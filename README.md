@@ -1,5 +1,11 @@
 # Welcome to **DataBase-Controller**
 
+## Install
+
+```sh
+python -m pip install dbcontroller
+```
+
 ## To Be Used With . . .
 
 - [sqlalchemy](https://pypi.org/project/SQLAlchemy/) and [databases](https://pypi.org/project/databases/)
@@ -10,9 +16,3 @@
 - ### [PyPi](https://pypi.org/project/dbcontroller)
 - ### [Github](https://github.com/hlop3z/dbcontroller)
 - ### [Read the Documents](https://hlop3z.github.io/dbcontroller/)
-
-## Install
-
-```sh
-python -m pip install dbcontroller
-```
