@@ -10,3 +10,9 @@
 - ### [PyPi](https://pypi.org/project/dbcontroller)
 - ### [Github](https://github.com/hlop3z/dbcontroller)
 - ### [Read the Documents](https://hlop3z.github.io/dbcontroller/)
+
+## Install
+
+```sh
+python -m pip install dbcontroller
+```
