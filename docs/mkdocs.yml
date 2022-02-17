@@ -1,0 +1,25 @@
+site_name: dbcontroller
+site_url: https://hlop3z.github.io/dbcontroller
+repo_url: https://github.com/hlop3z/dbcontroller
+copyright: Copyright © Hlop3z
+
+theme:
+  name: material
+  locale: en
+  features:
+    - navigation.tabs
+  icon:
+    logo: material/database-cog
+  palette:
+    primary: light blue
+
+nav:
+  - Home: index.md
+  - SQL: sql.md
+  - Mongo: mongo.md
+  - SQL-Where: sql-where.md
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
