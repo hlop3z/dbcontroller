@@ -19,6 +19,11 @@ class ManagerCrud:
         self.database = database
         self.table = model.__table__
 
+    @staticmethod
+    def id_decode(unique_id):
+        """ID-DECODER"""
+        return sql_id_decode(unique_id)
+
     """
     ..####...#####...######...####...######..######.
     .##..##..##..##..##......##..##....##....##.....
@@ -113,12 +118,27 @@ class ManagerCrud:
     async def detail(self, unique_id: str) -> Response:
         """DETAIL"""
         _id = sql_id_decode(unique_id)
-        # Detail
         find = self.table.select()
         sql_query = find.filter_by(id=_id)
         try:
             instance = await self.database.fetch_one(sql_query)
-            result = Response(data=to_obj(instance, sql=True))
+            count = 0
+            if instance:
+                count = 1
+            result = Response(data=to_obj(instance, sql=True), count=count)
+        except Exception as error:
+            result = Response(error=True, message=str(error))
+        return result
+
+    async def find_one(self, query: str = None) -> Response:
+        """FIND-ONE"""
+        sql_query = self.table.select().where(query)
+        try:
+            instance = await self.database.fetch_one(sql_query)
+            count = 0
+            if instance:
+                count = 1
+            result = Response(data=to_obj(instance, sql=True), count=count)
         except Exception as error:
             result = Response(error=True, message=str(error))
         return result

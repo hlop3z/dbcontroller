@@ -89,6 +89,11 @@ class MongoCrud:
         self.mongo = MongoBase(database=database, client=client)
         self.table = table
 
+    @staticmethod
+    def id_decode(unique_id):
+        """ID-DECODER"""
+        return mongo_id_decode(unique_id)
+
     """
     ..####...#####...######...####...######..######.
     .##..##..##..##..##......##..##....##....##.....
@@ -154,6 +159,10 @@ class MongoCrud:
         if results.count == 1:
             results.data = results.data
         return results
+
+    async def find_one(self, search: dict = {}):
+        """FIND-ONE"""
+        return await self.mongo.find_one(self.table, search)
 
     """
     .#####...######...####...#####...........##......######...####...######.
