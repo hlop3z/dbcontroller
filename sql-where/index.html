@@ -8,21 +8,21 @@
       
       
       
-        <link rel="canonical" href="https://hlop3z.github.io/dbcontroller/">
+        <link rel="canonical" href="https://hlop3z.github.io/dbcontroller/sql-where/">
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
     
     
       
-        <title>dbcontroller</title>
+        <title>SQL-Where - dbcontroller</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.50e68009.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50e68009.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.e6a45f82.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
         
           
           
@@ -40,7 +40,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-database-controller" class="md-skip">
+        <a href="#sql-where-operators" class="md-skip">
           Skip to content
         </a>
       
@@ -78,7 +78,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="dbcontroller" class="md-header__button md-logo" aria-label="dbcontroller" data-md-component="logo">
+    <a href=".." title="dbcontroller" class="md-header__button md-logo" aria-label="dbcontroller" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4-3.58 4-8 4-8-1.79-8-4m8.08 11H12c-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.29a7.38 7.38 0 0 1-.29-2c0-.34.03-.67.08-1M20 12.08V9c0 2.21-3.58 4-8 4s-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.69c1.13-2.37 3.53-4 6.31-4 .34 0 .67.03 1 .08m3.8 8.32c.1 0 .1.1 0 .2l-1 1.7c-.1.1-.2.1-.3.1l-1.2-.4c-.3.2-.5.3-.8.5l-.2 1.3c0 .1-.1.2-.2.2h-2c-.1 0-.2-.1-.3-.2l-.2-1.3c-.3-.1-.6-.3-.8-.5l-1.2.5c-.1 0-.2 0-.3-.1l-1-1.7c-.1-.1 0-.2.1-.3l1.1-.8v-1l-1.1-.8c-.1-.1-.1-.2-.1-.3l1-1.7c.1-.1.2-.1.3-.1l1.2.5c.3-.2.5-.3.8-.5l.2-1.3c0-.1.1-.2.3-.2h2c.1 0 .2.1.2.2l.2 1.3c.3.1.6.3.9.5l1.2-.5c.1 0 .3 0 .3.1l1 1.7c.1.1 0 .2-.1.3l-1.1.8v1l1.1.8M20.5 19c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.7 1.5 1.5 1.5 1.5-.7 1.5-1.5z"/></svg>
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              SQL-Where
             
           </span>
         </div>
@@ -169,12 +169,10 @@
         
   
   
-    
-  
 
 
   <li class="md-tabs__item">
-    <a href="." class="md-tabs__link md-tabs__link--active">
+    <a href=".." class="md-tabs__link">
       Home
     </a>
   </li>
@@ -186,7 +184,7 @@
 
 
   <li class="md-tabs__item">
-    <a href="sql/" class="md-tabs__link">
+    <a href="../sql/" class="md-tabs__link">
       SQL
     </a>
   </li>
@@ -198,7 +196,7 @@
 
 
   <li class="md-tabs__item">
-    <a href="mongo/" class="md-tabs__link">
+    <a href="../mongo/" class="md-tabs__link">
       Mongo
     </a>
   </li>
@@ -207,10 +205,12 @@
         
   
   
+    
+  
 
 
   <li class="md-tabs__item">
-    <a href="sql-where/" class="md-tabs__link">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
       SQL-Where
     </a>
   </li>
@@ -237,7 +237,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="dbcontroller" class="md-nav__button md-logo" aria-label="dbcontroller" data-md-component="logo">
+    <a href=".." title="dbcontroller" class="md-nav__button md-logo" aria-label="dbcontroller" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4-3.58 4-8 4-8-1.79-8-4m8.08 11H12c-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.29a7.38 7.38 0 0 1-.29-2c0-.34.03-.67.08-1M20 12.08V9c0 2.21-3.58 4-8 4s-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.69c1.13-2.37 3.53-4 6.31-4 .34 0 .67.03 1 .08m3.8 8.32c.1 0 .1.1 0 .2l-1 1.7c-.1.1-.2.1-.3.1l-1.2-.4c-.3.2-.5.3-.8.5l-.2 1.3c0 .1-.1.2-.2.2h-2c-.1 0-.2-.1-.3-.2l-.2-1.3c-.3-.1-.6-.3-.8-.5l-1.2.5c-.1 0-.2 0-.3-.1l-1-1.7c-.1-.1 0-.2.1-.3l1.1-.8v-1l-1.1-.8c-.1-.1-.1-.2-.1-.3l1-1.7c.1-.1.2-.1.3-.1l1.2.5c.3-.2.5-.3.8-.5l.2-1.3c0-.1.1-.2.3-.2h2c.1 0 .2.1.2.2l.2 1.3c.3.1.6.3.9.5l1.2-.5c.1 0 .3 0 .3.1l1 1.7c.1.1 0 .2-.1.3l-1.1.8v1l1.1.8M20.5 19c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.7 1.5 1.5 1.5 1.5-.7 1.5-1.5z"/></svg>
@@ -266,6 +266,51 @@
 
   
   
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql/" class="md-nav__link">
+        SQL
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mongo/" class="md-nav__link">
+        Mongo
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -278,12 +323,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
+          SQL-Where
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="." class="md-nav__link md-nav__link--active">
-        Home
+      <a href="./" class="md-nav__link md-nav__link--active">
+        SQL-Where
       </a>
       
         
@@ -302,22 +347,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#to-be-used-with" class="md-nav__link">
-    To Be Used With . . .
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cud-operations" class="md-nav__link">
-    C.U.D (Operations)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#read-operations" class="md-nav__link">
-    Read (Operations)
+  <a href="#example" class="md-nav__link">
+    Example:
   </a>
   
 </li>
@@ -326,51 +357,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="sql/" class="md-nav__link">
-        SQL
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="mongo/" class="md-nav__link">
-        Mongo
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="sql-where/" class="md-nav__link">
-        SQL-Where
-      </a>
     </li>
   
 
@@ -402,22 +388,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#to-be-used-with" class="md-nav__link">
-    To Be Used With . . .
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cud-operations" class="md-nav__link">
-    C.U.D (Operations)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#read-operations" class="md-nav__link">
-    Read (Operations)
+  <a href="#example" class="md-nav__link">
+    Example:
   </a>
   
 </li>
@@ -434,29 +406,38 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/hlop3z/dbcontroller/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/hlop3z/dbcontroller/edit/master/docs/sql-where.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="welcome-to-database-controller">Welcome to <strong>DataBase-Controller</strong></h1>
-<h3 id="to-be-used-with">To Be Used With . . .</h3>
+<h1 id="sql-where-operators">SQL Where ( Operators )</h1>
 <ul>
-<li><a href="https://pypi.org/project/SQLAlchemy/">SQLAlchemy</a> and <a href="https://pypi.org/project/databases/">Databases</a></li>
-<li><a href="https://pypi.org/project/pymongo/">PyMongo</a> and <a href="https://pypi.org/project/motor/">Motor</a></li>
+<li><code>eq</code> - equals</li>
+<li><code>ne</code> - not equals</li>
+<li><code>lt</code> - less than</li>
+<li><code>le</code> - less than or equal to</li>
+<li><code>gt</code> - greater than</li>
+<li><code>ge</code> - greater than or equal to</li>
+<li><code>contains</code> - text contains "string-to-search"</li>
+<li><code>like</code> - SQL <strong>like</strong> operator</li>
+<li><code>ilike</code> - SQL <strong>ignore-case like</strong> operator</li>
+<li><code>in</code> - value <strong>in</strong> list</li>
+<li><code>bt</code> - between (x, y)</li>
 </ul>
-<h2 id="cud-operations">C.U.D (Operations)</h2>
-<ul>
-<li><code>create</code> - <strong>Create</strong> a new instance.</li>
-<li><code>update</code> - <strong>Update</strong> instance(s) by <strong>ID</strong>.</li>
-<li><code>delete</code> - <strong>Delete</strong> instance(s) by <strong>ID</strong>.</li>
-</ul>
-<h2 id="read-operations">Read (Operations)</h2>
-<ul>
-<li><code>detail</code> - <strong>Read single</strong> instance by <strong>ID</strong>.</li>
-<li><code>find_one</code> - <strong>Read single</strong> instance.</li>
-<li><code>find</code> - <strong>Read multiple</strong> instances.</li>
-</ul>
+<div class="highlight"><pre><span></span><code><span class="n">table</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;column&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>You can add an <strong>exclamation point "<code>!</code>"</strong> at the beginning of the operator to make it a "<code>not</code>"</p>
+</blockquote>
+<hr />
+<h3 id="example"><strong>Example:</strong></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Name Equals Joe</span>
+<span class="n">table</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;eq&quot;</span><span class="p">,</span> <span class="s2">&quot;joe&quot;</span><span class="p">)</span>
+
+<span class="c1"># Name Not Equals Joe</span>
+<span class="n">table</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;!eq&quot;</span><span class="p">,</span> <span class="s2">&quot;joe&quot;</span><span class="p">)</span>
+</code></pre></div>
 
               
             </article>
@@ -469,21 +450,21 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-      
         
-        <a href="sql/" class="md-footer__link md-footer__link--next" aria-label="Next: SQL" rel="next">
+        <a href="../mongo/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Mongo" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
-                Next
+                Previous
               </span>
-              SQL
+              Mongo
             </div>
           </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
         </a>
+      
       
     </nav>
   
@@ -511,10 +492,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
     
     
-      <script src="assets/javascripts/bundle.5a9542cf.min.js"></script>
+      <script src="../assets/javascripts/bundle.5a9542cf.min.js"></script>
       
     
   </body>
