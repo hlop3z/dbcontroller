@@ -17,7 +17,9 @@ nav:
   - Home: index.md
   - SQL: sql.md
   - Mongo: mongo.md
-  - SQL-Where: sql-where.md
+  - Extras:
+      - ID-Decode: id-decoder.md
+      - SQL-Where: sql-where.md
 
 markdown_extensions:
   - pymdownx.superfences

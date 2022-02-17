@@ -1,6 +1,6 @@
 # Mongo (Motor)
 
-### Mongo + Controller
+### Mongo Setup
 
 ```python
 import motor.motor_asyncio
@@ -12,7 +12,7 @@ MONGO_URL = "mongodb://localhost:27017"
 MONGO_DB = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
 ```
 
-### Manager
+### Mongo + Controller
 
 ```python
 from dbcontroller import Mongo
@@ -21,7 +21,7 @@ mongodb = Mongo(MONGO_DB)
 manager = mongodb("test_databases")
 ```
 
-### Table | Collection
+### Manager | Table | Collection
 
 ```python
 table = manager("test_collection")

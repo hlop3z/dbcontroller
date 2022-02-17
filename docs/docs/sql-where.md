@@ -6,7 +6,7 @@
 - `le` - less than or equal to
 - `gt` - greater than
 - `ge` - greater than or equal to
-- `contains` - text contains "string-to-search"
+- `contains` - text **contains** "string-to-search"
 - `like` - SQL **like** operator
 - `ilike` - SQL **ignore-case like** operator
 - `in` - value **in** list
@@ -16,7 +16,7 @@
 table.where("column", "operator", "value")
 ```
 
-> You can add an **exclamation point "`!`"** at the beginning of the operator to make it a "`not`"
+> You can add an **exclamation point "`!`"** at the beginning of the operator to make it a **"`not`"**
 
 ---
 
