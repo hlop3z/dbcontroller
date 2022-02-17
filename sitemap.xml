@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://hlop3z.github.io/dbcontroller/id-decoder/</loc>
+         <lastmod>2022-02-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://hlop3z.github.io/dbcontroller/mongo/</loc>
          <lastmod>2022-02-17</lastmod>
          <changefreq>daily</changefreq>

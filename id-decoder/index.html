@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://hlop3z.github.io/dbcontroller/mongo/">
+        <link rel="canonical" href="https://hlop3z.github.io/dbcontroller/id-decoder/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
     
     
       
-        <title>Mongo - dbcontroller</title>
+        <title>ID-Decode - dbcontroller</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mongo-motor" class="md-skip">
+        <a href="#id-decoder" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mongo
+              ID-Decode
             
           </span>
         </div>
@@ -193,12 +193,10 @@
         
   
   
-    
-  
 
 
   <li class="md-tabs__item">
-    <a href="./" class="md-tabs__link md-tabs__link--active">
+    <a href="../mongo/" class="md-tabs__link">
       Mongo
     </a>
   </li>
@@ -207,13 +205,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../id-decoder/" class="md-tabs__link">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
         Extras
       </a>
     </li>
@@ -300,73 +300,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Mongo
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../mongo/" class="md-nav__link">
         Mongo
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#mongo-setup" class="md-nav__link">
-    Mongo Setup
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mongo-controller" class="md-nav__link">
-    Mongo + Controller
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manager-table-collection" class="md-nav__link">
-    Manager | Table | Collection
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#crud" class="md-nav__link">
-    C.R.U.D
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -377,12 +315,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       
       
@@ -403,11 +343,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../id-decoder/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         ID-Decode
       </a>
+      
     </li>
   
 
@@ -453,42 +403,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#mongo-setup" class="md-nav__link">
-    Mongo Setup
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mongo-controller" class="md-nav__link">
-    Mongo + Controller
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manager-table-collection" class="md-nav__link">
-    Manager | Table | Collection
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#crud" class="md-nav__link">
-    C.R.U.D
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -499,73 +413,14 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/hlop3z/dbcontroller/edit/master/docs/mongo.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/hlop3z/dbcontroller/edit/master/docs/id-decoder.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="mongo-motor">Mongo (Motor)</h1>
-<h3 id="mongo-setup">Mongo Setup</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">motor.motor_asyncio</span>
-
-<span class="c1"># URL</span>
-<span class="n">MONGO_URL</span> <span class="o">=</span> <span class="s2">&quot;mongodb://localhost:27017&quot;</span>
-
-<span class="c1"># Setup</span>
-<span class="n">MONGO_DB</span> <span class="o">=</span> <span class="n">motor</span><span class="o">.</span><span class="n">motor_asyncio</span><span class="o">.</span><span class="n">AsyncIOMotorClient</span><span class="p">(</span><span class="n">MONGO_URL</span><span class="p">)</span>
+<h1 id="id-decoder">ID-Decoder</h1>
+<div class="highlight"><pre><span></span><code><span class="n">table</span><span class="o">.</span><span class="n">id_decode</span><span class="p">(</span><span class="s1">&#39;ID-Base64-Encoded&#39;</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="mongo-controller">Mongo + Controller</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">dbcontroller</span> <span class="kn">import</span> <span class="n">Mongo</span>
-
-<span class="n">mongodb</span> <span class="o">=</span> <span class="n">Mongo</span><span class="p">(</span><span class="n">MONGO_DB</span><span class="p">)</span>
-<span class="n">manager</span> <span class="o">=</span> <span class="n">mongodb</span><span class="p">(</span><span class="s2">&quot;test_databases&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="manager-table-collection">Manager | Table | Collection</h3>
-<div class="highlight"><pre><span></span><code><span class="n">table</span> <span class="o">=</span> <span class="n">manager</span><span class="p">(</span><span class="s2">&quot;test_collection&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="crud">C.R.U.D</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Create</label><label for="__tabbed_1_2">Update</label><label for="__tabbed_1_3">Delete</label><label for="__tabbed_1_4">Detail (Read)</label><label for="__tabbed_1_5">Find-One (Read)</label><label for="__tabbed_1_6">Find (Read)</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">form</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Joe Doe&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-<span class="k">await</span> <span class="n">table</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">form</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;Some-ID&quot;</span><span class="p">,</span> <span class="c1"># For multiple-ids: [&quot;Some-ID-1&quot;, &quot;Some-ID-2&quot;]</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Jane Doll&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-<span class="k">await</span> <span class="n">table</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="c1"># Delete One</span>
-<span class="k">await</span> <span class="n">table</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;Some-ID&quot;</span><span class="p">)</span>
-
-<span class="c1"># Delete Many</span>
-<span class="k">await</span> <span class="n">table</span><span class="o">.</span><span class="n">delete</span><span class="p">([</span><span class="s2">&quot;Some-ID-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Some-ID-2&quot;</span><span class="p">])</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">table</span><span class="o">.</span><span class="n">detail</span><span class="p">(</span><span class="s2">&quot;Some-ID&quot;</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">query</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$regex&quot;</span><span class="p">:</span> <span class="s2">&quot;Joe&quot;</span><span class="p">}</span> <span class="p">}</span>
-<span class="k">await</span> <span class="n">table</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">query</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$regex&quot;</span><span class="p">:</span> <span class="s2">&quot;Joe&quot;</span><span class="p">}</span> <span class="p">}</span>
-<span class="k">await</span> <span class="n">table</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-</code></pre></div>
-</div>
-</div>
-</div>
 
               
             </article>
@@ -579,7 +434,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../sql/" class="md-footer__link md-footer__link--prev" aria-label="Previous: SQL" rel="prev">
+        <a href="../mongo/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Mongo" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -588,20 +443,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              SQL
+              Mongo
             </div>
           </div>
         </a>
       
       
         
-        <a href="../id-decoder/" class="md-footer__link md-footer__link--next" aria-label="Next: ID-Decode" rel="next">
+        <a href="../sql-where/" class="md-footer__link md-footer__link--next" aria-label="Next: SQL-Where" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              ID-Decode
+              SQL-Where
             </div>
           </div>
           <div class="md-footer__button md-icon">
