@@ -72,7 +72,7 @@ class MongoBase:
         try:
             _page = pagination(page=page, limit=limit)
             cursor = collection.find(search)
-            if not page == None:
+            if not page == -1:
                 cursor.skip(_page.offset).limit(_page.limit)
             items = [i async for i in cursor]
             count = await collection.count_documents(search)

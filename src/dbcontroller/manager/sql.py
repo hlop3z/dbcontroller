@@ -161,7 +161,7 @@ class ManagerCrud:
         """FIND"""
         _page = pagination(page=page, limit=limit)
         sql_query = self.table.select().where(query)
-        if not page == None:
+        if not page == -1:
             sql_query = sql_query.offset(_page.offset).limit(_page.limit)
         get_count = select([func.count()]).where(query)
         try:
