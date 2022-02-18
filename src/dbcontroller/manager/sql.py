@@ -161,7 +161,8 @@ class ManagerCrud:
         """FIND"""
         _page = pagination(page=page, limit=limit)
         sql_query = self.table.select().where(query)
-        sql_query = sql_query.offset(_page.offset).limit(_page.limit)
+        if not page == None:
+            sql_query = sql_query.offset(_page.offset).limit(_page.limit)
         get_count = select([func.count()]).where(query)
         try:
             items = await self.database.fetch_all(sql_query)
