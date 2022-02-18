@@ -3,6 +3,7 @@ Mongo Manager
 """
 
 import functools
+import math
 
 from .utils import Response, mongo_id_decode, pagination, to_obj
 
@@ -74,7 +75,8 @@ class MongoBase:
             cursor.skip(_page.offset).limit(_page.limit)
             items = [i async for i in cursor]
             count = await collection.count_documents(search)
-            result = Response(data=to_obj(items), count=count)
+            pages = int(math.ceil(count / limit))
+            result = Response(data=to_obj(items), count=count, pages=pages)
         except Exception as error:
             result = Response(error=True, message=str(error))
         return result

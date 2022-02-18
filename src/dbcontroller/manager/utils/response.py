@@ -16,3 +16,4 @@ class Response:
     error: bool = False
     message: str = None
     count: int = 0
+    pages: int = 0

@@ -3,6 +3,7 @@ SQL Manager
 """
 
 import functools
+import math
 
 import sqlalchemy as sa
 from sqlalchemy import func, select
@@ -165,7 +166,9 @@ class ManagerCrud:
         try:
             items = await self.database.fetch_all(sql_query)
             count = await self.database.fetch_all(get_count.select_from(self.table))
-            result = Response(data=to_obj(items, sql=True), count=count[0][0])
+            count = count[0][0]
+            pages = int(math.ceil(count / limit))
+            result = Response(data=to_obj(items, sql=True), count=count, pages=pages)
         except Exception as error:
             result = Response(error=True, message=str(error))
         return result
