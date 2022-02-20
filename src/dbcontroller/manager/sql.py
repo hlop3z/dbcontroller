@@ -6,7 +6,6 @@ import functools
 import math
 
 import sqlalchemy as sa
-from sqlalchemy import func, select
 
 from .utils import Response, pagination, sql_id_decode, to_obj
 
@@ -157,13 +156,28 @@ class ManagerCrud:
         query: str = None,
         page: int = 1,
         limit: int = 100,
+        sort_by: str = "-id",
     ):
         """FIND"""
         _page = pagination(page=page, limit=limit)
         sql_query = self.table.select().where(query)
-        if not page == -1:
+        sort_desc = False
+        # Check Sort By
+        if sort_by.startswith("-"):
+            sort_by = sort_by[1:]
+            sort_desc = True
+            if hasattr(self.table.c, sort_by):
+                sort_by_col = getattr(self.table.c, sort_by)
+            else:
+                sort_by_col = self.table.c.id
+        if sort_desc:
+            sort_by_col = sa.desc(sort_by_col)
+        # Add Sort By
+        sql_query = sql_query.order_by(sort_by_col)
+        # Offset & Limit
+        if page != -1:
             sql_query = sql_query.offset(_page.offset).limit(_page.limit)
-        get_count = select([func.count()]).where(query)
+        get_count = sa.select([sa.func.count()]).where(query)
         try:
             items = await self.database.fetch_all(sql_query)
             count = await self.database.fetch_all(get_count.select_from(self.table))

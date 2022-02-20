@@ -1,1 +1,5 @@
-from .manager import Sql, Mongo
+"""[summary]
+Controller for <Mongo & SQL>
+"""
+
+from .manager import Mongo, Sql

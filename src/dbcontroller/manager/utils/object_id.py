@@ -8,6 +8,7 @@ from .ids import ID
 
 
 def sql_id_decode(unique_id):
+    """Decoder for SQL"""
     try:
         return_value = int(ID.decode(unique_id))
     except Exception:
@@ -16,6 +17,7 @@ def sql_id_decode(unique_id):
 
 
 def mongo_id_decode(unique_id):
+    """Decoder for Mongo"""
     try:
         return_value = ObjectId(ID.decode(unique_id))
     except Exception:

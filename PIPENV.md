@@ -1,6 +1,6 @@
 # Run
 
-## Venv **Run** 
+## Venv **Run**
 ```sh
 python -m pipenv run some_command_inside_venv
 ```
@@ -14,13 +14,13 @@ python -m pipenv shell
 
 # Install
 
-## Install to **Core** 
+## Install to **Core**
 ```sh
 python -m pipenv install {package_or_module_name}
 ```
 
 
-## Install to **Development** 
+## Install to **Development**
 ```sh
 python -m pipenv install {package_or_module_name} --dev
 ```
@@ -29,7 +29,7 @@ python -m pipenv install {package_or_module_name} --dev
 
 # Save
 
-## Save **Requirements** for Production & Development 
+## Save **Requirements** for Production & Development
 ```sh
 python -m pipenv lock
 ```
@@ -38,13 +38,13 @@ python -m pipenv lock
 
 # Recreate
 
-## Recreate in **Production** 
+## Recreate in **Production**
 ```sh
 python -m pipenv install --ignore-pipfile
 ```
 
 
-## Recreate in **Development** 
+## Recreate in **Development**
 ```sh
 python -m pipenv install --dev
 ```

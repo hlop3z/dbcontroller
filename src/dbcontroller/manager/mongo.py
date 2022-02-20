@@ -65,14 +65,28 @@ class MongoBase:
         return result
 
     async def find(
-        self, table: str, search: dict, page: int = 1, limit: int = 100
+        self,
+        table: str,
+        search: dict,
+        page: int = 1,
+        limit: int = 100,
+        sort_by: str = "-id",
     ) -> Response:
         """FIND"""
         collection = self.database[table]
+        sort_desc = 1
+        # Check Sort By
+        if sort_by.startswith("-"):
+            sort_by = sort_by[1:]
+            sort_desc = -1
+        if sort_by == "id":
+            sort_by = "_id"
         try:
             _page = pagination(page=page, limit=limit)
-            cursor = collection.find(search)
-            if not page == -1:
+            # Add Sort By
+            cursor = collection.find(search).sort(sort_by, sort_desc)
+            # Offset & Limit
+            if page != -1:
                 cursor.skip(_page.offset).limit(_page.limit)
             items = [i async for i in cursor]
             count = await collection.count_documents(search)
@@ -175,9 +189,13 @@ class MongoCrud:
     .##..##..######..##..##..#####...........######..######...####.....##...
     """
 
-    async def find(self, search: dict = {}, page: int = 1, limit: int = 100):
+    async def find(
+        self, search: dict = {}, page: int = 1, limit: int = 100, sort_by: str = "-id"
+    ):
         """FIND"""
-        return await self.mongo.find(self.table, search=search, page=page, limit=limit)
+        return await self.mongo.find(
+            self.table, search=search, page=page, limit=limit, sort_by=sort_by
+        )
 
 
 def mongo_client(database, client):
