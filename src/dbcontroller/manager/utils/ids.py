@@ -16,8 +16,8 @@ def encode(text):
     Returns:
         str: base64.urlsafe_b64encode
     """
-    fill_up = hashlib.blake2s(f"{text}".encode("utf-8"), digest_size=12).hexdigest()
-    text = f"{ text }::{ fill_up }"  # Septillion
+    fill_up = hashlib.blake2s(f"{text}".encode("utf-8"), digest_size=8).hexdigest()
+    text = f"{ text }::{ fill_up }"
     return base64.urlsafe_b64encode(text.encode("utf-8")).decode("utf-8")
 
 
