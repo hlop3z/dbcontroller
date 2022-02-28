@@ -153,14 +153,14 @@ class ManagerCrud:
 
     async def find(
         self,
-        query: str = None,
+        search: str = None,
         page: int = 1,
         limit: int = 100,
         sort_by: str = "-id",
     ):
         """FIND"""
         _page = pagination(page=page, limit=limit)
-        sql_query = self.table.select().where(query)
+        sql_query = self.table.select().where(search)
         sort_desc = False
         # Check Sort By
         if sort_by.startswith("-"):
@@ -177,7 +177,7 @@ class ManagerCrud:
         # Offset & Limit
         if page != -1:
             sql_query = sql_query.offset(_page.offset).limit(_page.limit)
-        get_count = sa.select([sa.func.count()]).where(query)
+        get_count = sa.select([sa.func.count()]).where(search)
         try:
             items = await self.database.fetch_all(sql_query)
             count = await self.database.fetch_all(get_count.select_from(self.table))
