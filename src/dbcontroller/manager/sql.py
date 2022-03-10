@@ -4,8 +4,10 @@ SQL Manager
 
 import functools
 import math
+from typing import Any
 
 import sqlalchemy as sa
+from sqlalchemy.sql.elements import BinaryExpression
 
 from .utils import Response, pagination, sql_id_decode, to_obj
 
@@ -153,23 +155,29 @@ class ManagerCrud:
 
     async def find(
         self,
-        search: str = None,
+        search: BinaryExpression = None,
         page: int = 1,
         limit: int = 100,
         sort_by: str = "-id",
     ):
         """FIND"""
-        _page = pagination(page=page, limit=limit)
-        sql_query = self.table.select().where(search)
         sort_desc = False
-        # Check Sort By
+        sort_by_col = None
+        _page = pagination(page=page, limit=limit)
+        sql_query = self.table.select()
+        if isinstance(search, BinaryExpression):
+            sql_query = sql_query.where(search)
+        # Sort By (Descending || Ascending)
         if sort_by.startswith("-"):
             sort_by = sort_by[1:]
             sort_desc = True
+        # Check Sort By
+        if sort_by:
             if hasattr(self.table.c, sort_by):
                 sort_by_col = getattr(self.table.c, sort_by)
             else:
                 sort_by_col = self.table.c.id
+        # Add Sort Desc
         if sort_desc:
             sort_by_col = sa.desc(sort_by_col)
         # Add Sort By
@@ -177,7 +185,11 @@ class ManagerCrud:
         # Offset & Limit
         if page != -1:
             sql_query = sql_query.offset(_page.offset).limit(_page.limit)
-        get_count = sa.select([sa.func.count()]).where(search)
+        # List Count
+        get_count = sa.select([sa.func.count()])
+        if isinstance(search, BinaryExpression):
+            get_count = get_count.where(search)
+        # Finally
         try:
             items = await self.database.fetch_all(sql_query)
             count = await self.database.fetch_all(get_count.select_from(self.table))
@@ -186,6 +198,7 @@ class ManagerCrud:
             result = Response(data=to_obj(items, sql=True), count=count, pages=pages)
         except Exception as error:
             result = Response(error=True, message=str(error))
+        # Return
         return result
 
     """
