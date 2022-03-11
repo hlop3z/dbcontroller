@@ -209,6 +209,14 @@ class ManagerCrud:
     ..#####...####...######..##..##....##....######..##..##...####..
     """
 
+    def search(self, cols, search):
+        query = None
+        if cols:
+            query = self.where(cols[0], "contains", search)
+            for col in cols[1:]:
+                query = self.where(col, "contains", search) + (query)
+        return query
+
     def where(self, key, operation, val):
         """WHERE Per-Column Operator"""
         return_value = None
