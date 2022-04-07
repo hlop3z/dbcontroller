@@ -209,7 +209,7 @@ class ManagerCrud:
     ..#####...####...######..##..##....##....######..##..##...####..
     """
 
-    def search(self, cols, search):
+    def search(self, cols: list, search: str):
         query = None
         if cols:
             query = self.where(cols[0], "contains", search)
@@ -217,7 +217,7 @@ class ManagerCrud:
                 query = self.where(col, "contains", search) + (query)
         return query
 
-    def where(self, key, operation, val):
+    def where(self, key: str, operation: str, val: Any):
         """WHERE Per-Column Operator"""
         return_value = None
         col = None

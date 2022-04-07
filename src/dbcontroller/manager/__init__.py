@@ -1,5 +1,5 @@
-"""[summary]
-Mongo & SQL - Object-Manager
+"""
+    Mongo & SQL - Object-Manager
 """
 
 from .mongo import mongo as Mongo

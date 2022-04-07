@@ -1,5 +1,5 @@
-"""[summary]
-Mongo Manager
+"""
+    Mongo Manager
 """
 
 import functools
@@ -9,7 +9,7 @@ from .utils import Response, mongo_id_decode, pagination, to_obj
 
 
 class MongoBase:
-    """[summary]
+    """
     Mongo Manager (CORE)
     """
 

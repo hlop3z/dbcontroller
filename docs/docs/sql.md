@@ -57,7 +57,7 @@ table = manager(User)
         "id": None,
         "name": "Joe Doe",
     }
-    await table.create(form)
+    results = await table.create(form)
     ```
 
 === "Update"
@@ -67,35 +67,35 @@ table = manager(User)
         "id": "Some-ID", # For multiple-ids: ["Some-ID-1", "Some-ID-2"]
         "name": "Jane Doll",
     }
-    await table.update(form)
+    results = await table.update(form)
     ```
 
 === "Delete"
 
     ```python
     # Delete One
-    await table.delete("Some-ID")
+    results = await table.delete("Some-ID")
 
     # Delete Many
-    await table.delete(["Some-ID-1", "Some-ID-2"])
+    results = await table.delete(["Some-ID-1", "Some-ID-2"])
     ```
 
 === "Detail (Read)"
 
     ```python
-    await table.detail("Some-ID")
+    results = await table.detail("Some-ID")
     ```
 
 === "Find-One (Read)"
 
     ```python
     query = table.where("id", "eq", 1)
-    await table.find_one(query)
+    results = await table.find_one(query)
     ```
 
 === "Find (Read)"
 
     ```python
     query = (table.where("name", "contains", "jane") | table.where("name", "contains", "joe"))
-    await table.find(query, page=1, limit=100)
+    results = await table.find(query, page=1, limit=100)
     ```
