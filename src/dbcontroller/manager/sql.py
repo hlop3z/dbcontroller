@@ -6,8 +6,12 @@ import functools
 import math
 from typing import Any
 
-import sqlalchemy as sa
-from sqlalchemy.sql.elements import BinaryExpression
+try:
+    import sqlalchemy as sa
+    from sqlalchemy.sql.elements import BinaryExpression
+except ImportError:
+    sa = None
+    BinaryExpression = None
 
 from .utils import Response, pagination, sql_id_decode, to_obj
 
@@ -22,7 +26,7 @@ class ManagerCrud:
         self.table = model.__table__
 
     @staticmethod
-    def id_decode(unique_id):
+    def id_decode(unique_id: str):
         """ID-DECODER"""
         return sql_id_decode(unique_id)
 
@@ -210,6 +214,7 @@ class ManagerCrud:
     """
 
     def search(self, cols: list, search: str):
+        """Extends Where"""
         query = None
         if cols:
             query = self.where(cols[0], "contains", search)

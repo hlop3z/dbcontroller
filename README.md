@@ -1,9 +1,27 @@
 # Welcome to **DataBase-Controller**
 
-## Install
+## Install **SQL**ite
 
 ```sh
-python -m pip install dbcontroller
+python -m pip install dbcontroller SQLAlchemy databases[sqlite]
+```
+
+## Install Postgre**SQL**
+
+```sh
+python -m pip install dbcontroller SQLAlchemy databases[postgresql]
+```
+
+## Install My**SQL**
+
+```sh
+python -m pip install dbcontroller SQLAlchemy databases[mysql]
+```
+
+## Install **Mongo**
+
+```sh
+python -m pip install dbcontroller motor
 ```
 
 ## To Be Used With . . .

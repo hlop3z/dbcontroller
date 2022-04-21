@@ -2,7 +2,10 @@
     * Database Specific (Decode)
 """
 
-from bson.objectid import ObjectId
+try:
+    from bson.objectid import ObjectId
+except ImportError:
+    ObjectId = lambda x: x
 
 from .ids import ID
 
