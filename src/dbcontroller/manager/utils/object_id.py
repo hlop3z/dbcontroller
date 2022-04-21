@@ -5,7 +5,7 @@
 try:
     from bson.objectid import ObjectId
 except ImportError:
-    ObjectId = lambda x: x
+    ObjectId = None
 
 from .ids import ID
 
