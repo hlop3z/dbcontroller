@@ -19,7 +19,7 @@ def sql_id_decode(unique_id) -> int | None:
     return return_value
 
 
-def mongo_id_decode(unique_id) -> ObjectId | None:
+def mongo_id_decode(unique_id) -> str | None:
     """Decoder for Mongo"""
     try:
         return_value = ObjectId(ID.decode(unique_id))
