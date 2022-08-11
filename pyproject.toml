@@ -1,14 +1,28 @@
 
 [project]
 name = "dbcontroller"
-version = "0.0.1"
-description = "Databases Controller"
+version = "0.1.17"
+description = "Python - Database Controller (SQLAlchemy & Motor)"
+readme = "README.md"
+license = {file = "LICENSE.txt"}
 authors = [
     {name = "hlop3z", email = "23062270+hlop3z@users.noreply.github.com"},
 ]
-dependencies = []
 requires-python = ">=3.10"
-license = {text = "MIT"}
+dependencies = []
+keywords = ["database", "sql", "mongo"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10"
+]
+
+[project.urls]
+Homepage = "https://github.com/hlop3z/dbcontroller"
+Documentation = "https://hlop3z.github.io/dbcontroller/"
+# Repository = "https://github.com/hlop3z/dbcontroller/releases/download/alpha/v0.1.17.tar.gz"
+
 [project.optional-dependencies]
 
 [build-system]
@@ -18,6 +32,7 @@ build-backend = "pdm.pep517.api"
 [tool]
 [tool.pdm]
 allow_prereleases = true
+
 [[tool.pdm.source]]
 url = "https://pypi.org/simple"
 verify_ssl = true

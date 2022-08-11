@@ -5,6 +5,8 @@ import asyncio
 import os
 import pathlib
 import sys
+from bson.objectid import ObjectId
+from types import SimpleNamespace
 
 def dir_up(depth):
     """Easy level-up folder(s)."""
@@ -31,11 +33,14 @@ Base = ENGINE[DATABASE_NAME]
 
 my_table = Base['my_table']
 
-db = Mongo(my_table)
+db = Mongo(SimpleNamespace(objects=my_table))
 
 async def test():
-    #all_notes = await db.create({"text": "hola"})
+    #all_notes = await db.create({"text": "hello"})
     all_notes = await db.all()
+    #all_notes = await db.find_one({ "text" : "hola" })    
+    ID = ObjectId("62f521f276a55a8fe5301684")
+    all_notes = await db.search(["text"], "h")    
     print(all_notes)
 
 asyncio.run(test())

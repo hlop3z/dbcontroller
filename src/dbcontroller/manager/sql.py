@@ -67,9 +67,10 @@ class SQLBase:
     -----------------------------------------------------------------------------------------------
     # Read (Examples)
     -----------------------------------------------------------------------------------------------
-    - Filter-By         : await sql.filter_by(id=1, name="spongebob")
-    - Search-Columns    : await sql.search(["name", "title"], "bob")
     - Get-By(Single-Row): await sql.get_by(id=1, name="spongebob")
+    - Custom-Find-One   : await sql.find_one(sql.Q.where("id", "eq", 1))
+    - Filter-By         : await sql.filter_by(id=1, name="spongebob", page=1, etc...)
+    - Search-Columns    : await sql.search(["name", "title"], "bob", page=1, etc...)
     - Custom-Querying   : await sql.find(
                                     sql.Q.where("id", "in", [1, 2, 3]),
                                     page=1, limit=100, sort_by='-id'
@@ -149,6 +150,11 @@ class SQLBase:
         query = self.Q.search(columns, value) if value else None
         items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
         return items
+
+    async def find_one(self, query):
+        """Get Single-Row from Database Table by <SQLAlchemy-BinaryExpression>"""
+        item = await self.database.fetch_one(self.Q.select(query))
+        return to_obj(item, sql=True)
 
     async def get_by(self, **kwargs):
         """Get Single-Row from Database Table by <Keyword-Arguments>"""
