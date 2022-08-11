@@ -1,5 +1,41 @@
-[build-system]
-requires = [
-    "setuptools >= 60.9.3",
+
+[project]
+name = "dbcontroller"
+version = "0.0.1"
+description = "Databases Controller"
+authors = [
+    {name = "hlop3z", email = "23062270+hlop3z@users.noreply.github.com"},
 ]
-build-backend = "setuptools.build_meta"
+dependencies = []
+requires-python = ">=3.10"
+license = {text = "MIT"}
+[project.optional-dependencies]
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]
+allow_prereleases = true
+[[tool.pdm.source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "build",
+    "isort",
+    "black",
+    "pylint>=3.0.0a5",
+    "watchdog>=2.1.9",
+    "mkdocs",
+    "mkdocs-material",
+    "pre-commit",
+    "sqlalchemy",
+    "aiosqlite",
+    "motor",
+    "databases[aiosqlite]>=0.6.1",
+]
+

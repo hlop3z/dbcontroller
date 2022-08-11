@@ -14,6 +14,6 @@ class Response:
 
     data: Any = None
     error: bool = False
-    message: str = None
+    error_message: str = None
     count: int = 0
     pages: int = 0

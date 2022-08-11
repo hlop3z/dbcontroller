@@ -8,9 +8,7 @@ from .ids import ID
 
 
 def to_obj(items, sql: bool = False):
-    """[summary]
-    Convert Database-Based-Object into Python-SimpleNamespace-Object
-
+    """Convert Database-Based-Object into Python-SimpleNamespace-Object
     Args:
         items (list or dict): Database <Rows> or <Row>
         sql (bool, optional): IS-SQL Database? Defaults to False.
@@ -21,12 +19,9 @@ def to_obj(items, sql: bool = False):
         row2dict = lambda row: {key: getattr(row, key) for key in row.keys()}
         if sql:
             row = row2dict(row)
-            row["_id"] = row["id"]
         # Common
-        if "_id" in row:
-            unique_id = str(row["_id"])
-            row["id"] = ID.encode(unique_id)
-            row["_id"] = unique_id
+        unique_id = str(row["_id"])
+        row["id"] = ID.encode(unique_id)
         if row:
             return SimpleNamespace(**row)
         return None
@@ -40,4 +35,6 @@ def to_obj(items, sql: bool = False):
 
     if items:
         return item_handler(items)
+    elif isinstance(items, list) and len(items) == 0:
+        return []
     return None
