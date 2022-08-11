@@ -97,7 +97,7 @@ class MongoCrud:
         return Response(data=to_obj(items), count=len(items), pages=1)
 
 
-class MongoBase:
+class Mongo:
     """
     Mongo Manager (CRUD)
     """

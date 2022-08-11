@@ -50,7 +50,7 @@ def clean_update_form(base: Any, cols: list, form: dict):
 # Testing
 
 
-class SQLBase:
+class SQL:
     """SQlAlchemy & Databases (Manager)
 
     -----------------------------------------------------------------------------------------------
