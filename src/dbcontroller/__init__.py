@@ -3,4 +3,13 @@
 """
 
 from .manager import SQL, Mongo
-from .manager.utils import Objects
+from .manager.utils import Objects, ReadID
+from .types import Model, Admin
+
+Text = Model.text
+JSON = Model.json
+
+class FakeModel:
+    """Fake Model for Testing"""
+    def __init__(self, model):
+        self.objects = model

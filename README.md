@@ -3,25 +3,25 @@
 ## Install **SQL**ite
 
 ```sh
-python -m pip install dbcontroller SQLAlchemy databases[sqlite]
+python -m pip install dbcontroller[sqlite]
 ```
 
 ## Install Postgre**SQL**
 
 ```sh
-python -m pip install dbcontroller SQLAlchemy databases[postgresql]
+python -m pip install dbcontroller[sql] databases[postgresql]
 ```
 
 ## Install My**SQL**
 
 ```sh
-python -m pip install dbcontroller SQLAlchemy databases[mysql]
+python -m pip install dbcontroller[sql] databases[mysql]
 ```
 
 ## Install **Mongo**
 
 ```sh
-python -m pip install dbcontroller motor
+python -m pip install dbcontroller[mongo]
 ```
 
 ## To Be Used With . . .

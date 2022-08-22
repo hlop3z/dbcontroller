@@ -6,7 +6,6 @@ import os
 import pathlib
 import sys
 from bson.objectid import ObjectId
-from types import SimpleNamespace
 
 def dir_up(depth):
     """Easy level-up folder(s)."""
@@ -17,7 +16,7 @@ def dir_up(depth):
 dir_up(1)
 
 # Test
-from dbcontroller import Mongo
+import dbcontroller as dbc
 import motor.motor_asyncio
 
 # Config
@@ -31,16 +30,36 @@ ENGINE = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URL)
 # Base
 Base = ENGINE[DATABASE_NAME]
 
-my_table = Base['my_table']
+# Model
+Model = dbc.Model(mongo=Base)
 
-db = Mongo(SimpleNamespace(objects=my_table))
+# Types
+@Model.mongo
+class Notes:
+    text: dbc.Text
+    
+
+# Database Admin
+notes = dbc.Mongo(Notes)
+
 
 async def test():
     #all_notes = await db.create({"text": "hello"})
-    all_notes = await db.all()
+    all_notes = await notes.all()
     #all_notes = await db.find_one({ "text" : "hola" })    
     ID = ObjectId("62f521f276a55a8fe5301684")
-    all_notes = await db.search(["text"], "h")    
+    all_notes = await notes.search(["text"], "h")    
     print(all_notes)
 
 asyncio.run(test())
+
+# Register - Models
+dbc.Admin.register([Notes])
+print(dbc.Admin.types)
+# print(list(filter(lambda x: not x.startswith("__"), dir(db))))
+
+
+# Core: ['collection', 'crud', 'table']
+# Querying: ['all', 'create', 'delete', 'detail', 'filter_by', 'find', 'find_one', 'get_by', 'id_decode', 'search', 'update']
+# Querying: ['all', 'create', 'delete', 'detail', 'filter_by', 'find', 'find_one', 'get_by', 'id_decode', 'search', 'update']
+# User-Input: ['form', 'form_update']

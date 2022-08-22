@@ -18,30 +18,50 @@ dir_up(1)
 
 
 # Test
-from dbcontroller import SQL
+import dbcontroller as dbc
+
 from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base
 
 DB_URL = 'sqlite:///data/authentication.db'
-metadata = sqlalchemy.MetaData()
+
 engine = create_engine(DB_URL, echo = True)
 
-notes_db = sqlalchemy.Table(
-    "notes",
-    metadata,
-    sqlalchemy.Column("_id", sqlalchemy.Integer, primary_key=True),
-    sqlalchemy.Column("text", sqlalchemy.String(length=100)),
-    sqlalchemy.Column("completed", sqlalchemy.Boolean),
-)
+# Base
+Base = declarative_base()
+
+# Model
+Model = dbc.Model(sql=Base)
+
+# Types
+@Model.sql
+class Notes:
+    text: dbc.Text
+    completed: bool = False
+    
 
 
-notes = SQL(DB_URL, SimpleNamespace(objects=notes_db))
+# Database Admin
+notes = dbc.SQL(DB_URL, Notes)
 
+# Base.metadata.create_all(engine)
 
 async def test():
     all_notes = await notes.all()
-    #all_notes = await notes.create({"text": "hola"})
+    # all_notes = await notes.create({"text": "hola"})
     print(all_notes)
 
-#metadata.create_all(engine)
+
 asyncio.run(test())
 
+# Register - Models
+dbc.Admin.register([Notes, "... All-Models"])
+dbc.Admin.load()
+
+print(dbc.Admin.types)
+
+# print(list(filter(lambda x: not x.startswith("__"), dir(notes))))
+
+# Core: ['Q', 'database', 'table']
+# Querying: ['all', 'create', 'delete', 'detail', 'filter_by', 'find', 'find_one', 'get_by', 'id_decode', 'search', 'update']
+# User-Input: ['form', 'form_update']

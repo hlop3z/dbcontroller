@@ -11,8 +11,12 @@ __pycache__/
 # for pytest
 .cache
 
-# docs
+# Docs
 docs/site
+
+# Python Custom
+data/
+.venv
 
 # vscode
 .vscode/

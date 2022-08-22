@@ -5,9 +5,8 @@
 import functools
 import math
 from types import SimpleNamespace
-from typing import Any
 
-from .utils import Response, sql_id_decode, to_obj
+from .utils import Response, sql_id_decode, to_obj, clean_form, clean_update_form
 from .utils.sql_where import Filters as SQLFilters
 
 try:
@@ -22,33 +21,6 @@ except ImportError:
     def Database(x):
         """Fake Database"""
         return SimpleNamespace(database_url=x)
-
-
-def clean_form(base: Any, cols: list, form: dict):
-    """Clean User's Input
-
-    Args:
-        form (dict): User's Input.
-
-    Returns:
-        dict: Clean User's Input.
-    """
-    inputs = {}
-    base_form = base(**form)
-    for key, val in base_form.__dict__.items():
-        if key in cols and key != "_id":
-            inputs[key] = val
-    return inputs
-
-
-def clean_update_form(base: Any, cols: list, form: dict):
-    """Clean User's Input (Update-Form)"""
-    clean = clean_form(base, cols, form)
-    return {key: val for key, val in clean.items() if val and key in form.keys()}
-
-
-# Testing
-
 
 class SQL:
     """SQlAlchemy & Databases (Manager)
