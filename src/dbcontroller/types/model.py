@@ -260,7 +260,7 @@ class Model:
             info_class_name = original_object.__name__
             info_class_module_path = original_object.__module__
             info_class_module_name = get_module_name(info_class_module_path)
-            
+
             if not info_class_module_name:
                 info_class_module_name = "main"
 

@@ -2,6 +2,7 @@
     Object-Class Tools
 """
 
+
 class Singleton:
     """Create a Singleton"""
 
@@ -17,9 +18,8 @@ class Singleton:
 
     def init(self, *args, **kwargs):
         """Class __init__ Replacement"""
-        
-        
-        
+
+
 class ModelSingleton(Singleton):
     """All Models"""
 
@@ -37,16 +37,16 @@ class ModelSingleton(Singleton):
 
     def register(self, all_models: list):
         if not isinstance(all_models, list):
-            all_models = [ all_models ]
+            all_models = [all_models]
         # Register
         for current_type in all_models:
             self._core_models[current_type.__meta__.table_uri] = current_type
-            
+
     def load(self):
         for current_type in self._core_models.values():
             if current_type._lazy_object:
                 current_type.objects()
-        
+
 
 # Admin
 Admin = ModelSingleton()

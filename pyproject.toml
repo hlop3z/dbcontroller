@@ -61,4 +61,7 @@ docs = [
     "mkdocs-material>=8.4.1",
 ]
 
-
+[tool.pdm.scripts]
+watch = "python scripts/watcher.py"
+docs-dev = {shell = "cd docs/ && python -m mkdocs serve --dev-addr 0.0.0.0:8055"}
+docs-gh = {shell = "cd docs/ && python -m mkdocs gh-deploy --force"}

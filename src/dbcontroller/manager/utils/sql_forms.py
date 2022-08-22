@@ -1,5 +1,6 @@
 from typing import Any
 
+
 def clean_form(base: Any, cols: list, form: dict):
     """Clean User's Input
 

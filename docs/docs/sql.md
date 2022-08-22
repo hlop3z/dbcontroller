@@ -15,47 +15,56 @@ Base = declarative_base()
 
 # Setup
 engine = create_engine(DATABASE_URL, echo=True)
-
-# Create-Tables
-Base.metadata.create_all(engine)
-```
-
-### Databases + Controller
-
-```python
-from databases import Database
-from dbcontroller import Sql
-
-database = Database(DATABASE_URL)
-manager = Sql(database)
 ```
 
 ### Table | Model
 
+> **(Databases + Controller)**
+
 ```python
-from sqlalchemy import Column, Integer, String
+import dbcontroller as dbc
+import functools
 
-class User(Base):
-    __tablename__ = 'User'
+model = dbc.Model(sql=Base)
+SQL = functools.partial(dbc.SQL, DATABASE_URL)
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(80))
+# Types
+@model.sql
+class Notes:
+    name: str
+    text: dbc.Text
+    completed: bool = False
+    meta: dbc.JSON
+```
+
+### Create Tables
+
+```python
+# Create-Tables
+
+Base.metadata.create_all(engine)
 ```
 
 ### Manager
 
 ```python
-table = manager(User)
+table = SQL(Notes)
+
+async def test():
+    created = await table.create({"text": "hello world"})
+    all_notes = await table.all()
+    print(created)
+    print(all_notes)
+
 ```
 
-### C.R.U.D
+### **C.U.D** — Examples
 
 === "Create"
 
     ```python
     form = {
-        "id": None,
-        "name": "Joe Doe",
+        "name": "joe doe",
     }
     results = await table.create(form)
     ```
@@ -63,11 +72,11 @@ table = manager(User)
 === "Update"
 
     ```python
+    selector = "Some-ID" # ["Some-ID-1", "Some-ID-2", "More-IDS..."]
     form = {
-        "id": "Some-ID", # For multiple-ids: ["Some-ID-1", "Some-ID-2"]
-        "name": "Jane Doll",
+        "name": "jane doll",
     }
-    results = await table.update(form)
+    results = await table.update(selector, form)
     ```
 
 === "Delete"
@@ -77,25 +86,59 @@ table = manager(User)
     results = await table.delete("Some-ID")
 
     # Delete Many
-    results = await table.delete(["Some-ID-1", "Some-ID-2"])
+    results = await table.delete(["Some-ID-1", "Some-ID-2", "More-IDS..."])
     ```
 
-=== "Detail (Read)"
+### **Reading** | Querying (**Multiple**-Records)
+
+=== "All"
+
+    ```python
+    results = await table.all()
+    ```
+
+=== "Filter-By"
+
+    ```python
+    query = {"name": "joe doe"}
+    results = await table.filter_by(search=query, page=1, limit=100, sort_by="-id")
+    ```
+
+=== "Find"
+
+    ```python
+    query = (
+        table.where("name", "contains", "jane")
+        | table.where("name", "contains", "joe")
+    )
+    results = await table.find(query, page=1, limit=100)
+    ```
+
+=== "Search"
+
+    ```python
+    search_value = "john"
+    columns = ["first_name", "last_name"]
+    results = await table.search(columns=columns, value=search_value, page=1, limit=100, sort_by="-id")
+    ```
+
+### **Reading** | Querying (**One**-Record)
+
+=== "Detail"
 
     ```python
     results = await table.detail("Some-ID")
     ```
 
-=== "Find-One (Read)"
+=== "Get-By"
+
+    ```python
+    results = await table.detail("Some-ID")
+    ```
+
+=== "Find-One"
 
     ```python
     query = table.where("id", "eq", 1)
     results = await table.find_one(query)
-    ```
-
-=== "Find (Read)"
-
-    ```python
-    query = (table.where("name", "contains", "jane") | table.where("name", "contains", "joe"))
-    results = await table.find(query, page=1, limit=100)
     ```

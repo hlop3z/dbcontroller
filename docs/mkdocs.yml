@@ -3,16 +3,6 @@ site_url: https://hlop3z.github.io/dbcontroller
 repo_url: https://github.com/hlop3z/dbcontroller
 copyright: Copyright © Hlop3z
 
-theme:
-  name: material
-  locale: en
-  features:
-    - navigation.tabs
-  icon:
-    logo: material/database-cog
-  palette:
-    primary: light blue
-
 nav:
   - Home: index.md
   - SQL: sql.md
@@ -22,7 +12,50 @@ nav:
       - SQL-Search: sql-search.md
       - ID-Decode: id-decoder.md
 
+extra_css:
+  - css/extra.css
+
+theme:
+  name: material
+  locale: en
+  features:
+    - navigation.tabs
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - content.code.annotate
+    # - navigation.expand
+  icon:
+    logo: material/bike
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
 markdown_extensions:
-  - pymdownx.superfences
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg

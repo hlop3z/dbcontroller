@@ -7,6 +7,7 @@ import pathlib
 import sys
 import sqlalchemy
 from types import SimpleNamespace
+import functools
 
 def dir_up(depth):
     """Easy level-up folder(s)."""
@@ -42,20 +43,28 @@ class Notes:
 
 
 # Database Admin
-notes = dbc.SQL(DB_URL, Notes)
+SQL = functools.partial(dbc.SQL, DB_URL)
 
-# Base.metadata.create_all(engine)
+notes = SQL(Notes)
+
+#Base.metadata.create_all(engine)
 
 async def test():
-    all_notes = await notes.all()
-    # all_notes = await notes.create({"text": "hola"})
-    print(all_notes)
-
+    query = {"text": "hello world"}
+    # all_notes = await notes.filter_by(search=query, page=1, limit=100, sort_by="-id")
+    # all_notes = await notes.create({"text": "hello world"})
+    # all_notes = await notes.get_by(text="hola")
+    query = (
+        notes.where("name", "contains", "jane")
+        | notes.where("name", "contains", "hello")
+    )
+    results = await notes.find(query, page=1, limit=100)
+    print(results)
 
 asyncio.run(test())
 
 # Register - Models
-dbc.Admin.register([Notes, "... All-Models"])
+dbc.Admin.register([Notes])  # ... <All Other Models>
 dbc.Admin.load()
 
 print(dbc.Admin.types)

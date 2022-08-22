@@ -6,7 +6,7 @@ import functools
 import math
 from types import SimpleNamespace
 
-from .utils import Response, sql_id_decode, to_obj, clean_form, clean_update_form
+from .utils import Response, clean_form, clean_update_form, sql_id_decode, to_obj
 from .utils.sql_where import Filters as SQLFilters
 
 try:
@@ -21,6 +21,7 @@ except ImportError:
     def Database(x):
         """Fake Database"""
         return SimpleNamespace(database_url=x)
+
 
 class SQL:
     """SQlAlchemy & Databases (Manager)
@@ -61,6 +62,7 @@ class SQL:
         self.database = Database(database_url)
         self.table = custom_type.objects
         self.Q = SQLFilters(custom_type.objects)
+        self.where = self.Q.where
         self.form = functools.partial(
             clean_form, custom_type, custom_type.objects.columns.keys()
         )
@@ -72,73 +74,6 @@ class SQL:
     def id_decode(unique_id):
         """ID-DECODER"""
         return sql_id_decode(unique_id)
-
-    async def all(
-        self,
-    ):
-        """Get All-Rows from Database"""
-        items = await self.database.fetch_all(self.Q.select())
-        return Response(data=to_obj(items, sql=True), count=len(items), pages=1)
-
-    async def find(
-        self,
-        search: BinaryExpression = None,
-        page: int | None = None,
-        limit: int | None = None,
-        sort_by: str | None = None,
-    ):
-        """Get Multiple-Rows from Database Table by <SQLAlchemy-BinaryExpression>"""
-        try:
-            query = self.Q.find(search, page=page, limit=limit, sort_by=sort_by)
-            items = await self.database.fetch_all(query.query)
-            count = await self.database.fetch_val(query.count)
-            _limit = limit or 1
-            pages = int(math.ceil(count / _limit))
-            return Response(data=to_obj(items, sql=True), count=count, pages=pages)
-        except:
-            return Response(data=[], count=0, pages=0)
-
-    async def filter_by(
-        self,
-        search: dict | None = None,
-        page: int | None = None,
-        limit: int | None = None,
-        sort_by: str | None = None,
-    ):
-        """Get Multiple-Rows from Database Table by <Keyword-Arguments>"""
-        query = self.Q.filter_by(**search) if search else None
-        items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
-        return items
-
-    async def search(
-        self,
-        columns: list | None = None,
-        value: str | None = None,
-        page: int | None = None,
-        limit: int | None = None,
-        sort_by: str | None = None,
-    ):
-        """Get Multiple-Rows from Database Table by <Searching-Columns>"""
-        query = self.Q.search(columns, value) if value else None
-        items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
-        return items
-
-    async def find_one(self, query):
-        """Get Single-Row from Database Table by <SQLAlchemy-BinaryExpression>"""
-        item = await self.database.fetch_one(self.Q.select(query))
-        return to_obj(item, sql=True)
-
-    async def get_by(self, **kwargs):
-        """Get Single-Row from Database Table by <Keyword-Arguments>"""
-        query = self.Q.filter_by(**kwargs)
-        item = await self.database.fetch_one(self.Q.select(query))
-        return to_obj(item, sql=True)
-
-    async def detail(self, ID):
-        """Get Single-Row from Database ID"""
-        query = self.Q.filter_by(_id=sql_id_decode(ID))
-        item = await self.database.fetch_one(self.Q.select(query))
-        return to_obj(item, sql=True)
 
     async def create(self, form: dict):
         """Create Single-Row."""
@@ -161,6 +96,8 @@ class SQL:
         """Update Multiple/Single-Row(s)"""
         return_value = Response()
         # Get Ids
+        if not isinstance(unique_ids, list):
+            unique_ids = [unique_ids]
         all_ids = [sql_id_decode(i) for i in unique_ids]
         sql_ids_in = self.Q.where("_id", "in", all_ids)
         try:
@@ -179,6 +116,8 @@ class SQL:
         """Delete Multiple/Single-Row(s)"""
         return_value = Response()
         # Get Ids
+        if not isinstance(unique_ids, list):
+            unique_ids = [unique_ids]
         all_ids = [sql_id_decode(i) for i in unique_ids]
         sql_ids_in = self.Q.where("_id", "in", all_ids)
         try:
@@ -189,3 +128,78 @@ class SQL:
             return_value.error = True
             return_value.error_message = str(error)
         return return_value
+
+    async def get_by(self, **kwargs):
+        """Get Single-Row from Database Table by <Keyword-Arguments>"""
+        query = self.Q.filter_by(**kwargs)
+        item = await self.database.fetch_one(self.Q.select(query))
+        return to_obj(item, sql=True)
+
+    async def detail(self, ID):
+        """Get Single-Row from Database ID"""
+        query = self.Q.filter_by(_id=sql_id_decode(ID))
+        item = await self.database.fetch_one(self.Q.select(query))
+        return to_obj(item, sql=True)
+
+    async def find_one(self, query):
+        """Get Single-Row from Database Table by <SQLAlchemy-BinaryExpression>"""
+        item = await self.database.fetch_one(self.Q.select(query))
+        return to_obj(item, sql=True)
+
+    async def all(
+        self,
+    ):
+        """Get All-Rows from Database"""
+        items = await self.database.fetch_all(self.Q.select())
+        return Response(data=to_obj(items, sql=True), count=len(items), pages=1)
+
+    async def find(
+        self,
+        search: BinaryExpression = None,
+        page: int | None = None,
+        limit: int | None = None,
+        sort_by: str | None = None,
+    ):
+        """Get Multiple-Rows from Database Table by <SQLAlchemy-BinaryExpression>"""
+        if sort_by == "id":
+            sort_by = "_id"
+        elif sort_by == "-id":
+            sort_by = "-_id"
+        try:
+            query = self.Q.find(search, page=page, limit=limit, sort_by=sort_by)
+            items = await self.database.fetch_all(query.query)
+            count = await self.database.fetch_val(query.count)
+            _limit = limit or 1
+            pages = int(math.ceil(count / _limit))
+            return Response(data=to_obj(items, sql=True), count=count, pages=pages)
+        except Exception as e:
+            print(e)
+            return Response(data=[], count=0, pages=0)
+
+    async def filter_by(
+        self,
+        search: dict | None = None,
+        page: int | None = None,
+        limit: int | None = None,
+        sort_by: str | None = None,
+    ):
+        """Get Multiple-Rows from Database Table by <Keyword-Arguments>"""
+        if search.get("id"):
+            search["_id"] = search["id"]
+            del search["id"]
+        query = self.Q.filter_by(**search) if search else None
+        items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
+        return items
+
+    async def search(
+        self,
+        columns: list | None = None,
+        value: str | None = None,
+        page: int | None = None,
+        limit: int | None = None,
+        sort_by: str | None = None,
+    ):
+        """Get Multiple-Rows from Database Table by <Searching-Columns>"""
+        query = self.Q.search(columns, value) if value else None
+        items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
+        return items

@@ -115,22 +115,29 @@ class Mongo:
         """CREATE"""
         return await self.crud.create(form)
 
-    async def update(self, ids: list, form: dict):
+    async def update(self, unique_ids: list, form: dict):
         """UPDATE"""
-        _ids = [mongo_id_decode(i) for i in ids]
+        if not isinstance(unique_ids, list):
+            unique_ids = [unique_ids]
+        _ids = [mongo_id_decode(i) for i in unique_ids]
         search = {"_id": {"$in": _ids}}
         results = await self.crud.update(search, form)
         if results.count == 1 and not results.error:
-            return await self.detail(ids[0])
+            return await self.detail(unique_ids[0])
         return results
 
-    async def delete(self, ids: list):
+    async def delete(self, unique_ids: list):
         """DELETE"""
-        if not isinstance(ids, list):
-            ids = [ids]
-        _id = [mongo_id_decode(i) for i in ids]
+        if not isinstance(unique_ids, list):
+            unique_ids = [unique_ids]
+        _id = [mongo_id_decode(i) for i in unique_ids]
         search = {"_id": {"$in": _id}}
         return await self.crud.delete(search)
+
+    async def get_by(self, **kwargs):
+        """Get Single-Row by <Keyword-Arguments>"""
+        search = {key: {"$eq": val} for key, val in kwargs.items()}
+        return await self.crud.find_one(search)
 
     async def detail(self, unique_id: str):
         """DETAIL"""
@@ -142,10 +149,17 @@ class Mongo:
         """FIND-ONE"""
         return await self.crud.find_one(search)
 
-    async def get_by(self, **kwargs):
-        """Get Single-Row by <Keyword-Arguments>"""
-        search = {key: {"$eq": val} for key, val in kwargs.items()}
-        return await self.crud.find_one(search)
+    async def all(self):
+        """ALL-Rows"""
+        return await self.crud.all()
+
+    async def find(
+        self, search: dict = {}, page: int = 1, limit: int = 100, sort_by: str = "-id"
+    ):
+        """FIND"""
+        return await self.crud.find(
+            search=search, page=page, limit=limit, sort_by=sort_by
+        )
 
     async def filter_by(self, **kwargs):
         """Get Multiple-Rows from Database Table by <Keyword-Arguments>"""
@@ -163,15 +177,3 @@ class Mongo:
         """Get Multiple-Rows from Database Table by <Searching-Columns>"""
         search = [{key: {"$regex": value}} for key in columns]
         return await self.find({"$or": search}, page=page, limit=limit, sort_by=sort_by)
-
-    async def find(
-        self, search: dict = {}, page: int = 1, limit: int = 100, sort_by: str = "-id"
-    ):
-        """FIND"""
-        return await self.crud.find(
-            search=search, page=page, limit=limit, sort_by=sort_by
-        )
-
-    async def all(self):
-        """ALL-Rows"""
-        return await self.crud.all()
