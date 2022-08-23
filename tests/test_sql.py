@@ -41,27 +41,24 @@ SQL = functools.partial(dbc.SQL, DATABASE_URL)
 
 # Types
 @model.sql(table_name="main_user")
-class User:
+class UserSQL:
     name: str
     notes: dbc.Text
     meta: dbc.JSON
     disabled: bool = False
 
 
-table = SQL(User)
-
-# Create-Tables
-# Base.metadata.create_all(engine)
-
-# Register - Models
-dbc.Admin.register([User])  # ... <All Other Models>
-dbc.Admin.load()
-dbc.Admin.types
+table = SQL(UserSQL)
 
 
 class ID:
     one = "MTo6YTU1ZTUzMmVhYjAyOGI0Mg=="
     two = "Mjo6M2VmOWFiYmI1ZGY1YjY0MQ=="
+
+
+def test_create_database():
+    Base.metadata.create_all(engine)
+    assert True
 
 
 @pytest.mark.asyncio
@@ -159,4 +156,3 @@ async def demo_example():
 
 
 # asyncio.run(demo_example())
-# print(list(filter(lambda x: not x.startswith("__"), dir(notes))))

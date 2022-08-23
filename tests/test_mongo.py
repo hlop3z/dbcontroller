@@ -38,7 +38,7 @@ model = dbc.Model(mongo=Base)
 
 # Types
 @model.mongo(table_name="main_user")
-class User:
+class UserMongo:
     name: str
     notes: dbc.Text
     meta: dbc.JSON
@@ -46,16 +46,7 @@ class User:
 
 
 # Database Admin
-table = dbc.Mongo(User)
-
-
-# Core: ['collection', 'crud', 'table']
-# Querying: ['all', 'create', 'delete', 'detail', 'filter_by', 'find', 'find_one', 'get_by', 'id_decode', 'search', 'update']
-# Querying: ['all', 'create', 'delete', 'detail', 'filter_by', 'find', 'find_one', 'get_by', 'id_decode', 'search', 'update']
-# User-Input: ['form', 'form_update']
-dbc.Admin.register([User])  # ... <All Other Models>
-dbc.Admin.load()
-dbc.Admin.types
+table = dbc.Mongo(UserMongo)
 
 
 @pytest.fixture(scope="session")

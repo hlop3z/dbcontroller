@@ -69,6 +69,5 @@ test = [
 watch = "python scripts/watcher.py"
 docs-dev = {shell = "cd docs/ && python -m mkdocs serve --dev-addr 0.0.0.0:8055"}
 docs-gh = {shell = "cd docs/ && python -m mkdocs gh-deploy --force"}
-test = "pytest -rA"
-
-
+test = "pytest -rA tests/test_mongo.py tests/test_sql.py"
+# test = {composite = ["test-sql", "test-mongo"]}
