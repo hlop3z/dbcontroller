@@ -27,7 +27,7 @@
 | Method         | Is Used To...                                         | Variables      |
 | -------------- | ----------------------------------------------------- | -------------- |
 | **`get_by`**   | **Filter-By** Columns (**Single**-Record)             | `(**kwargs)`   |
-| **`detail`**   | Get **Details** by **GraphQL-ID** (**Single**-Record) | `(Encoded_ID)` |
+| **`detail`**   | Get **Details** by **Encoded-ID** (**Single**-Record) | `(Encoded_ID)` |
 | **`find_one`** | **Custom-Querying** (**Single**-Records)              | `(query)`      |
 
 ## **Util** Methods

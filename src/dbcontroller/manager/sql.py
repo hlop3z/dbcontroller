@@ -69,6 +69,8 @@ class SQL:
         self.form_update = functools.partial(
             clean_update_form, custom_type, custom_type.objects.columns.keys()
         )
+        self.columns = self.table.columns.keys()
+        self.c = self.table.c
 
     @staticmethod
     def id_decode(unique_id):
@@ -92,7 +94,7 @@ class SQL:
 
         return return_value
 
-    async def update(self, unique_ids: list[str], **kwargs):
+    async def update(self, unique_ids: list[str], form: dict):
         """Update Multiple/Single-Row(s)"""
         return_value = Response()
         # Get Ids
@@ -102,7 +104,7 @@ class SQL:
         sql_ids_in = self.Q.where("_id", "in", all_ids)
         try:
             return_value.count = await self.database.execute(
-                self.table.update().where(sql_ids_in).values(**kwargs)
+                self.table.update().where(sql_ids_in).values(**form)
             )
         except Exception as error:
             return_value.error = True
@@ -112,7 +114,7 @@ class SQL:
             return_value.data = await self.get_by(_id=all_ids[0])
         return return_value
 
-    async def delete(self, unique_ids: list[str]):
+    async def delete(self, unique_ids: list[str], all: bool = False):
         """Delete Multiple/Single-Row(s)"""
         return_value = Response()
         # Get Ids
@@ -120,24 +122,29 @@ class SQL:
             unique_ids = [unique_ids]
         all_ids = [sql_id_decode(i) for i in unique_ids]
         sql_ids_in = self.Q.where("_id", "in", all_ids)
+        if all:
+            selector = self.table.delete()
+        else:
+            selector = self.table.delete().where(sql_ids_in)
         try:
-            return_value.count = await self.database.execute(
-                self.table.delete().where(sql_ids_in)
-            )
+            return_value.count = await self.database.execute(selector)
         except Exception as error:
             return_value.error = True
             return_value.error_message = str(error)
         return return_value
 
-    async def get_by(self, **kwargs):
-        """Get Single-Row from Database Table by <Keyword-Arguments>"""
-        query = self.Q.filter_by(**kwargs)
-        item = await self.database.fetch_one(self.Q.select(query))
-        return to_obj(item, sql=True)
-
     async def detail(self, ID):
         """Get Single-Row from Database ID"""
         query = self.Q.filter_by(_id=sql_id_decode(ID))
+        item = await self.database.fetch_one(self.Q.select(query))
+        return to_obj(item, sql=True)
+
+    async def get_by(self, **kwargs):
+        """Get Single-Row from Database Table by <Keyword-Arguments>"""
+        if kwargs.get("id"):
+            kwargs["_id"] = kwargs["id"]
+            del kwargs["id"]
+        query = self.Q.filter_by(**kwargs)
         item = await self.database.fetch_one(self.Q.select(query))
         return to_obj(item, sql=True)
 

@@ -9,10 +9,11 @@ from typing import Any
 # SQLAlchemy
 try:
     import sqlalchemy as sa
-    from sqlalchemy.sql.elements import BinaryExpression
+    from sqlalchemy.sql.elements import BinaryExpression, BooleanClauseList
 except ImportError:
     sa = None
     BinaryExpression = None
+    BooleanClauseList = None
 
 
 Page = namedtuple("Page", ["offset", "limit"])
@@ -103,6 +104,13 @@ def sql_where_base(table, key: str, operation: str, val: Any):
     return return_value
 
 
+def is_sqlalchemy_query(search):
+    """Check if is SQLAlchemy's Query Type"""
+    if isinstance(search, BinaryExpression | BooleanClauseList):
+        return True
+    return False
+
+
 class Filters:
     """SQL-Querying
 
@@ -130,7 +138,7 @@ class Filters:
 
         def querying(query: BinaryExpression | None = None):
             """SQL-Querying"""
-            if isinstance(query, BinaryExpression):
+            if is_sqlalchemy_query(query):
                 return objects.select().where(query)
             return objects.select()
 
@@ -156,7 +164,7 @@ class Filters:
         def sql_count(search: Any = None):
             """Get Query's Count"""
             total_count = sa.select([sa.func.count()])
-            if isinstance(search, BinaryExpression):
+            if is_sqlalchemy_query(search):
                 total_count = total_count.where(search)
             return total_count.select_from(objects)
 

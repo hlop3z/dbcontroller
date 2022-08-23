@@ -66,14 +66,17 @@ def main():
     Watch over your project as you write it and ensure you follow code-style (black & isort).
     Also, it rates your code with (pylint).
     """
-
+    # Watch Directories
+    main_folders = ["src", "tests"]
+    
     # Base Directory
     base_dir = Path(__file__).parents[1]
 
     # Watchdog Handler
     event_handler = Handler()
     observer = watchdog.observers.Observer()
-    observer.schedule(event_handler, path=base_dir / "src", recursive=True)
+    for folder in main_folders:
+        observer.schedule(event_handler, path=base_dir / folder, recursive=True)
     observer.start()
 
     # Run "Server"

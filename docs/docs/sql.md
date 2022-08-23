@@ -3,7 +3,6 @@
 ### Sqlalchemy Setup
 
 ```python
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 
@@ -30,11 +29,11 @@ SQL = functools.partial(dbc.SQL, DATABASE_URL)
 
 # Types
 @model.sql
-class Notes:
+class User:
     name: str
-    text: dbc.Text
-    completed: bool = False
+    notes: dbc.Text
     meta: dbc.JSON
+    disabled: bool = False
 ```
 
 ### Create Tables
@@ -48,13 +47,13 @@ Base.metadata.create_all(engine)
 ### Manager
 
 ```python
-table = SQL(Notes)
+table = SQL(User)
 
 async def test():
-    created = await table.create({"text": "hello world"})
-    all_notes = await table.all()
+    created = await table.create({"name": "joe doe"})
+    results = await table.all()
     print(created)
-    print(all_notes)
+    print(results)
 
 ```
 
@@ -72,7 +71,7 @@ async def test():
 === "Update"
 
     ```python
-    selector = "Some-ID" # ["Some-ID-1", "Some-ID-2", "More-IDS..."]
+    selector = "Encoded-ID" # ["Some-ID-1", "Some-ID-2", "More-IDS..."]
     form = {
         "name": "jane doll",
     }
@@ -83,10 +82,31 @@ async def test():
 
     ```python
     # Delete One
-    results = await table.delete("Some-ID")
+    results = await table.delete("Encoded-ID")
 
     # Delete Many
-    results = await table.delete(["Some-ID-1", "Some-ID-2", "More-IDS..."])
+    results = await table.delete(["Encoded-ID-1", "Encoded-ID-2", "More-IDS..."])
+    ```
+
+### **Reading** | Querying (**One**-Record)
+
+=== "Detail"
+
+    ```python
+    results = await table.detail("Encoded-ID")
+    ```
+
+=== "Get-By"
+
+    ```python
+    results = await table.get_by(id=1)
+    ```
+
+=== "Find-One"
+
+    ```python
+    query = table.where("name", "contains", "joe")
+    results = await table.find_one(query)
     ```
 
 ### **Reading** | Querying (**Multiple**-Records)
@@ -117,28 +137,7 @@ async def test():
 === "Search"
 
     ```python
-    search_value = "john"
-    columns = ["first_name", "last_name"]
+    search_value = "j"
+    columns = ["name", "notes"]
     results = await table.search(columns=columns, value=search_value, page=1, limit=100, sort_by="-id")
-    ```
-
-### **Reading** | Querying (**One**-Record)
-
-=== "Detail"
-
-    ```python
-    results = await table.detail("Some-ID")
-    ```
-
-=== "Get-By"
-
-    ```python
-    results = await table.detail("Some-ID")
-    ```
-
-=== "Find-One"
-
-    ```python
-    query = table.where("id", "eq", 1)
-    results = await table.find_one(query)
     ```

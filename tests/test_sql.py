@@ -2,12 +2,13 @@
 """
 
 import asyncio
+import functools
 import os
 import pathlib
 import sys
-import sqlalchemy
-from types import SimpleNamespace
-import functools
+
+import pytest
+
 
 def dir_up(depth):
     """Easy level-up folder(s)."""
@@ -18,57 +19,146 @@ def dir_up(depth):
 dir_up(1)
 
 
-# Test
-import dbcontroller as dbc
+import functools
 
+# Test
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 
-DB_URL = 'sqlite:///data/authentication.db'
+import dbcontroller as dbc
 
-engine = create_engine(DB_URL, echo = True)
+# URL
+DATABASE_URL = "sqlite:///data/example.db"
 
 # Base
 Base = declarative_base()
 
-# Model
-Model = dbc.Model(sql=Base)
+# Setup
+engine = create_engine(DATABASE_URL, echo=True)
+
+model = dbc.Model(sql=Base)
+SQL = functools.partial(dbc.SQL, DATABASE_URL)
 
 # Types
-@Model.sql
-class Notes:
-    text: dbc.Text
-    completed: bool = False
-    
+@model.sql(table_name="main_user")
+class User:
+    name: str
+    notes: dbc.Text
+    meta: dbc.JSON
+    disabled: bool = False
 
 
-# Database Admin
-SQL = functools.partial(dbc.SQL, DB_URL)
+table = SQL(User)
 
-notes = SQL(Notes)
-
-#Base.metadata.create_all(engine)
-
-async def test():
-    query = {"text": "hello world"}
-    # all_notes = await notes.filter_by(search=query, page=1, limit=100, sort_by="-id")
-    # all_notes = await notes.create({"text": "hello world"})
-    # all_notes = await notes.get_by(text="hola")
-    query = (
-        notes.where("name", "contains", "jane")
-        | notes.where("name", "contains", "hello")
-    )
-    results = await notes.find(query, page=1, limit=100)
-    print(results)
-
-asyncio.run(test())
+# Create-Tables
+# Base.metadata.create_all(engine)
 
 # Register - Models
-dbc.Admin.register([Notes])  # ... <All Other Models>
+dbc.Admin.register([User])  # ... <All Other Models>
 dbc.Admin.load()
+dbc.Admin.types
 
-print(dbc.Admin.types)
 
+class ID:
+    one = "MTo6YTU1ZTUzMmVhYjAyOGI0Mg=="
+    two = "Mjo6M2VmOWFiYmI1ZGY1YjY0MQ=="
+
+
+@pytest.mark.asyncio
+async def test_create():
+    results = await table.create({"name": "jane doll"})
+    assert results.error == False and results.data.name == "jane doll"
+
+
+@pytest.mark.asyncio
+async def test_update():
+    selector = ID.one
+    form = {
+        "name": "joe doe",
+    }
+    results = await table.update(selector, form)
+    assert results.error == False and results.data.name == "joe doe"
+
+
+@pytest.mark.asyncio
+async def test_detail():
+    selector = ID.one
+    results = await table.detail(selector)
+    assert results.name == "joe doe"
+
+
+@pytest.mark.asyncio
+async def test_get_by():
+    results = await table.get_by(id=1)
+    assert results.name == "joe doe"
+
+
+@pytest.mark.asyncio
+async def test_find_one():
+    query = table.where("name", "contains", "joe")
+    results = await table.find_one(query)
+    assert results.name == "joe doe"
+
+
+@pytest.mark.asyncio
+async def test_delete():
+    selector = ID.one
+    results = await table.delete(selector)
+    assert results.error == False and results.count == 1
+
+
+@pytest.mark.asyncio
+async def test_all():
+    await table.create({"name": "joe doe"})
+    await table.create({"name": "jane doll"})
+    results = await table.all()
+    assert (
+        results.error == False
+        and isinstance(results.data, list) == True
+        and len(results.data) == 2
+    )
+
+
+@pytest.mark.asyncio
+async def test_filter_by():
+    query = {"name": "joe doe"}
+    results = await table.filter_by(search=query, page=1, limit=100, sort_by="-id")
+    assert results.error == False and results.count == 1
+
+
+@pytest.mark.asyncio
+async def test_find():
+    query = table.where("name", "contains", "jane") | table.where(
+        "name", "contains", "joe"
+    )
+    results = await table.find(query, page=1, limit=100, sort_by="-id")
+    assert results.error == False and results.count == 2
+
+
+@pytest.mark.asyncio
+async def test_search():
+    search_value = "j"
+    columns = ["name", "notes"]
+    results = await table.search(
+        columns=columns, value=search_value, page=1, limit=100, sort_by="-id"
+    )
+    assert results.error == False and results.count == 2
+
+
+@pytest.mark.asyncio
+async def test_reset():
+    results = await table.delete(None, all=True)
+    assert results.error == False
+
+
+@pytest.mark.asyncio
+async def demo_example():
+    query = table.where("name", "contains", "joe")
+    results = await table.find_one(query)
+    assert results.name == "joe doe"
+
+
+# asyncio.run(demo_example())
 # print(list(filter(lambda x: not x.startswith("__"), dir(notes))))
 
 # Core: ['Q', 'database', 'table']
