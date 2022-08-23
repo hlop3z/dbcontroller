@@ -58,6 +58,16 @@ dbc.Admin.load()
 dbc.Admin.types
 
 
+@pytest.fixture(scope="session")
+def event_loop():
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+    yield loop
+    loop.close()
+
+
 class ID:
     @classmethod
     async def one(cls):
@@ -157,8 +167,9 @@ async def demo_example():
     form = {
         "name": "joe doe",
     }
+    # results = await table.update(selector, form)
     results = await table.update(selector, form)
     print(results)
 
 
-asyncio.run(demo_example())
+# asyncio.run(demo_example())

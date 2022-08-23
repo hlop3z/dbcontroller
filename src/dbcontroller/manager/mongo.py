@@ -123,7 +123,7 @@ class Mongo:
         search = {"_id": {"$in": _ids}}
         results = await self.crud.update(search, form)
         if results.count == 1 and not results.error:
-            return await self.detail(unique_ids[0])
+            results.data = await self.detail(unique_ids[0])
         return results
 
     async def delete(self, unique_ids: list[str], all: bool = False):
