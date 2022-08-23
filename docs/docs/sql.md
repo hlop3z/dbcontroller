@@ -117,13 +117,6 @@ async def test():
     results = await table.all()
     ```
 
-=== "Filter-By"
-
-    ```python
-    query = {"name": "joe doe"}
-    results = await table.filter_by(search=query, page=1, limit=100, sort_by="-id")
-    ```
-
 === "Find"
 
     ```python
@@ -132,6 +125,13 @@ async def test():
         | table.where("name", "contains", "joe")
     )
     results = await table.find(query, page=1, limit=100)
+    ```
+
+=== "Filter-By"
+
+    ```python
+    query = {"name": "joe doe"}
+    results = await table.filter_by(search=query, page=1, limit=100, sort_by="-id")
     ```
 
 === "Search"

@@ -4,7 +4,7 @@
 
 import math
 
-from .utils import Response, mongo_id_decode, pagination, to_obj
+from .utils import Decode, Objects, Response, fixed_id_column, pagination
 
 
 class MongoCrud:
@@ -21,7 +21,7 @@ class MongoCrud:
         try:
             result = await collection.insert_one(form)
             instance = await collection.find_one({"_id": {"$eq": result.inserted_id}})
-            result = Response(data=to_obj(instance))
+            result = Response(data=Objects.mongo(instance))
         except Exception as error:
             result = Response(error=True, error_message=str(error))
         return result
@@ -53,7 +53,7 @@ class MongoCrud:
         collection = self.collection
         try:
             instance = await collection.find_one(search)
-            result = to_obj(instance)
+            result = Objects.mongo(instance)
         except Exception:
             result = None
         return result
@@ -84,7 +84,7 @@ class MongoCrud:
             items = [i async for i in cursor]
             count = await collection.count_documents(search)
             pages = int(math.ceil(count / limit))
-            result = Response(data=to_obj(items), count=count, pages=pages)
+            result = Response(data=Objects.mongo(items), count=count, pages=pages)
         except Exception as error:
             result = Response(error=True, error_message=str(error))
         return result
@@ -94,7 +94,7 @@ class MongoCrud:
         collection = self.collection
         cursor = collection.find()
         items = [i async for i in cursor]
-        return Response(data=to_obj(items), count=len(items), pages=1)
+        return Response(data=Objects.mongo(items), count=len(items), pages=1)
 
 
 class Mongo:
@@ -109,62 +109,70 @@ class Mongo:
     @staticmethod
     def id_decode(unique_id):
         """ID-DECODER"""
-        return mongo_id_decode(unique_id)
+        return Decode.mongo(unique_id)
 
     async def create(self, form: dict):
-        """CREATE"""
+        """Create Single-Row."""
         return await self.crud.create(form)
 
-    async def update(self, unique_ids: list, form: dict):
-        """UPDATE"""
+    async def update(self, unique_ids: list[str], form: dict):
+        """Update Multiple/Single-Row(s)"""
         if not isinstance(unique_ids, list):
             unique_ids = [unique_ids]
-        _ids = [mongo_id_decode(i) for i in unique_ids]
+        _ids = [Decode.mongo(i) for i in unique_ids]
         search = {"_id": {"$in": _ids}}
         results = await self.crud.update(search, form)
         if results.count == 1 and not results.error:
             return await self.detail(unique_ids[0])
         return results
 
-    async def delete(self, unique_ids: list):
-        """DELETE"""
-        if not isinstance(unique_ids, list):
-            unique_ids = [unique_ids]
-        _id = [mongo_id_decode(i) for i in unique_ids]
-        search = {"_id": {"$in": _id}}
+    async def delete(self, unique_ids: list[str], all: bool = False):
+        """Delete Multiple/Single-Row(s)"""
+        if not all:
+            if not isinstance(unique_ids, list):
+                unique_ids = [unique_ids]
+            _id = [Decode.mongo(i) for i in unique_ids]
+            search = {"_id": {"$in": _id}}
+        else:
+            search = {}
         return await self.crud.delete(search)
 
-    async def get_by(self, **kwargs):
-        """Get Single-Row by <Keyword-Arguments>"""
-        search = {key: {"$eq": val} for key, val in kwargs.items()}
-        return await self.crud.find_one(search)
-
     async def detail(self, unique_id: str):
-        """DETAIL"""
-        _id = mongo_id_decode(unique_id)
+        """Get Single-Row from Database Collection by ID"""
+        _id = Decode.mongo(unique_id)
         search = {"_id": {"$eq": _id}}
         return await self.crud.find_one(search)
 
-    async def find_one(self, search: dict = {}):
-        """FIND-ONE"""
+    async def get_by(self, **kwargs):
+        """Get Single-Row by <Keyword-Arguments>"""
+        kwargs = fixed_id_column(kwargs)
+        search = {key: {"$eq": val} for key, val in kwargs.items()}
+        return await self.crud.find_one(search)
+
+    async def find_one(self, search: dict = None):
+        """Get Single-Row from Database Collection"""
         return await self.crud.find_one(search)
 
     async def all(self):
-        """ALL-Rows"""
+        """Get All-Rows from Database"""
         return await self.crud.all()
 
     async def find(
-        self, search: dict = {}, page: int = 1, limit: int = 100, sort_by: str = "-id"
+        self, search: dict = None, page: int = 1, limit: int = 100, sort_by: str = "-id"
     ):
-        """FIND"""
+        """Get Multiple-Rows from Database Collection"""
+        sort_by = fixed_id_column(sort_by)
         return await self.crud.find(
             search=search, page=page, limit=limit, sort_by=sort_by
         )
 
-    async def filter_by(self, **kwargs):
-        """Get Multiple-Rows from Database Table by <Keyword-Arguments>"""
-        search = {key: {"$eq": val} for key, val in kwargs.items()}
-        return await self.crud.find(search)
+    async def filter_by(
+        self, search: dict = None, page: int = 1, limit: int = 100, sort_by: str = "-id"
+    ):
+        """Get Multiple-Rows from Database Collection by <Keyword-Arguments>"""
+        search = fixed_id_column(search)
+        query = {key: {"$eq": val} for key, val in search.items()}
+        return await self.find(search=query, page=page, limit=limit, sort_by=sort_by)
 
     async def search(
         self,
@@ -174,6 +182,6 @@ class Mongo:
         limit: int = 100,
         sort_by: str = "-id",
     ):
-        """Get Multiple-Rows from Database Table by <Searching-Columns>"""
+        """Get Multiple-Rows from Database Collection by <Searching-Columns>"""
         search = [{key: {"$regex": value}} for key in columns]
         return await self.find({"$or": search}, page=page, limit=limit, sort_by=sort_by)

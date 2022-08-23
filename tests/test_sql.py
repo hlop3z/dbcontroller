@@ -160,7 +160,3 @@ async def demo_example():
 
 # asyncio.run(demo_example())
 # print(list(filter(lambda x: not x.startswith("__"), dir(notes))))
-
-# Core: ['Q', 'database', 'table']
-# Querying: ['all', 'create', 'delete', 'detail', 'filter_by', 'find', 'find_one', 'get_by', 'id_decode', 'search', 'update']
-# User-Input: ['form', 'form_update']

@@ -38,3 +38,17 @@ def to_obj(items, sql: bool = False):
     elif isinstance(items, list) and len(items) == 0:
         return []
     return None
+
+
+class Objects:
+    """Convert <SQL or Mongo> output to types.SimpleNamespace => Object(s)."""
+
+    @staticmethod
+    def mongo(items):
+        """Convert Mongo to SimpleNamespace"""
+        return to_obj(items)
+
+    @staticmethod
+    def sql(items):
+        """Convert SQLAlchemy to SimpleNamespace"""
+        return to_obj(items, sql=True)

@@ -26,3 +26,17 @@ def mongo_id_decode(unique_id) -> str | None:
     except Exception:
         return_value = None
     return return_value
+
+
+class Decode:
+    """Convert ID to <SQL or Mongo> ID's Type."""
+
+    @staticmethod
+    def mongo(ID):
+        """ID Decode to Mongo"""
+        return mongo_id_decode(ID)
+
+    @staticmethod
+    def sql(ID):
+        """ID Decode to SQL"""
+        return sql_id_decode(ID)

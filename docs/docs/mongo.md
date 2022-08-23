@@ -27,7 +27,7 @@ manager = mongodb("test_databases")
 table = manager("test_collection")
 ```
 
-### C.R.U.D
+### **C.U.D** — Examples
 
 === "Create"
 
@@ -59,20 +59,30 @@ table = manager("test_collection")
     results = await table.delete(["Some-ID-1", "Some-ID-2"])
     ```
 
-=== "Detail (Read)"
+### **Reading** | Querying (**One**-Record)
+
+=== "Detail"
 
     ```python
     results = await table.detail("Some-ID")
     ```
 
-=== "Find-One (Read)"
+=== "Get-By"
+
+    ```python
+    results = await table.get_by(id=1)
+    ```
+
+=== "Find-One"
 
     ```python
     query = { "name": {"$regex": "Joe"} }
     results = await table.find_one(query)
     ```
 
-=== "Find (Read)"
+### **Reading** | Querying (**Multiple**-Records)
+
+=== "Find"
 
     ```python
     query = { "name": {"$regex": "Joe"} }
