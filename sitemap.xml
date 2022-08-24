@@ -2,32 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/</loc>
-         <lastmod>2022-04-07</lastmod>
+         <lastmod>2022-08-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hlop3z.github.io/dbcontroller/forms/</loc>
+         <lastmod>2022-08-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/id-decoder/</loc>
-         <lastmod>2022-04-07</lastmod>
+         <lastmod>2022-08-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/mongo/</loc>
-         <lastmod>2022-04-07</lastmod>
+         <lastmod>2022-08-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://hlop3z.github.io/dbcontroller/sql-search/</loc>
-         <lastmod>2022-04-07</lastmod>
+         <loc>https://hlop3z.github.io/dbcontroller/notebook/</loc>
+         <lastmod>2022-08-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/sql-where/</loc>
-         <lastmod>2022-04-07</lastmod>
+         <lastmod>2022-08-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/sql/</loc>
-         <lastmod>2022-04-07</lastmod>
+         <lastmod>2022-08-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
