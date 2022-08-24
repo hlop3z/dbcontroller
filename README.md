@@ -3,25 +3,31 @@
 ## Install **SQL**ite
 
 ```sh
-python -m pip install dbcontroller[sqlite]
+python -m pip install "dbcontroller[sqlite]"
 ```
 
 ## Install Postgre**SQL**
 
 ```sh
-python -m pip install dbcontroller[sql] databases[postgresql]
+python -m pip install "dbcontroller[sql]" "databases[postgresql]"
 ```
 
 ## Install My**SQL**
 
 ```sh
-python -m pip install dbcontroller[sql] databases[mysql]
+python -m pip install "dbcontroller[sql]" "databases[mysql]"
 ```
 
 ## Install **Mongo**
 
 ```sh
-python -m pip install dbcontroller[mongo]
+python -m pip install "dbcontroller[mongo]"
+```
+
+## Install **Testing**
+
+```sh
+python -m pip install "dbcontroller[testing]"
 ```
 
 ## To Be Used With . . .
