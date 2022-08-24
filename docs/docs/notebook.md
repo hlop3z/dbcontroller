@@ -5,7 +5,7 @@
 Install
 
 ```sh
-python -m pip install notebook
+python -m pip install notebook "dbcontroller[testing]"
 ```
 
 Run
@@ -19,7 +19,7 @@ python -m jupyter notebook
 Install
 
 ```sh
-pdm add notebook
+pdm add notebook "dbcontroller[testing]"
 ```
 
 Run
