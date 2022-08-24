@@ -1,6 +1,6 @@
-# Mongo (Motor)
+# **Mongo** (Motor)
 
-### Mongo Setup
+### **Mongo** Setup
 
 ```python
 import motor.motor_asyncio
@@ -16,7 +16,7 @@ ENGINE = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URL)
 Base = ENGINE[DATABASE_NAME]
 ```
 
-### Collection | Model
+### **Collection** | Model
 
 > **(Motor + Controller)**
 
@@ -34,7 +34,7 @@ class User:
     disabled: bool = False
 ```
 
-### Manager
+### **Manager**
 
 ```python
 table = dbc.Mongo(User)

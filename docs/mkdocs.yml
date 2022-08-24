@@ -4,13 +4,15 @@ repo_url: https://github.com/hlop3z/dbcontroller
 copyright: Copyright © Hlop3z
 
 nav:
-  - Home: index.md
-  - SQL: sql.md
-  - Mongo: mongo.md
+  - Introduction: index.md
+  - (Demo) Notebook: notebook.md
+  - Database:
+      - SQL: sql.md
+      - Mongo: mongo.md
   - Extras:
       - SQL-Where: sql-where.md
-      - SQL-Search: sql-search.md
       - ID-Decode: id-decoder.md
+      - Forms: forms.md
 
 extra_css:
   - css/extra.css
@@ -19,7 +21,6 @@ theme:
   name: material
   locale: en
   features:
-    - navigation.tabs
     - navigation.instant
     - navigation.tracking
     - navigation.sections
@@ -27,7 +28,7 @@ theme:
     - content.code.annotate
     # - navigation.expand
   icon:
-    logo: material/bike
+    logo: material/database-cog
 
   palette:
     - media: "(prefers-color-scheme: light)"

@@ -2,9 +2,18 @@
     Mongo Manager
 """
 
+import functools
 import math
 
-from .utils import Decode, Objects, Response, fixed_id_column, pagination
+from .utils import (
+    Decode,
+    Objects,
+    Response,
+    clean_form,
+    clean_update_form,
+    fixed_id_column,
+    pagination,
+)
 
 
 class MongoCrud:
@@ -123,6 +132,14 @@ class Mongo:
     def __init__(self, custom_type=None):
         self.collection = custom_type.objects
         self.crud = MongoCrud(custom_type.objects)
+        self.form = functools.partial(
+            clean_form, custom_type, custom_type.__meta__.custom_annotations.keys()
+        )
+        self.form_update = functools.partial(
+            clean_update_form,
+            custom_type,
+            custom_type.__meta__.custom_annotations.keys(),
+        )
 
     @staticmethod
     def id_decode(unique_id):

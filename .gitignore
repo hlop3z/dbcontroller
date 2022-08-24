@@ -20,3 +20,6 @@ docs/site
 
 # vscode
 .vscode/
+
+# test
+/tests/.report.json

@@ -1,6 +1,6 @@
-# SQL (Alchemy)
+# **SQL** (Alchemy)
 
-### Sqlalchemy Setup
+### **SQLAlchemy** Setup
 
 ```python
 from sqlalchemy import create_engine
@@ -13,7 +13,7 @@ DATABASE_URL = "sqlite:///example.db"
 Base = declarative_base()
 ```
 
-### Table | Model
+### **Table** | Model
 
 > **(Databases + Controller)**
 
@@ -33,15 +33,7 @@ class User:
     disabled: bool = False
 ```
 
-### Create Tables
-
-```python
-engine = create_engine(DATABASE_URL, echo=True)
-
-Base.metadata.create_all(engine)
-```
-
-### Manager
+### **Manager**
 
 ```python
 table = SQL(User)

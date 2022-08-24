@@ -106,7 +106,7 @@ async def test_delete():
 
 @pytest.mark.asyncio
 async def test_all():
-    created = await table.create([{"name": "joe doe"}, {"name": "jane doll"}])
+    await table.create([{"name": "joe doe"}, {"name": "jane doll"}])
     results = await table.all()
     assert (
         results.error == False
@@ -147,7 +147,6 @@ async def test_reset():
     assert results.error == False
 
 
-@pytest.mark.asyncio
 async def demo_example():
     query = table.where("name", "contains", "joe")
     results = await table.find_one(query)

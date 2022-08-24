@@ -48,8 +48,6 @@ dev = [
     "black",
     "pylint>=3.0.0a5",
     "watchdog>=2.1.9",
-    "mkdocs",
-    "mkdocs-material",
     "pre-commit",
     "sqlalchemy",
     "aiosqlite",
@@ -63,11 +61,15 @@ docs = [
 test = [
     "pytest>=7.1.2",
     "pytest-asyncio>=0.19.0",
+    "pytest-json-report>=1.5.0",
+]
+jupyter = [
+    "jupyterlab>=4.0.0a27",
 ]
 
 [tool.pdm.scripts]
 watch = "python scripts/watcher.py"
 docs-dev = {shell = "cd docs/ && python -m mkdocs serve --dev-addr 0.0.0.0:8055"}
 docs-gh = {shell = "cd docs/ && python -m mkdocs gh-deploy --force"}
-test = "pytest -rA tests/test_mongo.py tests/test_sql.py"
+test = "pytest -rA tests/test_mongo.py tests/test_sql.py --json-report --json-report-summary --json-report-indent 4 --json-report-file tests/.report.json "
 # test = {composite = ["test-sql", "test-mongo"]}

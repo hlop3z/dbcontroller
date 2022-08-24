@@ -84,31 +84,46 @@ class SQL:
         """ID-DECODER"""
         return Decode.sql(unique_id)
 
-    async def create(self, form: dict | list) -> Response:
+    async def create(
+        self, form: dict | list = None, return_items: bool = True
+    ) -> Response:
         """CREATE/CREATE-MANY"""
         if isinstance(form, dict):
             return await self.create_one(form)
-        return await self.create_many(form)
+        return await self.create_many(form, return_items)
 
     async def create_one(self, form: dict):
         """Create Single-Row."""
-        # Init Values
+        return_value = await self._create_one_row(form)
+        if return_value.data and not return_value.error:
+            return_value.data = await self.get_by(_id=return_value.data)
+        return return_value
+
+    async def create_many(self, forms: list, return_items: bool):
+        """Create Single-Row."""
+        if return_items:
+            all_ids = []
+            for form in forms:
+                return_value = await self._create_one_row(form)
+                all_ids.append(return_value.data)
+            sql_ids_in = self.Q.where("_id", "in", all_ids)
+            items = await self.database.fetch_all(self.Q.select(sql_ids_in))
+            return Response(data=Objects.sql(items), count=len(items))
+        return await self._create_many_rows(forms)
+
+    async def _create_one_row(self, form: dict) -> Response:
+        """(Base) Create Single-Row."""
         return_value = Response()
-        unique_id = False
         try:
             sql_query = self.table.insert(form)
-            unique_id = await self.database.execute(sql_query)
-            if unique_id:
-                # If Success => Fetch Row
-                return_value.data = await self.get_by(_id=unique_id)
+            return_value.data = await self.database.execute(sql_query)
         except Exception as error:
             return_value.error = True
             return_value.error_message = str(error)
         return return_value
 
-    async def create_many(self, form: list):
-        """Create Multiple-Row."""
-        # Init Values
+    async def _create_many_rows(self, form: list):
+        """(Base) Create Multiple-Row."""
         return_value = Response()
         try:
             sql_query = self.table.insert()
@@ -116,9 +131,6 @@ class SQL:
             return_value.data = unique_ids
             return_value.count = len(form)
         except Exception as error:
-            print("*" * 24)
-            print(error)
-            print("*" * 24)
             return_value.error = True
             return_value.error_message = str(error)
         return return_value
