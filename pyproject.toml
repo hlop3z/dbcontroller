@@ -28,7 +28,7 @@ Documentation = "https://hlop3z.github.io/dbcontroller/"
 
 [project.optional-dependencies]
 mongo = ["motor"]
-sql = ["sqlalchemy"]
+sql = ["sqlalchemy", "alembic"]
 sqlite = ["sqlalchemy", "databases[aiosqlite]>=0.6.1"]
 testing = ["dbcontroller[mongo,sqlite]"]
 
