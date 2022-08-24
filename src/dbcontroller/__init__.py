@@ -8,6 +8,7 @@ from .types import Admin, Model
 
 Text = Model.text
 JSON = Model.json
+ID = Model.id
 
 
 class FakeModel:
