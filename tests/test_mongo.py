@@ -111,8 +111,7 @@ async def test_delete():
 
 @pytest.mark.asyncio
 async def test_all():
-    await table.create({"name": "joe doe"})
-    await table.create({"name": "jane doll"})
+    await table.create([{"name": "joe doe"}, {"name": "jane doll"}])
     results = await table.all()
     assert (
         results.error == False

@@ -84,7 +84,13 @@ class SQL:
         """ID-DECODER"""
         return Decode.sql(unique_id)
 
-    async def create(self, form: dict):
+    async def create(self, form: dict | list) -> Response:
+        """CREATE/CREATE-MANY"""
+        if isinstance(form, dict):
+            return await self.create_one(form)
+        return await self.create_many(form)
+
+    async def create_one(self, form: dict):
         """Create Single-Row."""
         # Init Values
         return_value = Response()
@@ -98,7 +104,23 @@ class SQL:
         except Exception as error:
             return_value.error = True
             return_value.error_message = str(error)
+        return return_value
 
+    async def create_many(self, form: list):
+        """Create Multiple-Row."""
+        # Init Values
+        return_value = Response()
+        try:
+            sql_query = self.table.insert()
+            unique_ids = await self.database.execute_many(sql_query, values=form)
+            return_value.data = unique_ids
+            return_value.count = len(form)
+        except Exception as error:
+            print("*" * 24)
+            print(error)
+            print("*" * 24)
+            return_value.error = True
+            return_value.error_message = str(error)
         return return_value
 
     async def update(self, unique_ids: list[str], form: dict):

@@ -9,7 +9,7 @@ from .row_handler import Objects
 from .sql_forms import clean_form, clean_update_form
 
 
-def fixed_id_column(kwargs):
+def fixed_id_column(kwargs: dict | list | str):
     """Fixed the ID Column"""
     if isinstance(kwargs, dict):
         if kwargs.get("id"):

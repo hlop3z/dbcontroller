@@ -15,7 +15,13 @@ class MongoCrud:
     def __init__(self, client=None):
         self.collection = client
 
-    async def create(self, form: dict) -> Response:
+    async def create(self, form: dict | list) -> Response:
+        """CREATE/CREATE-MANY"""
+        if isinstance(form, dict):
+            return await self.create_one(form)
+        return await self.create_many(form)
+
+    async def create_one(self, form: dict) -> Response:
         """CREATE"""
         collection = self.collection
         try:
@@ -26,7 +32,20 @@ class MongoCrud:
             result = Response(error=True, error_message=str(error))
         return result
 
-    async def update(self, search: dict, form: dict) -> Response:
+    async def create_many(self, forms: list) -> Response:
+        """CREATE-MANY"""
+        collection = self.collection
+        try:
+            result = collection.insert_many(forms)
+            search = {"_id": {"$in": result.inserted_ids}}
+            cursor = collection.find(search)
+            items = [i async for i in cursor]
+            result = Response(data=Objects.mongo(items), count=len(items))
+        except Exception as error:
+            result = Response(error=True, error_message=str(error))
+        return result
+
+    async def update(self, search: dict = None, form: dict = None) -> Response:
         """UPDATE"""
         collection = self.collection
         try:
@@ -60,7 +79,7 @@ class MongoCrud:
 
     async def find(
         self,
-        search: dict,
+        search: dict = None,
         page: int = 1,
         limit: int = 100,
         sort_by: str = "-id",
@@ -79,8 +98,7 @@ class MongoCrud:
             # Add Sort By
             cursor = collection.find(search).sort(sort_by, sort_desc)
             # Offset & Limit
-            if page != -1:
-                cursor.skip(_page.offset).limit(_page.limit)
+            cursor.skip(_page.offset).limit(_page.limit)
             items = [i async for i in cursor]
             count = await collection.count_documents(search)
             pages = int(math.ceil(count / limit))

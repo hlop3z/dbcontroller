@@ -11,9 +11,6 @@ DATABASE_URL = "sqlite:///example.db"
 
 # Base
 Base = declarative_base()
-
-# Setup
-engine = create_engine(DATABASE_URL, echo=True)
 ```
 
 ### Table | Model
@@ -39,7 +36,7 @@ class User:
 ### Create Tables
 
 ```python
-# Create-Tables
+engine = create_engine(DATABASE_URL, echo=True)
 
 Base.metadata.create_all(engine)
 ```
@@ -48,13 +45,6 @@ Base.metadata.create_all(engine)
 
 ```python
 table = SQL(User)
-
-async def test():
-    created = await table.create({"name": "joe doe"})
-    results = await table.all()
-    print(created)
-    print(results)
-
 ```
 
 ### **C.U.D** — Examples
@@ -124,7 +114,7 @@ async def test():
         table.where("name", "contains", "jane")
         | table.where("name", "contains", "joe")
     )
-    results = await table.find(query, page=1, limit=100)
+    results = await table.find(query, page=1, limit=100, sort_by="-id")
     ```
 
 === "Filter-By"

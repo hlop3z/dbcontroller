@@ -5,26 +5,39 @@
 ```python
 import motor.motor_asyncio
 
-# URL
-MONGO_URL = "mongodb://localhost:27017"
+# Config
+DATABASE_URL = "mongodb://localhost:27017"
+DATABASE_NAME = "test_database"
 
-# Setup
-MONGO_DB = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+# Engine
+ENGINE = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URL)
+
+# Base
+Base = ENGINE[DATABASE_NAME]
 ```
 
-### Mongo + Controller
+### Collection | Model
+
+> **(Motor + Controller)**
 
 ```python
-from dbcontroller import Mongo
+import dbcontroller as dbc
 
-mongodb = Mongo(MONGO_DB)
-manager = mongodb("test_databases")
+model = dbc.Model(mongo=Base)
+
+# Types
+@model.sql
+class User:
+    name: str
+    notes: dbc.Text
+    meta: dbc.JSON
+    disabled: bool = False
 ```
 
-### Manager | Table | Collection
+### Manager
 
 ```python
-table = manager("test_collection")
+table = dbc.Mongo(User)
 ```
 
 ### **C.U.D** — Examples
@@ -82,9 +95,31 @@ table = manager("test_collection")
 
 ### **Reading** | Querying (**Multiple**-Records)
 
+=== "All"
+
+    ```python
+    results = await table.all()
+    ```
+
 === "Find"
 
     ```python
-    query = { "name": {"$regex": "Joe"} }
-    results = await table.find(query, page=1, limit=100)
+    search = [{"name": {"$regex": "joe"}}, {"name": {"$regex": "jane"}}]
+    query = {"$or": search}
+    results = await table.find(query, page=1, limit=100, sort_by="-id")
+    ```
+
+=== "Filter-By"
+
+    ```python
+    query = {"name": "joe doe"}
+    results = await table.filter_by(search=query, page=1, limit=100, sort_by="-id")
+    ```
+
+=== "Search"
+
+    ```python
+    search_value = "j"
+    columns = ["name", "notes"]
+    results = await table.search(columns=columns, value=search_value, page=1, limit=100, sort_by="-id")
     ```
