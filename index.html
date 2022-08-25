@@ -308,6 +308,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#usage-example" class="md-nav__link">
+    Usage Example
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -556,6 +563,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#usage-example" class="md-nav__link">
+    Usage Example
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -759,6 +773,34 @@ But at the same time you can use the <strong>"database-controller"</strong> by i
 </tr>
 </tbody>
 </table>
+<h2 id="usage-example">Usage <strong>Example</strong></h2>
+<blockquote>
+<p>The configurations are for the <strong>SQL-Database (ONLY)</strong> to configure the <strong>Model / Type</strong> just use regular <strong>Typing</strong> annotations.
+Or <strong>Mongo</strong> for Mongo-Database Typing</p>
+</blockquote>
+<div class="highlight"><span class="filename">model-sample.py</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="sd">    Model-Setup-Sample</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">import</span> <span class="nn">dbcontroller</span> <span class="k">as</span> <span class="nn">dbc</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Model</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">model</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nd">@model</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;custom_table_name&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">primary_key</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;col_one&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">required</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;col_one&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;col_one&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">unique</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;col_one&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">unique_together</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;col_one&quot;</span><span class="p">,</span> <span class="s2">&quot;col_two&quot;</span><span class="p">)],</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">many_to_many</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;col_one&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;col_three&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="k">class</span> <span class="nc">Product</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
 
 
 
