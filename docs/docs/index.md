@@ -43,3 +43,14 @@
 | **`form_update`** | **Clean** User's **`Inputs`**. And, **only** allows fields that are in the DataBase. | `(dict)`  |
 | **`id_decode`**   | **Decode** Encoded-ID                                                                | `(str)`   |
 | **`Q`**           | **Custom-Querying** for **SQLAlchemy** Tables                                        | `N/A`     |
+
+## Database **Type | Model** Setup
+
+| Key                   | Description                                                         |
+| --------------------- | ------------------------------------------------------------------- |
+| **`table_name`**      | (**`str`**) — Custom **Table Name** for the database                |
+| **`primary_key`**     | (**`list[str]`**) — Columns that are consider **Primary Key**       |
+| **`required`**        | (**`list[str]`**) — Columns that **Required** User's input          |
+| **`index`**           | (**`list[str]`**) — Columns that are **Index**                      |
+| **`unique`**          | (**`list[str]`**) — Columns that are **Unique**                     |
+| **`unique_together`** | (**`list[tuple]`**) — Group of Columns that are **Unique Together** |

@@ -23,9 +23,6 @@
 
 ---
 
-> **`ID`** is a special **Field** that represents the automatically created **`ID`** field for the database.
-> You **won't use it** directly in your code.
-
 ## Python **Fields**
 
 - **`dbcontroller.ID`**
@@ -42,7 +39,7 @@
 
 ## Usage **Example**
 
-```python title="types.py"
+```python title="Example - Part 1"
 # -*- coding: utf-8 -*-
 """
     Types
@@ -100,4 +97,24 @@ class Product:
 @model.sql
 class Category:
     name: str
+```
+
+```python title="Example - Part 2"
+# -*- coding: utf-8 -*-
+"""
+    Manager
+"""
+# Regular Engine
+engine = create_engine(DATABASE_URL, echo=True)
+
+# Register Tables & Load -> Lazy-Loaded Tables (aka: Types)
+dbc.Admin.register([Product, Category])
+dbc.Admin.load()
+
+# Create Tables
+Base.metadata.create_all(engine)
+
+# Manage Tables
+ProductDB = SQL(Product)
+CategoryDB = SQL(Category)
 ```

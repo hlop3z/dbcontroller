@@ -35,7 +35,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 
 # URL
-DATABASE_URL = "sqlite:///notebook-example.db"
+DATABASE_URL = "sqlite:///example.db"
 
 # Base
 Base = declarative_base()
