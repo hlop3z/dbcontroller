@@ -105,7 +105,8 @@ class SQL:
             all_ids = []
             for form in forms:
                 return_value = await self._create_one_row(form)
-                all_ids.append(return_value.data)
+                if return_value.data:
+                    all_ids.append(return_value.data)
             sql_ids_in = self.Q.where("_id", "in", all_ids)
             items = await self.database.fetch_all(self.Q.select(sql_ids_in))
             return Response(data=Objects.sql(items), count=len(items))
