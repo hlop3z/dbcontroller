@@ -4,7 +4,7 @@
 
 from .manager import SQL, Mongo
 from .manager.utils import Decode, Objects
-from .types import Admin, Model
+from .types import Admin, Model, Database
 
 Text = Model.text
 JSON = Model.json

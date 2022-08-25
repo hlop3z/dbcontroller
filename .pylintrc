@@ -161,6 +161,7 @@ disable=print-statement,
         E0401,
         C0103,
         W0702,
+        W0212,
         redefined-builtin
 
 # Enable the message, report, category or checker with the given id(s). You can
