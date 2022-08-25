@@ -43,7 +43,7 @@ Base = declarative_base()
 # Demo Create Tables
 def create_tables():
     engine = create_engine(DATABASE_URL, echo=False)
-    Base.metadata.create_all(engine)\
+    Base.metadata.create_all(engine)
 ```
 
 ## Database **Controller**
