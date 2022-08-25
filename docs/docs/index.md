@@ -62,3 +62,33 @@ graph LR;
 | **`unique`**          | (**`list[str]`**) — Columns that are **Unique**                                       |
 | **`unique_together`** | (**`list[tuple]`**) — Group of Columns that are **Unique Together**                   |
 | **`ignore`**          | (**`list[str]`**) — Columns that are **Virtual** and not part of the database columns |
+
+## Usage **Example**
+
+> The configurations are for the **SQL-Database (ONLY)** to configure the **Model / Type** just use regular **Typing** annotations.
+> Or **Mongo** for Mongo-Database Typing
+
+```python title="model-sample.py"
+# -*- coding: utf-8 -*-
+"""
+    Model-Setup-Sample
+"""
+
+import dbcontroller as dbc
+
+# Model
+model = dbc.Model()
+
+@model.sql(
+    table_name="custom_table_name",
+    primary_key=["col_one"],
+    required=["col_one"],
+    index=["col_one"],
+    unique=["col_one"],
+    unique_together=[("col_one", "col_two")],
+    many_to_many=["col_one"],
+    ignore=["col_three"],
+)
+class Product:
+    name: str
+```
