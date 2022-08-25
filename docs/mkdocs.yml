@@ -6,6 +6,7 @@ copyright: Copyright © Hlop3z
 nav:
   - Introduction: index.md
   - (Demo) Notebook: notebook.md
+  - Scalars/Fields/Columns: scalars.md
   - Database:
       - SQL: sql.md
       - Mongo: mongo.md

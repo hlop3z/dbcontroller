@@ -21,8 +21,11 @@ Base = declarative_base()
 import dbcontroller as dbc
 import functools
 
-model = dbc.Model(sql=Base)
+# Manager
 SQL = functools.partial(dbc.SQL, DATABASE_URL)
+
+# Model
+model = dbc.Model(sql=Base)
 
 # Types
 @model.sql
