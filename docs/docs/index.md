@@ -1,7 +1,14 @@
 # Welcome to **DataBase-Controller (DBC)**
 
-> **C.R.U.D — Operations**. Designed to work with <a href="https://pypi.org/project/fastberry/" target="_blank">**`Fastberry`**</a>.
+> **C.R.U.D — Operations** for **Mongo** and **SQL**. Designed to work with <a href="https://pypi.org/project/fastberry/" target="_blank">**`Fastberry`**</a>.
 > But at the same time you can use the **"database-controller"** by itself as a **Standalone** tool.
+
+```mermaid
+graph LR;
+    A{SQL} --> C;
+    B{Mongo} --> C[Databases Controller];
+    C --> D{Types};
+```
 
 ## **Built** With:
 
@@ -46,11 +53,12 @@
 
 ## Database **Type | Model** Setup
 
-| Key                   | Description                                                         |
-| --------------------- | ------------------------------------------------------------------- |
-| **`table_name`**      | (**`str`**) — Custom **Table Name** for the database                |
-| **`primary_key`**     | (**`list[str]`**) — Columns that are consider **Primary Key**       |
-| **`required`**        | (**`list[str]`**) — Columns that **Required** User's input          |
-| **`index`**           | (**`list[str]`**) — Columns that are **Index**                      |
-| **`unique`**          | (**`list[str]`**) — Columns that are **Unique**                     |
-| **`unique_together`** | (**`list[tuple]`**) — Group of Columns that are **Unique Together** |
+| Key                   | Description                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| **`table_name`**      | (**`str`**) — Custom **Table Name** for the database                                  |
+| **`primary_key`**     | (**`list[str]`**) — Columns that are consider **Primary Key**                         |
+| **`required`**        | (**`list[str]`**) — Columns that **Required** User's input                            |
+| **`index`**           | (**`list[str]`**) — Columns that are **Index**                                        |
+| **`unique`**          | (**`list[str]`**) — Columns that are **Unique**                                       |
+| **`unique_together`** | (**`list[tuple]`**) — Group of Columns that are **Unique Together**                   |
+| **`ignore`**          | (**`list[str]`**) — Columns that are **Virtual** and not part of the database columns |
