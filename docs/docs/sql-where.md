@@ -32,3 +32,12 @@ table.where("name", "eq", "joe")
 # Name Not Equals Joe
 table.where("name", "!eq", "joe")
 ```
+
+### **SQLAlchemy Style**
+
+> You can use just the **regular** SQLAlchemy **operators** instead.
+
+```python
+# Name Equals Joe
+table.c.name == "joe"
+```

@@ -7,11 +7,12 @@ nav:
   - Introduction: index.md
   - Scalars/Fields/Columns: scalars.md
   - (Demo) Notebook: notebook.md
-  - Database:
+  - Database (Typing):
       - SQL: sql.md
       - Mongo: mongo.md
+      - Databases: databases.md
   - Extras:
-      - SQL-Where: sql-where.md
+      - SQL Where: sql-where.md
       - ID-Decode: id-decoder.md
       - Forms: forms.md
 

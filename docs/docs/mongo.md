@@ -46,7 +46,6 @@ table = dbc.Mongo(User)
 
     ```python
     form = {
-        "id": None,
         "name": "Joe Doe",
     }
     results = await table.create(form)

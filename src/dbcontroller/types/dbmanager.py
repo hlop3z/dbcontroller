@@ -89,7 +89,7 @@ class Database:
         self._manager_sql = the_manager.sql
         self._manager_mongo = the_manager.mongo
         self._model = Model(sql=the_manager.sql.base, mongo=the_manager.mongo.base)
-        self._base = DBController(sql=the_manager.sql.base, mongo=the_manager.mongo.base)
+        self._base = the_manager.sql.base
 
     def register(self, all_models: list):
         """Register a Type(Model)"""
@@ -104,6 +104,9 @@ class Database:
             if current_type._lazy_object:
                 if callable(current_type.objects):
                     current_type.objects()
+
+    def set_fastberry(self, mode: bool = True):
+        self.fastberry = mode
 
     @property
     def base(self):
@@ -124,11 +127,6 @@ class Database:
     @property
     def types(self):
         """Types"""
-        return self._core_models
-
-    @property
-    def models(self):
-        """Models"""
         return self._core_models
 
     @property
