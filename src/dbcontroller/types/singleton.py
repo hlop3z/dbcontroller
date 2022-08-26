@@ -29,13 +29,16 @@ class ModelSingleton(Singleton):
 
     @property
     def types(self):
+        """Types"""
         return self._core_models
 
     @property
     def models(self):
+        """Models"""
         return self._core_models
 
     def register(self, all_models: list):
+        """Register a Type(Model)"""
         if not isinstance(all_models, list):
             all_models = [all_models]
         # Register
@@ -43,6 +46,7 @@ class ModelSingleton(Singleton):
             self._core_models[current_type.__meta__.table_uri] = current_type
 
     def load(self):
+        """Load Lazy-Tables"""
         for current_type in self._core_models.values():
             if current_type._lazy_object:
                 if callable(current_type.objects):

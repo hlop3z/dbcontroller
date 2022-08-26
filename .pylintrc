@@ -162,6 +162,13 @@ disable=print-statement,
         C0103,
         W0702,
         W0212,
+        too-many-locals,
+        too-many-nested-blocks,
+        too-few-public-methods,
+        too-many-branches,
+        too-many-statements,
+        arguments-differ,
+        too-many-instance-attributes,
         redefined-builtin
 
 # Enable the message, report, category or checker with the given id(s). You can

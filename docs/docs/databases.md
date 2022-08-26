@@ -4,7 +4,11 @@
 Database(sql: str = None, mongo: str = None, fastberry: bool = False)
 ```
 
+---
+
 ## API **INFO**
+
+---
 
 ```python title="Init"
 import dbcontroller as dbc
@@ -30,14 +34,14 @@ app = dbc.Database(sql=DB_URL["sql"], mongo=DB_URL["mongo"], fastberry=False)
 
 > For **more information** about the database engine go to <a href="https://pypi.org/project/databases/" target="_blank">**`Databases`**</a>
 
-```python title="SQL-Database"
+```python title="SQL Database"
 # SQL Database
 app.database.sql
 ```
 
 > For **more information** about the database engine go to <a href="https://pypi.org/project/motor/" target="_blank">**`Motor`**</a>
 
-```python title="Mongo-Database"
+```python title="Mongo Database"
 # Mongo Database
 app.database.mongo
 ```

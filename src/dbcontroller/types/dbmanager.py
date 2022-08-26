@@ -22,7 +22,8 @@ except ImportError:
     declarative_base = False
 
 DBManager = namedtuple("DBManager", ["base", "client", "database"])
-DBController = namedtuple("DBController", ["sql", "mongo"])
+DBController = namedtuple("DBController", ["sql", "mongo", "keys"])
+Controller = namedtuple("Controller", ["sql", "mongo"])
 MongoDNS = namedtuple("MongoDNS", ["url", "database"])
 
 
@@ -65,7 +66,7 @@ def databases_setup(sql: str = None, mongo: str = None):
             base=mongo_base, client=mongo_client, database=mongo_base
         )
 
-    return DBController(sql=sql_manager, mongo=mongo_manager)
+    return Controller(sql=sql_manager, mongo=mongo_manager)
 
 
 class Database:
@@ -79,7 +80,7 @@ class Database:
         self._model = Model()
         self._manager_sql = None
         self._manager_mongo = None
-        self._base = DBController(sql=None, mongo=None)
+        self._base = Controller(sql=None, mongo=None)
         # Config Databases
         self._config(sql=sql, mongo=mongo)
 
@@ -106,20 +107,23 @@ class Database:
                     current_type.objects()
 
     def set_fastberry(self, mode: bool = True):
+        """Set Fastberry"""
         self.fastberry = mode
 
     @property
     def base(self):
+        """SQLAlchemy Base"""
         return self._base
 
     @property
     def db(self):
+        """Databases SQL & Mongo"""
         return self.database
 
     @property
     def database(self):
-        """Base SQL & Mongo"""
-        return DBController(
+        """Databases SQL & Mongo"""
+        return Controller(
             sql=self._manager_sql.database,
             mongo=self._manager_mongo.database,
         )
@@ -172,5 +176,8 @@ class Database:
         MongoManager = namedtuple("MongoManager", model_dict_mongo.keys())
         manager_mongo = MongoManager(**model_dict_mongo)
 
-        self._managers = DBController(sql=manager_sql, mongo=manager_mongo)
+        all_keys = list(model_dict_sql.keys()) + list(model_dict_mongo.keys())
+        self._managers = DBController(
+            sql=manager_sql, mongo=manager_mongo, keys=lambda: all_keys
+        )
         return self._managers
