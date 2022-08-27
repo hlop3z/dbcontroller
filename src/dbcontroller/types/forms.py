@@ -341,20 +341,3 @@ class Form:
     search = functools.partial(dataclass, suffix="search")
     form = functools.partial(dataclass, suffix="form", graphql=False)
     crud = form_crud
-
-
-if __name__ == "__main__":
-
-    @Form.form
-    class Demo:
-        """Demo"""
-
-        name = Form.field(
-            str,
-            required=True,
-            regex={r"[\w\.-]+@[\w\.-]+": "invalid email address"},
-            rules=[(lambda v: v.startswith("demo") or "invalid input")],
-        )
-
-    # Validate
-    Demo({"name": "demo@google.com"})
