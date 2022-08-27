@@ -80,7 +80,7 @@ class Database:
         self._model = Model()
         self._manager_sql = None
         self._manager_mongo = None
-        self._base = Controller(sql=None, mongo=None)
+        self._base = None
         # Config Databases
         self._config(sql=sql, mongo=mongo)
 
