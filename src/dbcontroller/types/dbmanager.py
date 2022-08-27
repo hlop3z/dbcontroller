@@ -1,5 +1,5 @@
 """
-    Object-Class Tools
+    Databases Manager (SQL & MongoDB)
 """
 import functools
 from collections import namedtuple

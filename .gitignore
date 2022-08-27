@@ -23,3 +23,5 @@ docs/site
 
 # test
 /tests/.report.json
+.ipynb_checkpoints/
+*-checkpoint.ipynb
