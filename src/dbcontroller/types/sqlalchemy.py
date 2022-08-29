@@ -15,6 +15,8 @@ def related_field(type_config, key, related_class_name):
     # is_many_to_many = table_config.many_to_many.get(key)
     table_config = type_config.table_config
     related_model = Manager.find_model(related_class_name)
+    if not related_model:
+        return None
     related_table = related_model.__meta__.table_name
     if not related_model.__meta__.sql:
         # Mongo Database
@@ -151,10 +153,11 @@ def create_sqlalchemy_model(base, type_config):
                     def load_table(cls):
                         """When Ready Load Tables"""
                         for key, lazy_load in sqlalchemy_setup_lazy_load.items():
-                            if callable(lazy_load):
-                                sqlalchemy_class_setup[key] = lazy_load()
-                            else:
-                                sqlalchemy_class_setup[key] = lazy_load
+                            if lazy_load:                            
+                                if callable(lazy_load):
+                                    sqlalchemy_class_setup[key] = lazy_load()
+                                else:
+                                    sqlalchemy_class_setup[key] = lazy_load
 
                         # Objects
                         cls.objects = type(

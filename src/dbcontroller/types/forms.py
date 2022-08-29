@@ -10,6 +10,8 @@ import re
 import typing
 from types import SimpleNamespace
 
+from ..tools import to_pascal_case
+
 try:
     import strawberry
 
@@ -51,6 +53,7 @@ class FormResponse:
     data: dc.field(default_factory=dict)
     errors: dc.field(default_factory=list)
     is_valid: bool = False
+    next: typing.Any = None
 
 
 @dc.dataclass
@@ -129,7 +132,7 @@ class FormBase:
 
     def _init_only_once_for_the_whole_class(self, cls):
         """Class __init__ Replacement"""
-        builtin_keys = ["_init_only_once_for_the_whole_class", "_validate"]
+        builtin_keys = ["_init_only_once_for_the_whole_class", "_validate", "Method"]
         fields = [
             x for x in dir(self) if not x.startswith("__") and x not in builtin_keys
         ]
@@ -229,7 +232,13 @@ class FormBase:
 
 def run_validator(form, validator):
     """Return Custom Response to the Dataclass"""
-    form.input = validator(form.__dict__)
+    user_input = validator(form.__dict__)
+    if hasattr(validator, "Method"):
+        if hasattr(validator.Method, "run"):
+            if user_input.is_valid:
+                user_input.next = validator.Method.run(user_input.data)
+    form.input = user_input
+            
 
 
 def make_dataclass(BaseClass, form_name):
@@ -317,9 +326,9 @@ def form_crud(model: str = None) -> FormCRUD:
 
     def form_crud_read(search_name: str = None):
         """Form CRUD: <Read>"""
-        name = model.title()
+        name = model
         if search_name:
-            name += search_name.title()
+            name += to_pascal_case(search_name)
         return functools.partial(dataclass, name=f"{name}ReadCRUD")
 
     return FormCRUD(

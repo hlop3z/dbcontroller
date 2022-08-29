@@ -152,6 +152,7 @@ class Model:
             ignore: list = None,
             is_sql: bool = False,
             is_mongo: bool = False,
+            database_name: str = "default",
         ):
             """DECORATOR-OPTIONAL-ARGUMENT"""
             primary_key = primary_key or []
@@ -204,8 +205,10 @@ class Model:
             for field in dc.fields(custom_dataclass):
                 if not isinstance(field.default_factory, dc._MISSING_TYPE):
                     default_value = dc.field(default_factory=field.default_factory)
+                    util_default_field_is_auto = False
                 elif not isinstance(field.default, dc._MISSING_TYPE):
                     default_value = dc.field(default=field.default)
+                    util_default_field_is_auto = False
                 else:
                     default_value = dc.field(default=None)
                     util_default_field_is_auto = True
@@ -303,6 +306,7 @@ class Model:
                 table_config=table_config,
                 sql=is_sql,
                 mongo=is_mongo,
+                database_name=database_name,
             )
 
             # Attach <Objects>

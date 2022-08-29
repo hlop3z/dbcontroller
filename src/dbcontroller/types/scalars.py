@@ -94,6 +94,7 @@ class TypeConfig:
     mongo: bool = False
     sql: bool = False
     is_super_class: bool = True
+    database_name: str = "default"
 
 
 # SQLAlchemy-BASE

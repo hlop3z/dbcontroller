@@ -21,6 +21,7 @@ try:
 except ImportError:
     declarative_base = False
 
+
 DBManager = namedtuple("DBManager", ["base", "client", "database"])
 DBController = namedtuple("DBController", ["sql", "mongo", "keys"])
 Controller = namedtuple("Controller", ["sql", "mongo"])
@@ -86,11 +87,24 @@ class Database:
 
     def _config(self, sql: str = None, mongo: str = None):
         """Config Databases"""
+        # Core
+        type_base = Model()
+        app_managers = {
+            "sql": type_base.type,
+            "mongo": type_base.type,
+        }
         the_manager = databases_setup(sql=sql, mongo=mongo)
         self._manager_sql = the_manager.sql
         self._manager_mongo = the_manager.mongo
-        self._model = Model(sql=the_manager.sql.base, mongo=the_manager.mongo.base)
         self._base = the_manager.sql.base
+        if declarative_base:
+            active = Model(sql=the_manager.sql.base)
+            app_managers["sql"] = active.sql
+        if MotorClient:
+            active = Model(mongo=the_manager.mongo.base)
+            app_managers["mongo"] = active.mongo
+        # self._model = Model(sql=the_manager.sql.base, mongo=the_manager.mongo.base)
+        self._model = Controller(**app_managers)
 
     def register(self, all_models: list):
         """Register a Type(Model)"""
@@ -159,25 +173,21 @@ class Database:
             self.register(all_models)
             self.load()
         # Dicts
-        model_dict_sql = {}
-        model_dict_mongo = {}
+        manager_sql = {}
+        manager_mongo = {}
         for current_type in all_models:
-            name = current_type.__meta__.name
-            is_sql = current_type.__meta__.sql
-            is_mongo = current_type.__meta__.mongo
-            if is_sql and declarative_base:
-                model_dict_sql[name] = self.manager_sql.client(current_type)
-            elif is_mongo and MotorClient:
-                model_dict_mongo[name] = self.manager_mongo.client(current_type)
+            if hasattr(current_type, "__meta__"):
+                name = current_type.__meta__.table_uri
+                is_sql = current_type.__meta__.sql
+                is_mongo = current_type.__meta__.mongo
+                if is_sql and declarative_base:
+                    manager_sql[name] = self.manager_sql.client(current_type)
+                elif is_mongo and MotorClient:
+                    manager_mongo[name] = self.manager_mongo.client(current_type)
 
-        SQLManager = namedtuple("SQLManager", model_dict_sql.keys())
-        manager_sql = SQLManager(**model_dict_sql)
-
-        MongoManager = namedtuple("MongoManager", model_dict_mongo.keys())
-        manager_mongo = MongoManager(**model_dict_mongo)
-
-        all_keys = list(model_dict_sql.keys()) + list(model_dict_mongo.keys())
-        self._managers = DBController(
+        all_keys = list(manager_sql.keys()) + list(manager_mongo.keys())
+        db_manager = DBController(
             sql=manager_sql, mongo=manager_mongo, keys=lambda: all_keys
         )
-        return self._managers
+        self._managers = db_manager
+        return db_manager
