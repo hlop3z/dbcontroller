@@ -1,31 +1,17 @@
 """
-    Controller for <Mongo & SQL>
-    Optional: [Strawberry-GraphQL]
+    Core
 """
 
-from . import tools
-from .manager import SQL, Mongo
-from .manager.utils import Decode, Objects
-from .types import Admin, Database, Form, Model
-from .types import create_controllers as Controller
-
-# Data-Class: < Maker >
-input = Form.input
-search = Form.search
-crud = Form.crud
-form = Form.form
-
-# Data-Class: < Fields >
-field = Form.field
-filters = Form.filters
-
-# Scalars
-ID = Model.id
-
-# Scalar: JSON
-JSON = Model.json
-json = Model.json
-
-# Scalar: Text(str)
-Text = Model.text
-text = Model.text
+from .core import ID  # Scalar
+from .core import Controller  # Class
+from .core import Date  # Class
+from .core import date  # Scalar
+from .core import datetime  # Scalar
+from .core import decimal  # Scalar
+from .core import field  # Tool - Field
+from .core import is_model  # Tool - is_model?
+from .core import json  # Scalar
+from .core import load  # Tool - Load
+from .core import text  # Scalar
+from .core import time  # Scalar
+from .core import type  # Type

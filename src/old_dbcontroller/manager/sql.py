@@ -1,13 +1,17 @@
 """
     * SQLAlchemy + Databases — Controller
 """
-# import functools
-import math
 
-from .utils import (  # clean_form, clean_update_form,
+import functools
+import math
+from types import SimpleNamespace
+
+from .utils import (
     Decode,
     Objects,
     Response,
+    clean_form,
+    clean_update_form,
     fixed_id_column,
 )
 from .utils.sql_where import Filters as SQLFilters
@@ -16,6 +20,14 @@ try:
     from sqlalchemy.sql.elements import BinaryExpression
 except ImportError:
     BinaryExpression = None
+
+try:
+    from databases import Database
+except ImportError:
+
+    def Database(x):
+        """Fake Database"""
+        return SimpleNamespace(database_url=x)
 
 
 class SQL:
@@ -52,12 +64,18 @@ class SQL:
     - Delete            : await sql.delete(items: list[IDs])
     """
 
-    def __init__(self, objects=None, database=None):
+    def __init__(self, database_url, custom_type):
         """Start Manager"""
-        self.database = database
-        self.table = objects
-        self.Q = SQLFilters(objects)
+        self.database = Database(database_url)
+        self.table = custom_type.objects
+        self.Q = SQLFilters(custom_type.objects)
         self.where = self.Q.where
+        self.form = functools.partial(
+            clean_form, custom_type, custom_type.objects.columns.keys()
+        )
+        self.form_update = functools.partial(
+            clean_update_form, custom_type, custom_type.objects.columns.keys()
+        )
         self.columns = self.table.columns.keys()
         self.c = self.table.c
 
