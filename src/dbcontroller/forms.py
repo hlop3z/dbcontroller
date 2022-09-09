@@ -166,13 +166,18 @@ class FormBase:
         for name, setup in self._config.items():
             current_input = form.get(name)
             is_valid_type = False
-            if strawberry and setup.type == strawberry.ID:
+            type_origin = typing.get_origin(setup.type)
+            if type_origin is None:
+                type_to_check = setup.type
+            else:
+                type_to_check = type_origin
+            if strawberry and type_to_check == strawberry.ID:
                 is_valid_type = True
             else:
-                is_valid_type = isinstance(current_input, setup.type)
+                is_valid_type = isinstance(current_input, type_to_check)
             if not is_valid_type and current_input:
                 the_error = FormError(
-                    field=name, type="typing", text=f"{ setup.type } is required."
+                    field=name, type="typing", text=f"{ type_to_check } is required."
                 )
                 errors.append(the_error.__dict__)
             # Required Validator
