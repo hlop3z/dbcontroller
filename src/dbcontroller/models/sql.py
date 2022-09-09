@@ -100,7 +100,7 @@ def sql_fields(annotations, config) -> OrderedDict:
                 case _:
                     sql_scalar = column(SA.String(length=255))
             if field.name not in config["ignore"]:
-                related_fields[f"{related}_id"] = sql_scalar
+                related_fields[f"{field.name}_id"] = sql_scalar
         else:
             if field.name not in config["ignore"]:
                 db_fields[field.name] = column(Scalar.get(field.scalar))

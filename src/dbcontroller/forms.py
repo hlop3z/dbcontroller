@@ -18,6 +18,7 @@ try:
     STRAWBERRY_INPUT = strawberry.input
 except ImportError:
     STRAWBERRY_INPUT = False
+    strawberry = None
 
 # Custom Typing
 ISNULL = typing.TypeVar("ISNULL", bool, None)
@@ -149,6 +150,8 @@ class FormBase:
                 annotations[f_name] = typing.Optional[current.type]
             # Custom Type Annotation
             custom_field = custom_field_maker(current)
+            if not current.required:
+               custom_field = (custom_field[0], typing.Optional[custom_field[1]], custom_field[2])
             custom_annotations.append(custom_field)
 
         self._config = validate
@@ -162,7 +165,12 @@ class FormBase:
         # Check Fields
         for name, setup in self._config.items():
             current_input = form.get(name)
-            is_valid_type = isinstance(current_input, setup.type)
+            is_valid_type = False
+            if strawberry:
+                if setup.type == strawberry.ID:
+                    is_valid_type = True
+            else:
+                is_valid_type = isinstance(current_input, setup.type)
             if not is_valid_type and current_input:
                 the_error = FormError(
                     field=name, type="typing", text=f"{ setup.type } is required."
@@ -221,8 +229,13 @@ class FormBase:
                                     pass
                     # Add Field To Form
                     output_form[name] = new_input
+            # Set Default                
+            if not current_input:
+                output_form[name] = setup.default
+                
         if "input" in output_form:
             del output_form["input"]
+            
         return FormResponse(
             data=SimpleNamespace(**output_form),
             errors=errors,
@@ -261,8 +274,8 @@ def dataclass(
     original_object: object = None,
     *,
     name: str = None,
-    prefix: str = None,
-    suffix: str | list = None,
+    prefix: str | list[str] = None,
+    suffix: str | list[str] = None,
     graphql: bool = True,
 ):
     """Form To GQL Input"""
@@ -308,7 +321,9 @@ def dataclass(
     return OutClass
 
 
-def form_filters(regex: list = None, rules: list = None) -> dict:
+def form_filters(
+    regex: list[tuple[str, str]] = None, rules: list[typing.Callable] = None
+) -> dict:
     """Form Filters"""
     regex = regex or []
     rules = rules or []
@@ -345,8 +360,21 @@ class Form:
     filters = form_filters
 
     # Custom DataClasses
-    input = functools.partial(dataclass, suffix="input")
-    search = functools.partial(dataclass, suffix="search")
-    form = functools.partial(dataclass, suffix="form", graphql=False)
-    crud = form_crud
     dataclass = dataclass
+    crud = form_crud
+
+    @staticmethod
+    def group(
+        prefix: str | list[str] = None,
+        suffix: str | list[str] = None,
+    ):
+        """Form(s) with a { Suffix } or { Prefix } in Common"""
+        return functools.partial(dataclass, prefix=prefix, suffix=suffix, graphql=False)
+
+    @staticmethod
+    def graphql(
+        prefix: str | list[str] = None,
+        suffix: str | list[str] = None,
+    ):
+        """GraphQL-Form(s) with a { Suffix } or { Prefix } in Common"""
+        return functools.partial(dataclass, prefix=prefix, suffix=suffix, graphql=True)

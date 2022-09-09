@@ -78,7 +78,7 @@ def create_custom_type(original_object, model):
 
     # Strawberry
     if STRAWBERRY_CORE:
-        custom_class = STRAWBERRY_CORE.type(custom_class)
+        custom_class = STRAWBERRY_CORE.type(custom_class, description=original_object.__doc__)
     elif not STRAWBERRY_CORE:
         custom_class = dc.dataclass(custom_class)
 

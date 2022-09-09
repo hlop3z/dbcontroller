@@ -28,11 +28,8 @@ def mongo_fields(annotations, config) -> OrderedDict:
     related_fields = OrderedDict()
     for field in annotations:
         if field.is_custom_type:
-            my_class = Globals.get(field.real)
-            class_config = my_class.__spoc__.config
-            related = class_config["table_name"]
             if field.name not in config["ignore"]:
-                related_fields[f"{related}_id"] = True
+                related_fields[f"{field.name}_id"] = True
         else:
             if field.name not in config["ignore"]:
                 db_fields[field.name] = True
