@@ -166,9 +166,8 @@ class FormBase:
         for name, setup in self._config.items():
             current_input = form.get(name)
             is_valid_type = False
-            if strawberry:
-                if setup.type == strawberry.ID:
-                    is_valid_type = True
+            if strawberry and setup.type == strawberry.ID:
+                is_valid_type = True
             else:
                 is_valid_type = isinstance(current_input, setup.type)
             if not is_valid_type and current_input:
