@@ -6,6 +6,11 @@ import dataclasses as dc
 import functools
 import typing
 
+COMPONENT = {}
+
+COMPONENT["model"] = {"engine": "dbcontroller", "type": "model"}
+COMPONENT["form"] = {"engine": "dbcontroller", "type": "form"}
+
 
 @dc.dataclass(frozen=True)
 class Component:
@@ -40,4 +45,9 @@ def component(
 
 def is_model(cls):
     """Plugin Validator"""
-    return cls.__spoc__.metadata == {"engine": "dbcontroller", "type": "model"}
+    return cls.__spoc__.metadata == COMPONENT["model"]
+
+
+def is_form(cls):
+    """Plugin Validator"""
+    return cls.__spoc__.metadata == COMPONENT["form"]

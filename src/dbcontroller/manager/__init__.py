@@ -3,4 +3,5 @@
 """
 
 from .mongo import Mongo
+from .querying import manager
 from .sql import SQL

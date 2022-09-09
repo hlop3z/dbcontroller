@@ -4,7 +4,7 @@ build-backend = "pdm.pep517.api"
 
 [project]
 name = "dbcontroller"
-version = "0.1.37"
+version = "0.1.40"
 description = "Python - Database Controller (SQLAlchemy & Motor)"
 readme = "README.md"
 license = {file = "LICENSE.txt"}
@@ -73,5 +73,6 @@ docs-dev = {shell = "cd docs/ && python -m mkdocs serve --dev-addr 0.0.0.0:8055"
 docs-gh = {shell = "cd docs/ && python -m mkdocs gh-deploy --force"}
 test = "pytest -rA tests/test_mongo.py tests/test_sql.py --json-report --json-report-summary --json-report-indent 4 --json-report-file tests/.report.json "
 notebook = "jupyter-lab"
-lint-watch = "python scripts/linter.py"
+lint-watch = "python scripts/lint-watch.py"
+lint = "python scripts/linter.py"
 # test = {composite = ["test-sql", "test-mongo"]}

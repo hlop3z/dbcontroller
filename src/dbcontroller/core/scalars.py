@@ -35,6 +35,7 @@ if strawberry:
 # Global
 SCALAR_FIELD_ID = SCALAR_FIELD.ID
 
+
 @dc.dataclass(frozen=True)
 class APIType:
     """API-Field-Type"""
@@ -102,5 +103,3 @@ Scalar[decimal.Decimal] = APIType(
     name="Decimal",
     python=decimal.Decimal,
 )
-
-

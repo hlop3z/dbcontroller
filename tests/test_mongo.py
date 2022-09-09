@@ -35,6 +35,7 @@ class UserMongo:
 # Init Objects
 dbc.load([UserMongo])
 
+
 @pytest.fixture(scope="session")
 def event_loop():
     try:
@@ -109,7 +110,9 @@ async def test_all():
 @pytest.mark.asyncio
 async def test_filter_by():
     query = {"name": "joe doe"}
-    results = await UserMongo.objects.filter_by(search=query, page=1, limit=100, sort_by="-id")
+    results = await UserMongo.objects.filter_by(
+        search=query, page=1, limit=100, sort_by="-id"
+    )
     assert results.error == False and results.count == 1
 
 

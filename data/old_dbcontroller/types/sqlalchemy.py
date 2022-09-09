@@ -153,7 +153,7 @@ def create_sqlalchemy_model(base, type_config):
                     def load_table(cls):
                         """When Ready Load Tables"""
                         for key, lazy_load in sqlalchemy_setup_lazy_load.items():
-                            if lazy_load:                            
+                            if lazy_load:
                                 if callable(lazy_load):
                                     sqlalchemy_class_setup[key] = lazy_load()
                                 else:

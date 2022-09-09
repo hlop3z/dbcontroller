@@ -10,6 +10,8 @@ import re
 import typing
 from types import SimpleNamespace
 
+from .core.annotations import get_args
+from .core.spoc import COMPONENT, component
 from .tools import to_pascal_case
 
 try:
@@ -22,6 +24,20 @@ except ImportError:
 
 # Custom Typing
 ISNULL = typing.TypeVar("ISNULL", bool, None)
+
+
+def get_custom_annotations(original_object):
+    """Get Custom Annotations"""
+    good = get_args(original_object)
+    out_dict = {}
+    for field in good.annotations.values():
+        the_type = field.real
+        if field.is_list:
+            the_type = list
+        if strawberry and the_type == strawberry.ID:
+            the_type = str
+        out_dict[field.name] = the_type
+    return out_dict
 
 
 @dc.dataclass
@@ -133,13 +149,13 @@ class FormBase:
 
     def _init_only_once_for_the_whole_class(self, cls):
         """Class __init__ Replacement"""
-        builtin_keys = ["_init_only_once_for_the_whole_class", "_validate", "Method"]
+        builtin_keys = ["_init_only_once_for_the_whole_class", "_validate", "Next"]
         fields = [
             x for x in dir(self) if not x.startswith("__") and x not in builtin_keys
         ]
         validate = {}
         annotations = {}
-        custom_annotations = []
+        custom_annotations = {"one": [], "two": []}
         for f_name in fields:
             current = getattr(self, f_name)
             current.name = f_name
@@ -151,8 +167,15 @@ class FormBase:
             # Custom Type Annotation
             custom_field = custom_field_maker(current)
             if not current.required:
-               custom_field = (custom_field[0], typing.Optional[custom_field[1]], custom_field[2])
-            custom_annotations.append(custom_field)
+                custom_field = (
+                    custom_field[0],
+                    typing.Optional[custom_field[1]],
+                    custom_field[2],
+                )
+                custom_annotations["two"].append(custom_field)
+            else:
+                custom_annotations["one"].append(custom_field)
+            # custom_annotations.append(custom_field)
 
         self._config = validate
         cls.__annotations__ = annotations
@@ -233,13 +256,13 @@ class FormBase:
                                     pass
                     # Add Field To Form
                     output_form[name] = new_input
-            # Set Default                
+            # Set Default
             if not current_input:
                 output_form[name] = setup.default
-                
+
         if "input" in output_form:
             del output_form["input"]
-            
+
         return FormResponse(
             data=SimpleNamespace(**output_form),
             errors=errors,
@@ -250,10 +273,10 @@ class FormBase:
 def run_validator(form, validator):
     """Return Custom Response to the Dataclass"""
     user_input = validator(form.__dict__)
-    if hasattr(validator, "Method"):
-        if hasattr(validator.Method, "run"):
+    if hasattr(validator, "Next"):
+        if hasattr(validator.Next, "run"):
             if user_input.is_valid:
-                user_input.next = validator.Method.run(user_input.data)
+                user_input.next = validator.Next.run(user_input.data)
     form.input = user_input
 
 
@@ -264,10 +287,12 @@ def make_dataclass(BaseClass, form_name):
     cleaned_data = custom_field_maker(
         SimpleNamespace(name="input", type=typing.Any, default=None, required=False)
     )
-    form_annotations.append(cleaned_data)
+    form_annotations["two"].append(cleaned_data)
+    class_annotations = form_annotations["one"]
+    class_annotations.extend(form_annotations["two"])
     OutClass = dc.make_dataclass(
         form_name,
-        form_annotations,
+        class_annotations,
         namespace={"__post_init__": lambda self: run_validator(self, validator)},
     )
     del OutClass.__annotations__["input"]
@@ -322,6 +347,10 @@ def dataclass(
     OutClass = make_dataclass(custom_class, form_name)
     if STRAWBERRY_INPUT and graphql:
         OutClass = STRAWBERRY_INPUT(OutClass, description=original_object.__doc__)
+
+    # Create Component
+    out_dict = get_custom_annotations(OutClass)
+    component(OutClass, config={"annotations": out_dict}, metadata=COMPONENT["form"])
     return OutClass
 
 

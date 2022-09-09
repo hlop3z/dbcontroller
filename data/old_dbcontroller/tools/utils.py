@@ -13,5 +13,3 @@ def to_pascal_case(text):
     """Converts to { Pascal-Case }"""
     temp = text.split("_")
     return "".join([*map(str.title, temp)])
-
-

@@ -40,8 +40,11 @@ class UserSQL:
     meta: dbc.json
     disabled: bool = False
 
+
 # Init Objects
 dbc.load([UserSQL])
+
+
 class ID:
     one = "MTo6YTU1ZTUzMmVhYjAyOGI0Mg=="
     two = "Mjo6M2VmOWFiYmI1ZGY1YjY0MQ=="
@@ -109,7 +112,9 @@ async def test_all():
 @pytest.mark.asyncio
 async def test_filter_by():
     query = {"name": "joe doe"}
-    results = await UserSQL.objects.filter_by(search=query, page=1, limit=100, sort_by="-id")
+    results = await UserSQL.objects.filter_by(
+        search=query, page=1, limit=100, sort_by="-id"
+    )
     assert results.error == False and results.count == 1
 
 

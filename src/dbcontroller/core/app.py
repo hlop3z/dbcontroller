@@ -7,9 +7,9 @@ import decimal
 import functools
 
 from ..models import create_database
+from ..tools import get_module_name
 from .base import custom_type
 from .spoc import is_model
-from ..tools import get_module_name
 
 DATE = datetime.date
 DATETIME = datetime.datetime

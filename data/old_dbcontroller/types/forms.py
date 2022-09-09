@@ -238,7 +238,6 @@ def run_validator(form, validator):
             if user_input.is_valid:
                 user_input.next = validator.Method.run(user_input.data)
     form.input = user_input
-            
 
 
 def make_dataclass(BaseClass, form_name):

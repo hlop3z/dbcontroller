@@ -144,9 +144,10 @@ def get_args(original_object):
         cool_annotations[key] = found_args
     for key in func_annotations:
         func = getattr(original_object, key)
-        val = func.__annotations__.get("return")
-        found_args = get_annotations_args(key, val)
-        cool_annotations[key] = found_args
+        if func:
+            val = func.__annotations__.get("return")
+            found_args = get_annotations_args(key, val)
+            cool_annotations[key] = found_args
     return Model(
         fields=field_keys, methods=func_annotations, annotations=cool_annotations
     )

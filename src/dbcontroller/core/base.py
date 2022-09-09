@@ -7,7 +7,7 @@ import functools
 from ..models import create_model
 from .annotations import get_args
 from .custom_class import create_custom_type
-from .spoc import component
+from .spoc import COMPONENT, component
 from .table import table_info
 
 # from .tools import get_module_name, to_pascal_case
@@ -34,7 +34,7 @@ def custom_type(
     index = index or []
     unique = unique or []
     unique_together = unique_together or []
-    many_to_many = many_to_many or []
+    # many_to_many = many_to_many or []
     ignore = ignore or []
 
     config = {
@@ -44,7 +44,7 @@ def custom_type(
         "index": index,
         "unique": unique,
         "unique_together": unique_together,
-        "many_to_many": many_to_many,
+        # "many_to_many": many_to_many,
         "ignore": ignore,
         "engine": engine,
         "database": database,
@@ -85,9 +85,9 @@ def custom_type(
         "table_name": db_table_name,
         "database": database,
         "engine": engine,
+        "annotations": model.annotations,
     }
-    component_metadata = {"engine": "dbcontroller", "type": "model"}
-    component(custom_class, config=component_config, metadata=component_metadata)
+    component(custom_class, config=component_config, metadata=COMPONENT["model"])
 
     # Return: Customized Class
     return custom_class

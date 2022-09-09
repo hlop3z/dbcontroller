@@ -12,6 +12,6 @@ from .app import Controller, Date, field, load
 
 # Scalars
 from .scalars import JSON as json
-from .scalars import TEXT as text
 from .scalars import SCALAR_FIELD_ID as ID
-from .spoc import is_model
+from .scalars import TEXT as text
+from .spoc import is_form, is_model
