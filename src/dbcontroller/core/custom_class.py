@@ -66,7 +66,7 @@ def create_class(custom_class, original_object, model):
     return custom_class
 
 
-def create_custom_type(original_object, model):
+def create_custom_type(original_object, model, description=None):
     """Create Custom Class"""
     class_name = original_object.__name__
     custom_class = type(
@@ -78,8 +78,9 @@ def create_custom_type(original_object, model):
 
     # Strawberry
     if STRAWBERRY_CORE:
+        description = description or original_object.__doc__
         custom_class = STRAWBERRY_CORE.type(
-            custom_class, description=original_object.__doc__
+            custom_class, description=description
         )
     elif not STRAWBERRY_CORE:
         custom_class = dc.dataclass(custom_class)

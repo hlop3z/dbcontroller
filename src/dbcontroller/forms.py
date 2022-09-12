@@ -306,6 +306,7 @@ def dataclass(
     prefix: str | list[str] = None,
     suffix: str | list[str] = None,
     graphql: bool = True,
+    description:str = None,
 ):
     """Form To GQL Input"""
 
@@ -317,6 +318,7 @@ def dataclass(
             prefix=prefix,
             suffix=suffix,
             graphql=graphql,
+            description=description,
         )
 
     # Configure Class
@@ -346,7 +348,8 @@ def dataclass(
     # Create Data-Class
     OutClass = make_dataclass(custom_class, form_name)
     if STRAWBERRY_INPUT and graphql:
-        OutClass = STRAWBERRY_INPUT(OutClass, description=original_object.__doc__)
+        description = description or original_object.__doc__
+        OutClass = STRAWBERRY_INPUT(OutClass, description=description)
 
     # Create Component
     out_dict = get_custom_annotations(OutClass)

@@ -22,11 +22,11 @@ def custom_type(
     index: list = None,
     unique: list = None,
     unique_together: list = None,
-    many_to_many: list = None,
     ignore: list = None,
     engine: str = "sql",
     database: str = "default",
     controller: object = None,
+    description:str = None,
 ):
     """{ Controller } for GraphQL { Type } & { Model } Database"""
     primary_key = primary_key or []
@@ -34,7 +34,6 @@ def custom_type(
     index = index or []
     unique = unique or []
     unique_together = unique_together or []
-    # many_to_many = many_to_many or []
     ignore = ignore or []
 
     config = {
@@ -44,7 +43,6 @@ def custom_type(
         "index": index,
         "unique": unique,
         "unique_together": unique_together,
-        # "many_to_many": many_to_many,
         "ignore": ignore,
         "engine": engine,
         "database": database,
@@ -56,13 +54,14 @@ def custom_type(
         return functools.partial(
             custom_type,
             **config,
+            description=description,
         )
 
     # Annotations (Python)
     model = get_args(original_object)
 
     # GraphQL (Strawberry) Class
-    custom_class = create_custom_type(original_object, model)
+    custom_class = create_custom_type(original_object, model, description)
     table_config = table_info(original_object, table_name, config)
     db_table_name = table_config.table_name
     config["table_name"] = db_table_name
