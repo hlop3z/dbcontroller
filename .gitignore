@@ -17,6 +17,7 @@ docs/site
 # Python Custom
 *.db
 .venv
+.pytest_cache
 
 # vscode
 .vscode/
