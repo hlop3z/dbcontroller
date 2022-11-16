@@ -2,47 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/</loc>
-         <lastmod>2022-08-26</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://hlop3z.github.io/dbcontroller/databases/</loc>
-         <lastmod>2022-08-26</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://hlop3z.github.io/dbcontroller/forms/</loc>
-         <lastmod>2022-08-26</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://hlop3z.github.io/dbcontroller/id-decoder/</loc>
-         <lastmod>2022-08-26</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://hlop3z.github.io/dbcontroller/mongo/</loc>
-         <lastmod>2022-08-26</lastmod>
+         <lastmod>2022-11-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/notebook/</loc>
-         <lastmod>2022-08-26</lastmod>
+         <lastmod>2022-11-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/scalars/</loc>
-         <lastmod>2022-08-26</lastmod>
+         <lastmod>2022-11-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://hlop3z.github.io/dbcontroller/sql-where/</loc>
-         <lastmod>2022-08-26</lastmod>
+         <loc>https://hlop3z.github.io/dbcontroller/database/manager/</loc>
+         <lastmod>2022-11-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://hlop3z.github.io/dbcontroller/sql/</loc>
-         <lastmod>2022-08-26</lastmod>
+         <loc>https://hlop3z.github.io/dbcontroller/database/mongo/</loc>
+         <lastmod>2022-11-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hlop3z.github.io/dbcontroller/database/sql/</loc>
+         <lastmod>2022-11-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hlop3z.github.io/dbcontroller/extras/id-decoder/</loc>
+         <lastmod>2022-11-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hlop3z.github.io/dbcontroller/extras/sql-where/</loc>
+         <lastmod>2022-11-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
