@@ -25,6 +25,9 @@ classifiers = [
 [tool.pdm]
 allow_prereleases = true
 
+[tool.pdm.build]
+package-dir = "src"
+
 [[tool.pdm.source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
