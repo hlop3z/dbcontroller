@@ -55,7 +55,7 @@ graph LR;
 | --------------------- | ------------------------------------------------------------------------------------- |
 | **`table_name`**      | (**`str`**) — Custom **Table Name** for the database                                  |
 | **`primary_key`**     | (**`list[str]`**) — Columns that are consider **Primary Key**                         |
-| **`required`**        | (**`list[str]`**) — Columns that **Required** User's input                            |
+| **`required`**        | (**`list[str]`**) — Columns that **Required** an input                                |
 | **`index`**           | (**`list[str]`**) — Columns that are **Index**                                        |
 | **`unique`**          | (**`list[str]`**) — Columns that are **Unique**                                       |
 | **`unique_together`** | (**`list[tuple]`**) — Group of Columns that are **Unique Together**                   |
