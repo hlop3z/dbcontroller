@@ -43,7 +43,7 @@ class MongoCrud:
         """CREATE-MANY"""
         collection = self.collection
         try:
-            result = collection.insert_many(forms)
+            result = await collection.insert_many(forms)
             search = {"_id": {"$in": result.inserted_ids}}
             cursor = collection.find(search)
             items = [i async for i in cursor]

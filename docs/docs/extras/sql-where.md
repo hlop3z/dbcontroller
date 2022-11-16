@@ -1,5 +1,9 @@
 # SQL **Where** ( Operators )
 
+!!! warning "table"
+
+    **`table`** is short for **`Model.objects`**
+
 > **Usage**: `table.where(str: "column", str: "method", Any: value)`
 
 | Method         | Check Column (IF)                    |

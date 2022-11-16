@@ -31,47 +31,40 @@ pdm run jupyter notebook
 ## Initialize
 
 ```py
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
+import dbcontroller as dbc
 
-# URL
-DATABASE_URL = "sqlite:///example.db"
-
-# Base
-Base = declarative_base()
-
-# Demo Create Tables
-def create_tables():
-    engine = create_engine(DATABASE_URL, echo=False)
-    Base.metadata.create_all(engine)
+sql = dbc.Controller(sql="sqlite:///example.db")
 ```
 
 ## Database **Controller**
 
 ```py
-import functools
-import dbcontroller as dbc
-
-model = dbc.Model(sql=Base)
-SQL = functools.partial(dbc.SQL, DATABASE_URL)
-
-@model.sql(table_name="users")
+@sql.model(table_name="users")
 class User:
     name: str
-    notes: dbc.Text
-    meta: dbc.JSON
+    notes: dbc.text
+    meta: dbc.json
     disabled: bool = False
 ```
 
-## Manager
+## Load Classes (**Manager**)
 
 ```py
-# Connect "Type" to "Controller"
-table = SQL(User)
-
-# Create Table
-create_tables()
+# Init Objects
+dbc.load([User])
 ```
+
+## SQLAlchemy
+
+```py
+from sqlalchemy import create_engine
+
+# Init Table (SQLAlchemy)
+engine = create_engine(sql.url, echo=True)
+sql.base.metadata.create_all(engine)
+```
+
+---
 
 ## Demo
 
@@ -80,11 +73,11 @@ create_tables()
 #### **Create**
 
 ```py
-await table.create([{"name": "joe doe"}, {"name": "jane doll"}])
+await User.create([{"name": "joe doe"}, {"name": "jane doll"}])
 ```
 
 #### **Get-All**
 
 ```py
-await table.all()
+await User.all()
 ```

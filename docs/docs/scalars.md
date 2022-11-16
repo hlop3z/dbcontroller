@@ -2,19 +2,19 @@
 
 ## Model **Fields**
 
-| GraphQL        | Python (dbcontroller)   | SQLAlchemy         |
-| -------------- | ----------------------- | ------------------ |
-| **`ID`**       | **`dbcontroller.ID`**   | Integer            |
-| **`String`**   | **`str`**               | String(length=255) |
-| **`String`**   | **`dbcontroller.Text`** | Text               |
-| **`Integer`**  | **`int`**               | Integer            |
-| **`Float`**    | **`float`**             | Float              |
-| **`Boolean`**  | **`bool`**              | Boolean            |
-| **`Datetime`** | **`datetime.datetime`** | DateTime           |
-| **`Date`**     | **`datetime.date`**     | Date               |
-| **`Time`**     | **`datetime.time`**     | Time               |
-| **`Decimal`**  | **`decimal.Decimal`**   | String(length=255) |
-| **`JSON`**     | **`dbcontroller.JSON`** | JSON               |
+| GraphQL        | Python (dbcontroller)      | SQLAlchemy         |
+| -------------- | -------------------------- | ------------------ |
+| **`ID`**       | **`dbcontroller.ID`**      | Integer            |
+| **`String`**   | **`str`**                  | String(length=255) |
+| **`String`**   | **`dbcontroller.text`**    | Text               |
+| **`Integer`**  | **`int`**                  | Integer            |
+| **`Float`**    | **`float`**                | Float              |
+| **`Boolean`**  | **`bool`**                 | Boolean            |
+| **`Datetime`** | **`datetime.datetime`**    | DateTime           |
+| **`Date`**     | **`datetime.date`**        | Date               |
+| **`Time`**     | **`datetime.time`**        | Time               |
+| **`Decimal`**  | **`dbcontroller.decimal`** | String(length=255) |
+| **`JSON`**     | **`dbcontroller.json`**    | JSON               |
 
 ## Your **instance** includes **two** fields
 
@@ -23,98 +23,69 @@
 
 ---
 
-## Python **Fields**
-
-- **`dbcontroller.ID`**
-- **`str`**
-- **`dbcontroller.Text`**
-- **`int`**
-- **`float`**
-- **`bool`**
-- **`datetime.datetime`**
-- **`datetime.date`**
-- **`datetime.time`**
-- **`decimal.Decimal`**
-- **`dbcontroller.JSON`**
-
 ## Usage **Example**
 
-```python title="Example - Part 1"
+### Step **1**
+
+```python title="Basic Tools"
 # -*- coding: utf-8 -*-
 """
-    Types
+    Type | Model
 """
-import functools
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
-
-import dataclasses as dc
-import datetime
-import decimal
-import typing
-
 import dbcontroller as dbc
+from typing import Optional
 
-# URL
-DATABASE_URL = "sqlite:///example.db"
-
-# Base
-Base = declarative_base()
-
-# Manager
-SQL = functools.partial(dbc.SQL, DATABASE_URL)
-
-# Model
-model = dbc.Model(sql=Base)
-
+sql   = dbc.Controller(sql="sqlite:///example.db")
+mongo = dbc.Controller(mongo="mongodb://localhost:27017/example")
 
 # DateTime Functions
 class Date:
     datetime = lambda: datetime.datetime.now()
     date = lambda: datetime.date.today()
     time = lambda: datetime.datetime.now().time()
+```
 
+### Step **2**
 
-# Create your <types> here.
-@model.sql
+```python title="Create Model(s)"
+@sql.model
 class Product:
-    name: str
+    # Core { Python }
+    name: str | None = None
     aliases: list[str] | None = None
     stock: int | None = None
     is_available: bool | None = None
-    created_on: datetime.datetime = dc.field(default_factory=Date.datetime)
-    available_from: datetime.date = dc.field(default_factory=Date.date)
-    same_day_shipping_before: datetime.time = dc.field(default_factory=Date.time)
-    price: decimal.Decimal | None = None
-    notes: list[dbc.Text] = dc.field(default_factory=list)
-    is_object: dbc.JSON = dc.field(default_factory=dict)
 
-    async def category(self) -> typing.Optional["Category"]:
-        return Category(name="awesome")
+    # Custom Scalars { GraphQL }
+    created_on: dbc.datetime = dbc.field(Date.datetime)
+    available_from: dbc.date = dbc.field(Date.date)
+    same_day_shipping_before: dbc.time = dbc.field(Date.time)
+    price: dbc.decimal | None = None
+    notes: list[dbc.text] = dbc.field(list)
+    is_object: dbc.json = dbc.field(dict)
 
+    # Other { Type | Model }
+    category: Optional["Category"] = None
 
-@model.sql
+    # Other { Type | Model }
+    async def group(self) -> Optional["Group"]:
+        """Group Type"""
+        return Group(name="awesome")
+
+@sql.model
 class Category:
+    name: str
+
+@mongo.model
+class Group:
     name: str
 ```
 
-```python title="Example - Part 2"
-# -*- coding: utf-8 -*-
-"""
-    Manager
-"""
-# Regular Engine
-engine = create_engine(DATABASE_URL, echo=True)
+### Step **3** (**SQL** Only)
 
-# Register Tables & Load -> Lazy-Loaded Tables (aka: Types)
-dbc.Admin.register([Product, Category])
-dbc.Admin.load()
+```python title="Create Database's Table"
+from sqlalchemy import create_engine
 
-# Create Tables
-Base.metadata.create_all(engine)
-
-# Manage Tables
-ProductDB = SQL(Product)
-CategoryDB = SQL(Category)
+engine = create_engine(sql.url, echo=True)
+sql.base.metadata.create_all(engine)
 ```

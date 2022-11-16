@@ -7,14 +7,15 @@ nav:
   - Introduction: index.md
   - Scalars/Fields/Columns: scalars.md
   - (Demo) Notebook: notebook.md
-  - Database (Typing):
-      - SQL: sql.md
-      - Mongo: mongo.md
-      - Databases: databases.md
+  - Database (Table):
+      - SQL: database/sql.md
+      - Mongo: database/mongo.md
+      - Manager: database/manager.md
   - Extras:
-      - SQL Where: sql-where.md
-      - ID-Decode: id-decoder.md
-      - Forms: forms.md
+      - SQL Where: extras/sql-where.md
+      - SQL ( Q ): extras/sql-q.md
+      - ID-Decode: extras/id-decoder.md
+      - Load: extras/load.md
 
 extra_css:
   - css/extra.css
@@ -47,6 +48,7 @@ theme:
         name: Switch to light mode
 
 markdown_extensions:
+  - admonition
   - tables
   - pymdownx.highlight:
       anchor_linenums: true

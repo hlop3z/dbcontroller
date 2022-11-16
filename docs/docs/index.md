@@ -44,14 +44,10 @@ graph LR;
 
 ## **Util** Methods
 
-> **`form`** and **`form_update`** use the fields from the database if is **`SQL`** and from the model if is **`Mongo`**
-
-| Method            | Is Used To...                                                                     | Variables |
-| ----------------- | --------------------------------------------------------------------------------- | --------- |
-| **`form`**        | **Clean** User's **`Inputs`**. And, **only** allows fields that are in the Model. | `(dict)`  |
-| **`form_update`** | **Clean** User's **`Inputs`**. And, **only** allows fields that are in the Model. | `(dict)`  |
-| **`id_decode`**   | **Decode** Encoded-ID                                                             | `(str)`   |
-| **`Q`**           | **Custom-Querying** for **SQLAlchemy** Tables                                     | `N/A`     |
+| Method          | Is Used To...                                 | Variables |
+| --------------- | --------------------------------------------- | --------- |
+| **`id_decode`** | **Decode** Encoded-ID                         | `(str)`   |
+| **`Q`**         | **Custom-Querying** for **SQLAlchemy** Tables | `N/A`     |
 
 ## Database **Type | Model** Setup
 
@@ -67,12 +63,7 @@ graph LR;
 
 ## Usage **Example**
 
-> The configurations are for the **SQL-Database (ONLY)** to configure the **Model / Type** just use regular **Typing** annotations.
-> Or **Mongo** for Mongo-Database **Models**
-
-> <p style="color:red">**Note:**</p> **Type Annotation** is also how you design the schema of your **database**. <br />
-> In **SQL-Databases** each Type means something. However, in **Mongo-Databases** it does **NOT**, <br />
-> since Mongo is just **JSON**.
+> These configurations are for **SQL-Database (ONLY)**
 
 ```python title="model-sample.py"
 # -*- coding: utf-8 -*-
@@ -83,16 +74,15 @@ graph LR;
 import dbcontroller as dbc
 
 # Model
-model = dbc.Model()
+sql = dbc.Controller(sql="sqlite:///example.db")
 
-@model.sql(
+@sql.model(
     table_name="custom_table_name",
     primary_key=["col_one"],
     required=["col_one"],
     index=["col_one"],
     unique=["col_one"],
     unique_together=[("col_one", "col_two")],
-    many_to_many=["col_one"],
     ignore=["col_three"],
 )
 class Product:

@@ -1,43 +1,29 @@
-# **Mongo** (Motor)
+# **SQL** (Alchemy)
 
-### **Mongo** Setup
+!!! tip "Type"
 
-```python
-import motor.motor_asyncio
+    **`Database Collection`** **=** **`GraphQL Type`**
 
-# Config
-DATABASE_URL = "mongodb://localhost:27017"
-DATABASE_NAME = "test_database"
-
-# Engine
-ENGINE = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URL)
-
-# Base
-Base = ENGINE[DATABASE_NAME]
-```
-
-### **Collection** | Model
-
-> **(Motor + Controller)**
+## **Collection** | Model | Type
 
 ```python
 import dbcontroller as dbc
 
-model = dbc.Model(mongo=Base)
+mongo = dbc.Controller(mongo="mongodb://localhost:27017/example")
 
 # Types
-@model.sql
+@mongo.model
 class User:
     name: str
-    notes: dbc.Text
-    meta: dbc.JSON
+    notes: dbc.text
+    meta: dbc.json
     disabled: bool = False
 ```
 
 ### **Manager**
 
 ```python
-table = dbc.Mongo(User)
+table = User.objects
 ```
 
 ### **C.U.D** — Examples
@@ -46,29 +32,37 @@ table = dbc.Mongo(User)
 
     ```python
     form = {
-        "name": "Joe Doe",
+        "name": "joe doe",
     }
+
+    # Create One
     results = await table.create(form)
+
+    # Create Many
+    results = await table.create([{"name": "joe doe"}, {"name": "jane doll"}])
     ```
 
 === "Update"
 
     ```python
+    selector = "Encoded-ID" # ["Some-ID-1", "Some-ID-2", "More-IDS..."]
+
     form = {
-        "id": "Some-ID", # For multiple-ids: ["Some-ID-1", "Some-ID-2"]
-        "name": "Jane Doll",
+        "name": "jane doll",
     }
-    results = await table.update(form)
+
+    # Update One or Many
+    results = await table.update(selector, form)
     ```
 
 === "Delete"
 
     ```python
     # Delete One
-    results = await table.delete("Some-ID")
+    results = await table.delete("Encoded-ID")
 
     # Delete Many
-    results = await table.delete(["Some-ID-1", "Some-ID-2"])
+    results = await table.delete(["Encoded-ID-1", "Encoded-ID-2", "More-IDS..."])
     ```
 
 ### **Reading** | Querying (**One**-Record)
@@ -76,7 +70,7 @@ table = dbc.Mongo(User)
 === "Detail"
 
     ```python
-    results = await table.detail("Some-ID")
+    results = await table.detail("Encoded-ID")
     ```
 
 === "Get-By"
@@ -88,7 +82,7 @@ table = dbc.Mongo(User)
 === "Find-One"
 
     ```python
-    query = { "name": {"$regex": "Joe"} }
+    query = table.where("name", "contains", "joe")
     results = await table.find_one(query)
     ```
 
@@ -103,8 +97,10 @@ table = dbc.Mongo(User)
 === "Find"
 
     ```python
-    search = [{"name": {"$regex": "joe"}}, {"name": {"$regex": "jane"}}]
-    query = {"$or": search}
+    query = (
+        table.where("name", "contains", "jane")
+        | table.where("name", "contains", "joe")
+    )
     results = await table.find(query, page=1, limit=100, sort_by="-id")
     ```
 

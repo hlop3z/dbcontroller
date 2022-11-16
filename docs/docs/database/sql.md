@@ -1,45 +1,29 @@
 # **SQL** (Alchemy)
 
-### **SQLAlchemy** Setup
+!!! tip "Type"
 
-```python
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
+    **`Database Table`** **=** **`GraphQL Type`**
 
-# URL
-DATABASE_URL = "sqlite:///example.db"
-
-# Base
-Base = declarative_base()
-```
-
-### **Table** | Model
-
-> **(Databases + Controller)**
+## **Table** | Model | Type
 
 ```python
 import dbcontroller as dbc
-import functools
 
-# Manager
-SQL = functools.partial(dbc.SQL, DATABASE_URL)
-
-# Model
-model = dbc.Model(sql=Base)
+sql = dbc.Controller(sql="sqlite:///example.db")
 
 # Types
-@model.sql
+@sql.model
 class User:
     name: str
-    notes: dbc.Text
-    meta: dbc.JSON
+    notes: dbc.text
+    meta: dbc.json
     disabled: bool = False
 ```
 
 ### **Manager**
 
 ```python
-table = SQL(User)
+table = User.objects
 ```
 
 ### **C.U.D** — Examples
@@ -50,7 +34,12 @@ table = SQL(User)
     form = {
         "name": "joe doe",
     }
+
+    # Create One
     results = await table.create(form)
+
+    # Create Many
+    results = await table.create([{"name": "joe doe"}, {"name": "jane doll"}])
     ```
 
 === "Update"
@@ -60,6 +49,8 @@ table = SQL(User)
     form = {
         "name": "jane doll",
     }
+
+    # Update One or Many
     results = await table.update(selector, form)
     ```
 
