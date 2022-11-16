@@ -36,6 +36,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://hlop3z.github.io/dbcontroller/extras/load/</loc>
+         <lastmod>2022-11-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hlop3z.github.io/dbcontroller/extras/sql-q/</loc>
+         <lastmod>2022-11-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://hlop3z.github.io/dbcontroller/extras/sql-where/</loc>
          <lastmod>2022-11-16</lastmod>
          <changefreq>daily</changefreq>

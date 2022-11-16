@@ -372,14 +372,14 @@
       
       
         <label class="md-nav__link" for="__nav_4">
-          Database (Typing)
+          Database (Table)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Database (Typing)" data-md-level="1">
+      <nav class="md-nav" aria-label="Database (Table)" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Database (Typing)
+          Database (Table)
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -481,8 +481,36 @@
   
   
     <li class="md-nav__item">
+      <a href="extras/sql-q/" class="md-nav__link">
+        SQL ( Q )
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="extras/id-decoder/" class="md-nav__link">
         ID-Decode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="extras/load/" class="md-nav__link">
+        Load
       </a>
     </li>
   
@@ -704,9 +732,6 @@ But at the same time you can use the <strong>"database-controller"</strong> by i
 </tbody>
 </table>
 <h2 id="util-methods"><strong>Util</strong> Methods</h2>
-<blockquote>
-<p><strong><code>form</code></strong> and <strong><code>form_update</code></strong> use the fields from the database if is <strong><code>SQL</code></strong> and from the model if is <strong><code>Mongo</code></strong></p>
-</blockquote>
 <table>
 <thead>
 <tr>
@@ -716,16 +741,6 @@ But at the same time you can use the <strong>"database-controller"</strong> by i
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><strong><code>form</code></strong></td>
-<td><strong>Clean</strong> User's <strong><code>Inputs</code></strong>. And, <strong>only</strong> allows fields that are in the Model.</td>
-<td><code>(dict)</code></td>
-</tr>
-<tr>
-<td><strong><code>form_update</code></strong></td>
-<td><strong>Clean</strong> User's <strong><code>Inputs</code></strong>. And, <strong>only</strong> allows fields that are in the Model.</td>
-<td><code>(dict)</code></td>
-</tr>
 <tr>
 <td><strong><code>id_decode</code></strong></td>
 <td><strong>Decode</strong> Encoded-ID</td>
@@ -779,11 +794,7 @@ But at the same time you can use the <strong>"database-controller"</strong> by i
 </table>
 <h2 id="usage-example">Usage <strong>Example</strong></h2>
 <blockquote>
-<p>The configurations are for the <strong>SQL-Database (ONLY)</strong> to configure the <strong>Model / Type</strong> just use regular <strong>Typing</strong> annotations.
-Or <strong>Mongo</strong> for Mongo-Database <strong>Models</strong></p>
-<p><p style="color:red"><strong>Note:</strong></p> <strong>Type Annotation</strong> is also how you design the schema of your <strong>database</strong>. <br />
-In <strong>SQL-Databases</strong> each Type means something. However, in <strong>Mongo-Databases</strong> it does <strong>NOT</strong>, <br />
-since Mongo is just <strong>JSON</strong>.</p>
+<p>These configurations are for <strong>SQL-Database (ONLY)</strong></p>
 </blockquote>
 <div class="highlight"><span class="filename">model-sample.py</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="sd">&quot;&quot;&quot;</span>

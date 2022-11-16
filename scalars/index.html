@@ -296,6 +296,33 @@
     Usage Example
   </a>
   
+    <nav class="md-nav" aria-label="Usage Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    Step 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    Step 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-sql-only" class="md-nav__link">
+    Step 3 (SQL Only)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -340,14 +367,14 @@
       
       
         <label class="md-nav__link" for="__nav_4">
-          Database (Typing)
+          Database (Table)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Database (Typing)" data-md-level="1">
+      <nav class="md-nav" aria-label="Database (Table)" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Database (Typing)
+          Database (Table)
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -449,8 +476,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../extras/sql-q/" class="md-nav__link">
+        SQL ( Q )
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../extras/id-decoder/" class="md-nav__link">
         ID-Decode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extras/load/" class="md-nav__link">
+        Load
       </a>
     </li>
   
@@ -506,6 +561,33 @@
     Usage Example
   </a>
   
+    <nav class="md-nav" aria-label="Usage Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    Step 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    Step 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-sql-only" class="md-nav__link">
+    Step 3 (SQL Only)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -554,7 +636,7 @@
 </tr>
 <tr>
 <td><strong><code>String</code></strong></td>
-<td><strong><code>dbcontroller.Text</code></strong></td>
+<td><strong><code>dbcontroller.text</code></strong></td>
 <td>Text</td>
 </tr>
 <tr>
@@ -589,12 +671,12 @@
 </tr>
 <tr>
 <td><strong><code>Decimal</code></strong></td>
-<td><strong><code>decimal.Decimal</code></strong></td>
+<td><strong><code>dbcontroller.decimal</code></strong></td>
 <td>String(length=255)</td>
 </tr>
 <tr>
 <td><strong><code>JSON</code></strong></td>
-<td><strong><code>dbcontroller.JSON</code></strong></td>
+<td><strong><code>dbcontroller.json</code></strong></td>
 <td>JSON</td>
 </tr>
 </tbody>
@@ -606,21 +688,24 @@
 </ol>
 <hr />
 <h2 id="usage-example">Usage <strong>Example</strong></h2>
+<h3 id="step-1">Step <strong>1</strong></h3>
 <div class="highlight"><span class="filename">Basic Tools</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="sd">&quot;&quot;&quot;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="sd">    Type | Model</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="sd">&quot;&quot;&quot;</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">import</span> <span class="nn">dbcontroller</span> <span class="k">as</span> <span class="nn">dbc</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">sql</span>   <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Controller</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;sqlite:///example.db&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">mongo</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Controller</span><span class="p">(</span><span class="n">mongo</span><span class="o">=</span><span class="s2">&quot;mongodb://localhost:27017/example&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># DateTime Functions</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">class</span> <span class="nc">Date</span><span class="p">:</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">datetime</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">date</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">time</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">sql</span>   <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Controller</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;sqlite:///example.db&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">mongo</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Controller</span><span class="p">(</span><span class="n">mongo</span><span class="o">=</span><span class="s2">&quot;mongodb://localhost:27017/example&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># DateTime Functions</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">class</span> <span class="nc">Date</span><span class="p">:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">datetime</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">date</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">time</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 </code></pre></div>
+<h3 id="step-2">Step <strong>2</strong></h3>
 <div class="highlight"><span class="filename">Create Model(s)</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nd">@sql</span><span class="o">.</span><span class="n">model</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">class</span> <span class="nc">Product</span><span class="p">:</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="c1"># Core { Python }</span>
@@ -653,7 +738,8 @@
 <a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="k">class</span> <span class="nc">Group</span><span class="p">:</span>
 <a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
-<div class="highlight"><span class="filename">Create Database's Table (SQL Only)</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<h3 id="step-3-sql-only">Step <strong>3</strong> (<strong>SQL</strong> Only)</h3>
+<div class="highlight"><span class="filename">Create Database's Table</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">sql</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
