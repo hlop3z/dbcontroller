@@ -78,7 +78,7 @@ def column_base_setup(name: str, config: dict) -> dict:
     }
 
 
-def column_setup(*fields, name: str = None, config: dict = None) -> SA.Column:
+def column_setup(*fields, name: str = None, config: dict = None):
     """Column Setup"""
     setup = column_base_setup(name, config)
     return SA.Column(*fields, **setup)
