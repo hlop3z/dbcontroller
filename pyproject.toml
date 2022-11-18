@@ -4,7 +4,7 @@ build-backend = "pdm.pep517.api"
 
 [project]
 name = "dbcontroller"
-version = "0.1.44"
+version = "0.1.45"
 description = "Python - Database Controller (SQLAlchemy & Motor)"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
@@ -24,7 +24,7 @@ classifiers = [
 [project.optional-dependencies]
 mongo = ["motor"]
 sql = ["sqlalchemy", "alembic"]
-sqlite = ["sqlalchemy", "databases[aiosqlite]>=0.6.1"]
+sqlite = ["sqlalchemy", "databases[aiosqlite]>=0.6.1", "alembic"]
 testing = ["dbcontroller[mongo,sqlite]"]
 
 [tool]
