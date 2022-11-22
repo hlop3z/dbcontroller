@@ -36,6 +36,7 @@ def classproperty(func):
         func = classmethod(func)
     return ClassPropertyDescriptor(func)
 
+
 """
     Model Querying
 """
@@ -48,13 +49,21 @@ class Manager:
 
     @classproperty
     def engine(cls):
-        """Return Controller"""
+        """Model's Engine"""
         return cls.model.__database__
 
     @classproperty
     def objects(cls):
-        """Return Controller"""
+        """Model's Controller"""
         return cls.model.objects
+
+    @classmethod
+    def form(cls, form):
+        """Model's Cleaner"""
+        the_input = cls.model(**form.data.__dict__).__dict__
+        del the_input["id"]
+        del the_input["_id"]
+        return the_input
 
 
 def manager(cls):
