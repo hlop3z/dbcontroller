@@ -205,10 +205,10 @@ class FormBase:
                 errors.append(the_error.__dict__)
             # Required Validator
             if setup.required:
-                if name not in form.keys():
-                    the_error = FormError(
-                        field=name, type="required", text=f"{ name } is required."
-                    )
+                the_error = FormError(
+                    field=name, type="required", text=f"{ name } is required."
+                )
+                if name not in form.keys() or not current_input:
                     errors.append(the_error.__dict__)
             # Custom Validators
             if current_input:
@@ -306,7 +306,7 @@ def dataclass(
     prefix: str | list[str] = None,
     suffix: str | list[str] = None,
     graphql: bool = True,
-    description:str = None,
+    description: str = None,
 ):
     """Form To GQL Input"""
 
