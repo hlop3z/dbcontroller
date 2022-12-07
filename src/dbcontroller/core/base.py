@@ -26,7 +26,7 @@ def custom_type(
     engine: str = "sql",
     database: str = "default",
     controller: object = None,
-    description:str = None,
+    description: str = None,
 ):
     """{ Controller } for GraphQL { Type } & { Model } Database"""
     primary_key = primary_key or []

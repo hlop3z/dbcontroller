@@ -16,7 +16,9 @@ def to_obj(items, sql: bool = False):
 
     def row_handler(row: dict):
         # SQL-Alchemy
-        row2dict = lambda row: {key: getattr(row, key) for key in row.keys()}
+        def row2dict(row):
+            return {key: getattr(row, key) for key in row.keys()}
+
         if sql:
             row = row2dict(row)
         # Common
@@ -35,7 +37,7 @@ def to_obj(items, sql: bool = False):
 
     if items:
         return item_handler(items)
-    elif isinstance(items, list) and len(items) == 0:
+    if isinstance(items, list) and len(items) == 0:
         return []
     return None
 

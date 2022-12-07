@@ -6,7 +6,8 @@ import typing
 from collections import OrderedDict, namedtuple
 
 from .. import manager
-from ..core.custom_class import Globals
+
+# from ..core.custom_class import Globals
 
 try:
     import motor.motor_asyncio

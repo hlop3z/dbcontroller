@@ -5,13 +5,8 @@
 # import functools
 import math
 
-from .utils import (  # clean_form, clean_update_form,
-    Decode,
-    Objects,
-    Response,
-    fixed_id_column,
-    pagination,
-)
+from .utils import Objects  # clean_form, clean_update_form,
+from .utils import Decode, Response, fixed_id_column, pagination
 
 
 class MongoCrud:

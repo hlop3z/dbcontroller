@@ -90,7 +90,10 @@ disable=W0105,
         too-many-statements,
         arguments-differ,
         too-many-instance-attributes,
-        redefined-builtin
+        redefined-builtin,
+        E0213,
+        E1102,
+        E1101
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

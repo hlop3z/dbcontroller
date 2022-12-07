@@ -4,12 +4,8 @@
 # import functools
 import math
 
-from .utils import (  # clean_form, clean_update_form,
-    Decode,
-    Objects,
-    Response,
-    fixed_id_column,
-)
+from .utils import Objects  # clean_form, clean_update_form,
+from .utils import Decode, Response, fixed_id_column
 from .utils.sql_where import Filters as SQLFilters
 
 try:
@@ -74,26 +70,6 @@ class SQL:
             return await self.create_one(form)
         return await self.create_many(form, return_items)
 
-    async def create_one(self, form: dict):
-        """Create Single-Row."""
-        return_value = await self._create_one_row(form)
-        if return_value.data and not return_value.error:
-            return_value.data = await self.get_by(_id=return_value.data)
-        return return_value
-
-    async def create_many(self, forms: list, return_items: bool):
-        """Create Single-Row."""
-        if return_items:
-            all_ids = []
-            for form in forms:
-                return_value = await self._create_one_row(form)
-                if return_value.data:
-                    all_ids.append(return_value.data)
-            sql_ids_in = self.Q.where("_id", "in", all_ids)
-            items = await self.database.fetch_all(self.Q.select(sql_ids_in))
-            return Response(data=Objects.sql(items), count=len(items))
-        return await self._create_many_rows(forms)
-
     async def _create_one_row(self, form: dict) -> Response:
         """(Base) Create Single-Row."""
         return_value = Response()
@@ -103,6 +79,13 @@ class SQL:
         except Exception as error:
             return_value.error = True
             return_value.error_message = str(error)
+        return return_value
+
+    async def create_one(self, form: dict):
+        """Create Single-Row."""
+        return_value = await self._create_one_row(form)
+        if return_value.data and not return_value.error:
+            return_value.data = await self.get_by(_id=return_value.data)
         return return_value
 
     async def _create_many_rows(self, form: list):
@@ -117,6 +100,19 @@ class SQL:
             return_value.error = True
             return_value.error_message = str(error)
         return return_value
+
+    async def create_many(self, forms: list, return_items: bool):
+        """Create Single-Row."""
+        if return_items:
+            all_ids = []
+            for form in forms:
+                return_value = await self._create_one_row(form)
+                if return_value.data:
+                    all_ids.append(return_value.data)
+            sql_ids_in = self.Q.where("_id", "in", all_ids)
+            items = await self.database.fetch_all(self.Q.select(sql_ids_in))
+            return Response(data=Objects.sql(items), count=len(items))
+        return await self._create_many_rows(forms)
 
     async def update(self, unique_ids: list[str], form: dict):
         """Update Multiple/Single-Row(s)"""

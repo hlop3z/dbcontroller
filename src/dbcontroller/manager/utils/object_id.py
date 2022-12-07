@@ -32,11 +32,11 @@ class Decode:
     """Convert ID to <SQL or Mongo> ID's Type."""
 
     @staticmethod
-    def mongo(ID):
+    def mongo(graphql_id):
         """ID Decode to Mongo"""
-        return mongo_id_decode(ID)
+        return mongo_id_decode(graphql_id)
 
     @staticmethod
-    def sql(ID):
+    def sql(graphql_id):
         """ID Decode to SQL"""
-        return sql_id_decode(ID)
+        return sql_id_decode(graphql_id)
