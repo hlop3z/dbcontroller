@@ -7,6 +7,7 @@ import math
 from .utils import Objects  # clean_form, clean_update_form,
 from .utils import Decode, Response, fixed_id_column
 from .utils.sql_where import Filters as SQLFilters
+from functools import partial
 
 try:
     from sqlalchemy.sql.elements import BinaryExpression
@@ -56,6 +57,7 @@ class SQL:
         self.where = self.Q.where
         self.columns = self.table.columns.keys()
         self.c = self.table.c
+        self.to_obj = partial(Objects.sql, self.columns)
 
     @staticmethod
     def id_decode(unique_id):
@@ -111,7 +113,7 @@ class SQL:
                     all_ids.append(return_value.data)
             sql_ids_in = self.Q.where("_id", "in", all_ids)
             items = await self.database.fetch_all(self.Q.select(sql_ids_in))
-            return Response(data=Objects.sql(items), count=len(items))
+            return Response(data=self.to_obj(items), count=len(items))
         return await self._create_many_rows(forms)
 
     async def update(self, unique_ids: list[str], form: dict):
@@ -157,26 +159,26 @@ class SQL:
         """Get Single-Row from Database Table by ID"""
         query = self.Q.filter_by(_id=Decode.sql(ID))
         item = await self.database.fetch_one(self.Q.select(query))
-        return Objects.sql(item)
+        return self.to_obj(item)
 
     async def get_by(self, **kwargs):
         """Get Single-Row from Database Table by <Keyword-Arguments>"""
         kwargs = fixed_id_column(kwargs)
         query = self.Q.filter_by(**kwargs)
         item = await self.database.fetch_one(self.Q.select(query))
-        return Objects.sql(item)
+        return self.to_obj(item)
 
     async def find_one(self, query):
         """Get Single-Row from Database Table by <SQLAlchemy-BinaryExpression>"""
         item = await self.database.fetch_one(self.Q.select(query))
-        return Objects.sql(item)
+        return self.to_obj(item)
 
     async def all(
         self,
     ):
         """Get All-Rows from Database Table"""
         items = await self.database.fetch_all(self.Q.select())
-        return Response(data=Objects.sql(items), count=len(items), pages=1)
+        return Response(data=self.to_obj(items), count=len(items), pages=1)
 
     async def find(
         self,
@@ -193,7 +195,7 @@ class SQL:
             count = await self.database.fetch_val(query.count)
             _limit = limit or 1
             pages = int(math.ceil(count / _limit))
-            return Response(data=Objects.sql(items), count=count, pages=pages)
+            return Response(data=self.to_obj(items), count=count, pages=pages)
         except Exception as e:
             print(e)
             return Response(data=[], count=0, pages=0)

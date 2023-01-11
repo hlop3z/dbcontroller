@@ -163,7 +163,7 @@ class Filters:
 
         def sql_count(search: Any = None):
             """Get Query's Count"""
-            total_count = sa.select([sa.func.count()])
+            total_count = sa.select(sa.func.count())
             if is_sqlalchemy_query(search):
                 total_count = total_count.where(search)
             return total_count.select_from(objects)

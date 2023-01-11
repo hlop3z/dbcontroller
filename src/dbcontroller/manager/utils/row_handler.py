@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from .ids import ID
 
 
-def to_obj(items, sql: bool = False):
+def to_obj(items, sql: bool = False, columns: list = None):
     """Convert Database-Based-Object into Python-SimpleNamespace-Object
     Args:
         items (list or dict): Database <Rows> or <Row>
@@ -17,7 +17,7 @@ def to_obj(items, sql: bool = False):
     def row_handler(row: dict):
         # SQL-Alchemy
         def row2dict(row):
-            return {key: getattr(row, key) for key in row.keys()}
+            return {key: getattr(row, key) for key in columns if hasattr(row, key)}
 
         if sql:
             row = row2dict(row)
@@ -51,6 +51,6 @@ class Objects:
         return to_obj(items)
 
     @staticmethod
-    def sql(items):
+    def sql(columns, items):
         """Convert SQLAlchemy to SimpleNamespace"""
-        return to_obj(items, sql=True)
+        return to_obj(items, sql=True, columns=columns)
