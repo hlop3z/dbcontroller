@@ -26,3 +26,4 @@ docs/site
 /tests/.report.json
 .ipynb_checkpoints/
 *-checkpoint.ipynb
+.pdm.toml
