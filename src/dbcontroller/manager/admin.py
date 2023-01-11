@@ -58,12 +58,19 @@ class Manager:
         return cls.model.objects
 
     @classmethod
-    def form(cls, form):
-        """Model's Cleaner"""
-        the_input = cls.model(**form.data.__dict__).__dict__
-        del the_input["id"]
-        del the_input["_id"]
-        return the_input
+    def form(cls, __remove__: list | None, **kwargs):
+        """
+        Remove all { Values } that are { None }
+        Plus any { Field } in the { __remove__ } section.
+        """
+        active_filter = __remove__ or []
+        instance = cls.model(**kwargs)
+        form = {
+            key: val
+            for key, val in instance.__dict__.items()
+            if val is not None and key not in active_filter
+        }
+        return form
 
 
 def manager(cls):
