@@ -258,7 +258,10 @@ class FormBase:
                     output_form[name] = new_input
             # Set Default
             if not current_input:
-                output_form[name] = setup.default
+                if callable(setup.default):
+                    output_form[name] = setup.default()
+                else:
+                    output_form[name] = setup.default
 
         if "input" in output_form:
             del output_form["input"]

@@ -4,7 +4,7 @@ build-backend = "pdm.pep517.api"
 
 [project]
 name = "dbcontroller"
-version = "0.1.49"
+version = "0.1.50"
 description = "Python - Database Controller (SQLAlchemy & Motor)"
 readme = "README.md"
 license = { file = "LICENSE.txt" }

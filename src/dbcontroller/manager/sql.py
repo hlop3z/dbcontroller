@@ -3,11 +3,11 @@
 """
 # import functools
 import math
+from functools import partial
 
 from .utils import Objects  # clean_form, clean_update_form,
 from .utils import Decode, Response, fixed_id_column
 from .utils.sql_where import Filters as SQLFilters
-from functools import partial
 
 try:
     from sqlalchemy.sql.elements import BinaryExpression
@@ -76,7 +76,7 @@ class SQL:
         """(Base) Create Single-Row."""
         return_value = Response()
         try:
-            sql_query = self.table.insert(form)
+            sql_query = self.table.insert().values(**form)
             return_value.data = await self.database.execute(sql_query)
         except Exception as error:
             return_value.error = True
