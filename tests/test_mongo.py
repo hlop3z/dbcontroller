@@ -135,6 +135,15 @@ async def test_search():
 
 
 @pytest.mark.asyncio
+async def test_query_list():
+    query = UserMongo.objects.query_list(
+        [["name", "contains", "jane"], "or", ["name", "contains", "joe"]]
+    )
+    results = await UserMongo.objects.find(query, page=1, limit=100, sort_by="-id")
+    assert results.error == False and results.count == 2
+
+
+@pytest.mark.asyncio
 async def test_reset():
     results = await UserMongo.objects.delete(None, all=True)
     assert results.error == False

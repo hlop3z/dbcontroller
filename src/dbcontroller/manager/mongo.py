@@ -7,6 +7,7 @@ import math
 
 from .utils import Objects  # clean_form, clean_update_form,
 from .utils import Decode, Response, fixed_id_column, pagination
+from .utils.mongo_where import BinaryExpression as MongoWhere
 
 
 class MongoCrud:
@@ -82,8 +83,8 @@ class MongoCrud:
     async def find(
         self,
         search: dict = None,
-        page: int = 1,
-        limit: int = 100,
+        page: int | None = None,
+        limit: int | None = None,
         sort_by: str = "-id",
     ) -> Response:
         """FIND"""
@@ -96,11 +97,12 @@ class MongoCrud:
         if sort_by == "id":
             sort_by = "_id"
         try:
-            _page = pagination(page=page, limit=limit)
             # Add Sort By
             cursor = collection.find(search).sort(sort_by, sort_desc)
             # Offset & Limit
-            cursor.skip(_page.offset).limit(_page.limit)
+            if page and limit:
+                _page = pagination(page=page, limit=limit)
+                cursor.skip(_page.offset).limit(_page.limit)
             items = [i async for i in cursor]
             count = await collection.count_documents(search)
             pages = int(math.ceil(count / limit))
@@ -126,6 +128,7 @@ class Mongo:
         self.collection = database
         self.crud = MongoCrud(objects)
         self.columns = keys
+        self.where = MongoWhere
 
     @staticmethod
     def id_decode(unique_id):
@@ -206,3 +209,27 @@ class Mongo:
         """Get Multiple-Rows from Database Collection by <Searching-Columns>"""
         search = [{key: {"$regex": value}} for key in columns]
         return await self.find({"$or": search}, page=page, limit=limit, sort_by=sort_by)
+
+    def query_list(self, data: list | None = None):
+        """Array of Mongo.where(s)"""
+        query = None
+        operator = None
+
+        for item in data:
+            if isinstance(item, list):
+                column = item[0]
+                op = item[1]
+                value = item[2]
+                expression = self.where(column, op, value)
+                if query is None:
+                    query = expression
+                else:
+                    if operator == "and":
+                        query = query & expression
+                    elif operator == "or":
+                        query = query | expression
+            elif item == "and":
+                operator = "and"
+            elif item == "or":
+                operator = "or"
+        return query.query
