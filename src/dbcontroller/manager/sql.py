@@ -225,3 +225,27 @@ class SQL:
         query = self.Q.search(columns, value) if value else None
         items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
         return items
+
+    def query_list(self, data: list | None = None):
+        """Array of SQL.where(s)"""
+        query = None
+        operator = None
+
+        for item in data:
+            if isinstance(item, list):
+                column = item[0]
+                op = item[1]
+                value = item[2]
+                expression = self.where(column, op, value)
+                if query is None:
+                    query = expression
+                else:
+                    if operator == "and":
+                        query = query & expression
+                    elif operator == "or":
+                        query = query | expression
+            elif item == "and":
+                operator = "and"
+            elif item == "or":
+                operator = "or"
+        return query
