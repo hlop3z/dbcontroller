@@ -82,7 +82,7 @@ table = User.objects
 === "Find-One"
 
     ```python
-    query = table.where("name", "contains", "joe")
+    query = {"name": {"$regex": "joe"}}
     results = await table.find_one(query)
     ```
 
@@ -97,10 +97,10 @@ table = User.objects
 === "Find"
 
     ```python
-    query = (
-        table.where("name", "contains", "jane")
-        | table.where("name", "contains", "joe")
-    )
+    query = {"$or": [
+        {"name": {"$regex": "joe"}},
+        {"name": {"$regex": "jane"}}
+    ]}
     results = await table.find(query, page=1, limit=100, sort_by="-id")
     ```
 

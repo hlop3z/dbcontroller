@@ -44,10 +44,11 @@ graph LR;
 
 ## **Util** Methods
 
-| Method          | Is Used To...                                 | Variables |
-| --------------- | --------------------------------------------- | --------- |
-| **`id_decode`** | **Decode** Encoded-ID                         | `(str)`   |
-| **`Q`**         | **Custom-Querying** for **SQLAlchemy** Tables | `N/A`     |
+| Method           | Is Used To...                                 | Variables |
+| ---------------- | --------------------------------------------- | --------- |
+| **`id_decode`**  | **Decode** Encoded-ID                         | `(str)`   |
+| **`query_list`** | Transform a **`List`** into a **Query**       | `list`    |
+| **`Q`**          | **Custom-Querying** for **SQLAlchemy** Tables | `N/A`     |
 
 ## Database **Type | Model** Setup
 

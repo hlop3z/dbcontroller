@@ -15,29 +15,39 @@ def mongo_regex(data, ignore=False):
 
 def where_base(key: str, operation: str, val: Any):
     """Standard Querying For Tables"""
+
+    extra = ""
+    if operation.startswith("!"):
+        operation = operation[1:]
+        extra = "!"
+
     match operation:
         case "eq":
-            return_value = [[key, "eq", val]]
+            return_value = [[key, extra + "eq", val]]
         case "ne":
-            return_value = [[key, "ne", val]]
+            return_value = [[key, extra + "ne", val]]
         case "lt":
-            return_value = [[key, "lt", val]]
+            return_value = [[key, extra + "lt", val]]
         case "le":
-            return_value = [[key, "lte", val]]
+            return_value = [[key, extra + "lte", val]]
         case "gt":
-            return_value = [[key, "gt", val]]
+            return_value = [[key, extra + "gt", val]]
         case "ge":
-            return_value = [[key, "gte", val]]
+            return_value = [[key, extra + "gte", val]]
         case "contains":
-            return_value = [[key, "regex", mongo_regex(val, True)]]
+            return_value = [[key, extra + "regex", mongo_regex(val, True)]]
         case "regex":
-            return_value = [[key, "regex", mongo_regex(val)]]
+            return_value = [[key, extra + "regex", mongo_regex(val)]]
         case "iregex":
-            return_value = [[key, "regex", mongo_regex(val, True)]]
+            return_value = [[key, extra + "regex", mongo_regex(val, True)]]
         case "in":
-            return_value = [[key, "in", val]]
+            return_value = [[key, extra + "in", val]]
         case "bt":
-            return_value = [[key, "gte", val[0]], "and", [key, "lte", val[1]]]
+            return_value = [
+                [key, extra + "gte", val[0]],
+                "and",
+                [key, extra + "lte", val[1]],
+            ]
     return return_value
 
 
@@ -52,7 +62,11 @@ def query_builder(data):
             column = item[0]
             op = item[1]
             value = item[2]
-            expression = {"$" + op: value}
+            if op.startswith("!"):
+                op = op[1:]
+                expression = {"$not": {"$" + op: value}}
+            else:
+                expression = {"$" + op: value}
             subquery = {column: expression}
             subqueries.append(subquery)
         elif item == "and":

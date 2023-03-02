@@ -11,8 +11,11 @@ nav:
       - SQL: database/sql.md
       - Mongo: database/mongo.md
       - Manager: database/manager.md
+  - Where:
+      - Query-List: query-list/index.md
+      - SQL: query-list/sql-where.md
+      - Mongo: query-list/mongo-where.md
   - Extras:
-      - SQL Where: extras/sql-where.md
       - SQL ( Q ): extras/sql-q.md
       - ID-Decode: extras/id-decoder.md
       - Load: extras/load.md
