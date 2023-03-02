@@ -2,52 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/notebook/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/scalars/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/database/manager/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/database/mongo/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/database/sql/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/extras/id-decoder/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/extras/load/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hlop3z.github.io/dbcontroller/extras/sql-q/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://hlop3z.github.io/dbcontroller/extras/sql-where/</loc>
-         <lastmod>2022-11-16</lastmod>
+         <loc>https://hlop3z.github.io/dbcontroller/query-list/</loc>
+         <lastmod>2023-03-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hlop3z.github.io/dbcontroller/query-list/mongo-where/</loc>
+         <lastmod>2023-03-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hlop3z.github.io/dbcontroller/query-list/sql-where/</loc>
+         <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

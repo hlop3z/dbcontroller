@@ -8,27 +8,27 @@
       
       
       
-        <link rel="canonical" href="https://hlop3z.github.io/dbcontroller/notebook/">
+        <link rel="canonical" href="https://hlop3z.github.io/dbcontroller/query-list/mongo-where/">
       
       
-        <link rel="prev" href="../scalars/">
+        <link rel="prev" href="../sql-where/">
       
       
-        <link rel="next" href="../database/sql/">
+        <link rel="next" href="../../extras/sql-q/">
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.15">
     
     
       
-        <title>(Demo) Notebook - DB-Controller</title>
+        <title>Mongo - DB-Controller</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.113286f1.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.113286f1.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
 
@@ -44,9 +44,9 @@
       
     
     
-      <link rel="stylesheet" href="../css/extra.css">
+      <link rel="stylesheet" href="../../css/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#notebook-dbc" class="md-skip">
+        <a href="#mongo-where-operators" class="md-skip">
           Skip to content
         </a>
       
@@ -89,7 +89,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="DB-Controller" class="md-header__button md-logo" aria-label="DB-Controller" data-md-component="logo">
+    <a href="../.." title="DB-Controller" class="md-header__button md-logo" aria-label="DB-Controller" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4-3.58 4-8 4-8-1.79-8-4m8.08 11H12c-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.29a7.38 7.38 0 0 1-.29-2c0-.34.03-.67.08-1M20 12.08V9c0 2.21-3.58 4-8 4s-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.69c1.13-2.37 3.53-4 6.31-4 .34 0 .67.03 1 .08m3.8 8.32c.1 0 .1.1 0 .2l-1 1.7c-.1.1-.2.1-.3.1l-1.2-.4c-.3.2-.5.3-.8.5l-.2 1.3c0 .1-.1.2-.2.2h-2c-.1 0-.2-.1-.3-.2l-.2-1.3c-.3-.1-.6-.3-.8-.5l-1.2.5c-.1 0-.2 0-.3-.1l-1-1.7c-.1-.1 0-.2.1-.3l1.1-.8v-1l-1.1-.8c-.1-.1-.1-.2-.1-.3l1-1.7c.1-.1.2-.1.3-.1l1.2.5c.3-.2.5-.3.8-.5l.2-1.3c0-.1.1-.2.3-.2h2c.1 0 .2.1.2.2l.2 1.3c.3.1.6.3.9.5l1.2-.5c.1 0 .3 0 .3.1l1 1.7c.1.1 0 .2-.1.3l-1.1.8v1l1.1.8M20.5 19c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.7 1.5 1.5 1.5 1.5-.7 1.5-1.5Z"/></svg>
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              (Demo) Notebook
+              Mongo
             
           </span>
         </div>
@@ -207,7 +207,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="DB-Controller" class="md-nav__button md-logo" aria-label="DB-Controller" data-md-component="logo">
+    <a href="../.." title="DB-Controller" class="md-nav__button md-logo" aria-label="DB-Controller" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4-3.58 4-8 4-8-1.79-8-4m8.08 11H12c-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.29a7.38 7.38 0 0 1-.29-2c0-.34.03-.67.08-1M20 12.08V9c0 2.21-3.58 4-8 4s-8-1.79-8-4v3c0 2.21 3.58 4 8 4h.69c1.13-2.37 3.53-4 6.31-4 .34 0 .67.03 1 .08m3.8 8.32c.1 0 .1.1 0 .2l-1 1.7c-.1.1-.2.1-.3.1l-1.2-.4c-.3.2-.5.3-.8.5l-.2 1.3c0 .1-.1.2-.2.2h-2c-.1 0-.2-.1-.3-.2l-.2-1.3c-.3-.1-.6-.3-.8-.5l-1.2.5c-.1 0-.2 0-.3-.1l-1-1.7c-.1-.1 0-.2.1-.3l1.1-.8v-1l-1.1-.8c-.1-.1-.1-.2-.1-.3l1-1.7c.1-.1.2-.1.3-.1l1.2.5c.3-.2.5-.3.8-.5l.2-1.3c0-.1.1-.2.3-.2h2c.1 0 .2.1.2.2l.2 1.3c.3.1.6.3.9.5l1.2-.5c.1 0 .3 0 .3.1l1 1.7c.1.1 0 .2-.1.3l-1.1.8v1l1.1.8M20.5 19c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.7 1.5 1.5 1.5 1.5-.7 1.5-1.5Z"/></svg>
@@ -238,7 +238,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -253,7 +253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scalars/" class="md-nav__link">
+      <a href="../../scalars/" class="md-nav__link">
         Scalars/Fields/Columns
       </a>
     </li>
@@ -266,114 +266,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          (Demo) Notebook
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../notebook/" class="md-nav__link">
         (Demo) Notebook
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pip-install" class="md-nav__link">
-    PIP Install
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pdm-install" class="md-nav__link">
-    PDM Install
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#initialize" class="md-nav__link">
-    Initialize
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#database-controller" class="md-nav__link">
-    Database Controller
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#load-classes-manager" class="md-nav__link">
-    Load Classes (Manager)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sqlalchemy" class="md-nav__link">
-    SQLAlchemy
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    Demo
-  </a>
-  
-    <nav class="md-nav" aria-label="Demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
-    Create
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-all" class="md-nav__link">
-    Get-All
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -415,7 +312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/sql/" class="md-nav__link">
+      <a href="../../database/sql/" class="md-nav__link">
         SQL
       </a>
     </li>
@@ -429,7 +326,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/mongo/" class="md-nav__link">
+      <a href="../../database/mongo/" class="md-nav__link">
         Mongo
       </a>
     </li>
@@ -443,7 +340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/manager/" class="md-nav__link">
+      <a href="../../database/manager/" class="md-nav__link">
         Manager
       </a>
     </li>
@@ -463,16 +360,18 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
       
       
       
@@ -481,7 +380,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           Where
@@ -494,7 +393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../query-list/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Query-List
       </a>
     </li>
@@ -508,7 +407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../query-list/sql-where/" class="md-nav__link">
+      <a href="../sql-where/" class="md-nav__link">
         SQL
       </a>
     </li>
@@ -520,11 +419,59 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../query-list/mongo-where/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Mongo
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Mongo
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api-demo" class="md-nav__link">
+    API - Demo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -573,7 +520,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../extras/sql-q/" class="md-nav__link">
+      <a href="../../extras/sql-q/" class="md-nav__link">
         SQL ( Q )
       </a>
     </li>
@@ -587,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../extras/id-decoder/" class="md-nav__link">
+      <a href="../../extras/id-decoder/" class="md-nav__link">
         ID-Decode
       </a>
     </li>
@@ -601,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../extras/load/" class="md-nav__link">
+      <a href="../../extras/load/" class="md-nav__link">
         Load
       </a>
     </li>
@@ -642,71 +589,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pip-install" class="md-nav__link">
-    PIP Install
+  <a href="#api-demo" class="md-nav__link">
+    API - Demo
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pdm-install" class="md-nav__link">
-    PDM Install
+  <a href="#example" class="md-nav__link">
+    Example
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#initialize" class="md-nav__link">
-    Initialize
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#database-controller" class="md-nav__link">
-    Database Controller
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#load-classes-manager" class="md-nav__link">
-    Load Classes (Manager)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sqlalchemy" class="md-nav__link">
-    SQLAlchemy
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    Demo
-  </a>
-  
-    <nav class="md-nav" aria-label="Demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create" class="md-nav__link">
-    Create
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-all" class="md-nav__link">
-    Get-All
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -728,53 +620,76 @@
   
 
 
-<h1 id="notebook-dbc"><strong>Notebook (DBC)</strong></h1>
-<h2 id="pip-install"><strong>PIP</strong> Install</h2>
-<p>Install</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>notebook<span class="w"> </span><span class="s2">&quot;dbcontroller[testing]&quot;</span>
+<h1 id="mongo-where-operators">Mongo <strong>Where</strong> ( Operators )</h1>
+<div class="admonition warning">
+<p class="admonition-title">table</p>
+<p><strong><code>table</code></strong> is short for <strong><code>Model.objects</code></strong></p>
+</div>
+<blockquote>
+<p><strong>Usage</strong>: <code>table.where(str: "column", str: "method", Any: value)</code></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Check Column (IF)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>eq</code></strong></td>
+<td><strong>Equals</strong></td>
+</tr>
+<tr>
+<td><strong><code>lt</code></strong></td>
+<td><strong>Less than</strong></td>
+</tr>
+<tr>
+<td><strong><code>le</code></strong></td>
+<td><strong>Less than or Equal than</strong></td>
+</tr>
+<tr>
+<td><strong><code>gt</code></strong></td>
+<td><strong>Greater than</strong></td>
+</tr>
+<tr>
+<td><strong><code>ge</code></strong></td>
+<td><strong>Greater than or Equal than</strong></td>
+</tr>
+<tr>
+<td><strong><code>contains</code></strong></td>
+<td><strong>Custom Text Search (Ignore-Case)</strong></td>
+</tr>
+<tr>
+<td><strong><code>regex</code></strong></td>
+<td><strong>Text Search "regex" (Case-Sensitive)</strong></td>
+</tr>
+<tr>
+<td><strong><code>iregex</code></strong></td>
+<td><strong>Text Search "regex" (Ignore-Case)</strong></td>
+</tr>
+<tr>
+<td><strong><code>in</code></strong></td>
+<td><strong>In List</strong></td>
+</tr>
+<tr>
+<td><strong><code>bt</code></strong></td>
+<td><strong>Between</strong> "A &amp; B"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="api-demo">API - <strong>Demo</strong></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">table</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;column&quot;</span><span class="p">,</span> <span class="s2">&quot;operator&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p>Run</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>-m<span class="w"> </span>jupyter<span class="w"> </span>notebook
-</code></pre></div>
-<h2 id="pdm-install"><strong>PDM</strong> Install</h2>
-<p>Install</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pdm<span class="w"> </span>add<span class="w"> </span>notebook<span class="w"> </span><span class="s2">&quot;dbcontroller[testing]&quot;</span>
-</code></pre></div>
-<p>Run</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pdm<span class="w"> </span>run<span class="w"> </span>jupyter<span class="w"> </span>notebook
-</code></pre></div>
-<h2 id="initialize">Initialize</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span> <span class="nn">dbcontroller</span> <span class="k">as</span> <span class="nn">dbc</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">sql</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Controller</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;sqlite:///example.db&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="database-controller">Database <strong>Controller</strong></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nd">@sql</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;users&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">notes</span><span class="p">:</span> <span class="n">dbc</span><span class="o">.</span><span class="n">text</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">meta</span><span class="p">:</span> <span class="n">dbc</span><span class="o">.</span><span class="n">json</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">disabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</code></pre></div>
-<h2 id="load-classes-manager">Load Classes (<strong>Manager</strong>)</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Init Objects</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">dbc</span><span class="o">.</span><span class="n">load</span><span class="p">([</span><span class="n">User</span><span class="p">])</span>
-</code></pre></div>
-<h2 id="sqlalchemy">SQLAlchemy</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Init Table (SQLAlchemy)</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">sql</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
-</code></pre></div>
-<hr />
-<h2 id="demo">Demo</h2>
-<hr />
-<h4 id="create"><strong>Create</strong></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">await</span> <span class="n">User</span><span class="o">.</span><span class="n">create</span><span class="p">([{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;joe doe&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jane doll&quot;</span><span class="p">}])</span>
-</code></pre></div>
-<h4 id="get-all"><strong>Get-All</strong></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">await</span> <span class="n">User</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<h3 id="example"><strong>Example</strong></h3>
+<blockquote>
+<p>You can add an <strong>exclamation point "<code>!</code>"</strong> at the beginning of the operator to make it a <strong>"<code>not</code>"</strong></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Name Equals Joe</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">table</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;eq&quot;</span><span class="p">,</span> <span class="s2">&quot;joe&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Name Not Equals Joe</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">table</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;!eq&quot;</span><span class="p">,</span> <span class="s2">&quot;joe&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 
@@ -822,10 +737,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "content.code.annotate"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      <script src="../../assets/javascripts/bundle.2a6f1dda.min.js"></script>
       
     
   </body>
