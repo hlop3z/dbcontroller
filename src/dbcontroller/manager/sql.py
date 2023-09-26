@@ -226,26 +226,32 @@ class SQL:
         items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
         return items
 
-    def query_list(self, data: list | None = None):
+
+    def query_list(self, nested_list: list | None = None):
         """Array of SQL.where(s)"""
         query = None
-        operator = None
 
-        for item in data:
+        # Loop through the nested JSON array
+        for item in nested_list:
+            # Check if the item is a list
             if isinstance(item, list):
-                column = item[0]
-                op = item[1]
-                value = item[2]
-                expression = self.where(column, op, value)
+                # The list most have exactly three elements
+                field, operator, value = item
+                where_condition = self.where(field, operator, value)
+
                 if query is None:
-                    query = expression
+                    query = where_condition
                 else:
-                    if operator == "and":
-                        query = query & expression
-                    elif operator == "or":
-                        query = query | expression
-            elif item == "and":
-                operator = "and"
-            elif item == "or":
-                operator = "or"
+                    # Combine conditions based on "and" and "or" operators
+                    if item == "and":
+                        query = query & where_condition
+                    elif item == "or":
+                        query = query | where_condition
+            else:
+                # Handle "and" and "or" operators as needed
+                if item == "and":
+                    query = query & query
+                elif item == "or":
+                    query = query | query
+
         return query
