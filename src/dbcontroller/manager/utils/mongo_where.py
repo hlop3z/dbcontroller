@@ -91,31 +91,24 @@ def query_builder(data):
     return query
 
 
+
 class BinaryExpression:
     """Mongo SQL-Where-Style"""
 
     def __init__(self, *value):
-        self._query = []
-        self.value = where_base(*value)
-        self._query.extend(self.value)
-
-    @property
-    def query(self):
-        """Transform List to Query"""
-        return query_builder(self._query)
+        self.query = query_builder(where_base(*value))
 
     def __or__(self, obj):
         """Bitwise OR"""
         if isinstance(obj, BinaryExpression):
-            self._query.append("or")
-            self._query.extend(obj.value)
+            self.query = {"$or": [self.query, obj.query]} 
             return self
         raise ValueError("Must be an instance of BinaryExpression class")
 
     def __and__(self, obj):
         """Bitwise AND"""
         if isinstance(obj, BinaryExpression):
-            self._query.append("and")
-            self._query.extend(obj.value)
+            self.query = {"$and": [self.query, obj.query]} 
             return self
         raise ValueError("Must be an instance of BinaryExpression class")
+

@@ -199,6 +199,8 @@ class Mongo:
 
     async def find_one(self, search: dict = None):
         """Get Single-Row from Database Collection"""
+        if isinstance(search, MongoWhere):
+            search = search.query
         return await self.crud.find_one(search)
 
     async def all(self):
@@ -210,6 +212,8 @@ class Mongo:
     ):
         """Get Multiple-Rows from Database Collection"""
         sort_by = fixed_id_column(sort_by)
+        if isinstance(search, MongoWhere):
+            search = search.query
         return await self.crud.find(
             search=search, page=page, limit=limit, sort_by=sort_by
         )
@@ -219,6 +223,8 @@ class Mongo:
     ):
         """Get Multiple-Rows from Database Collection"""
         sort_by = fixed_id_column(sort_by)
+        if isinstance(search, MongoWhere):
+            search = search.query
         return await self.crud.find_all(
             search=search, sort_by=sort_by
         )
@@ -265,4 +271,4 @@ class Mongo:
                 operator = "and"
             elif item == "or":
                 operator = "or"
-        return query.query
+        return query
