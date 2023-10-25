@@ -111,6 +111,30 @@ class MongoCrud:
             result = Response(error=True, error_message=str(error))
         return result
 
+
+    async def find_all(
+        self,
+        search: dict = None,
+        sort_by: str = "-id",
+    ) -> Response:
+        """FIND-ALL"""
+        collection = self.collection
+        sort_desc = 1
+        # Check Sort By
+        if sort_by.startswith("-"):
+            sort_by = sort_by[1:]
+            sort_desc = -1
+        if sort_by == "id":
+            sort_by = "_id"
+        try:
+            # Add Sort By
+            cursor = collection.find(search).sort(sort_by, sort_desc)
+            items = [i async for i in cursor]
+            result = Response(data=Objects.mongo(items), count=len(items), pages=1)
+        except Exception as error:
+            result = Response(error=True, error_message=str(error))
+        return result
+
     async def all(self):
         """ALL-Rows"""
         collection = self.collection
@@ -188,6 +212,15 @@ class Mongo:
         sort_by = fixed_id_column(sort_by)
         return await self.crud.find(
             search=search, page=page, limit=limit, sort_by=sort_by
+        )
+
+    async def find_all(
+        self, search: dict = None, sort_by: str = "-id"
+    ):
+        """Get Multiple-Rows from Database Collection"""
+        sort_by = fixed_id_column(sort_by)
+        return await self.crud.find_all(
+            search=search, sort_by=sort_by
         )
 
     async def filter_by(

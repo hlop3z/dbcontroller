@@ -26,4 +26,7 @@ docs/site
 /tests/.report.json
 .ipynb_checkpoints/
 *-checkpoint.ipynb
+.pdm-python
+pdm.lock
+.pdm.toml
 .pdm.toml

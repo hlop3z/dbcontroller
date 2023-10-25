@@ -21,7 +21,7 @@ dir_up(1)
 import dbcontroller as dbc
 
 # Config
-mongo = dbc.Controller(mongo="mongodb://localhost:27017/test_database")
+mongo = dbc.Controller(mongo="mongodb://localhost:63445/test_database")
 
 # Types
 @mongo.model(table_name="main_user")
@@ -142,6 +142,13 @@ async def test_query_list():
     results = await UserMongo.objects.find(query, page=1, limit=100, sort_by="-id")
     assert results.error == False and results.count == 2
 
+@pytest.mark.asyncio
+async def test_find_all():
+    query = UserMongo.objects.query_list(
+        [["name", "contains", "jane"], "or", ["name", "contains", "joe"]]
+    )
+    results = await UserMongo.objects.find_all(query, sort_by="-id")
+    assert results.error == False and results.count == 2
 
 @pytest.mark.asyncio
 async def test_reset():

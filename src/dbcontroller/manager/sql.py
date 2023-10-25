@@ -200,6 +200,21 @@ class SQL:
             print(e)
             return Response(data=[], count=0, pages=0)
 
+    async def find_all(
+        self,
+        search: BinaryExpression = None,
+        sort_by: str | None = None,
+    ):
+        """Get Multiple-Rows from Database Table by <SQLAlchemy-BinaryExpression>"""
+        sort_by = fixed_id_column(sort_by)
+        try:
+            query = self.Q.find(search, page=None, limit=None, sort_by=sort_by)
+            items = await self.database.fetch_all(query.query)
+            return Response(data=self.to_obj(items), count=len(items), pages=1)
+        except Exception as e:
+            print(e)
+            return Response(data=[], count=0, pages=0)
+
     async def filter_by(
         self,
         search: dict | None = None,
@@ -226,32 +241,25 @@ class SQL:
         items = await self.find(query, page=page, limit=limit, sort_by=sort_by)
         return items
 
-
-    def query_list(self, nested_list: list | None = None):
-        """Array of SQL.where(s)"""
-        query = None
-
-        # Loop through the nested JSON array
-        for item in nested_list:
-            # Check if the item is a list
-            if isinstance(item, list):
-                # The list most have exactly three elements
-                field, operator, value = item
-                where_condition = self.where(field, operator, value)
-
-                if query is None:
-                    query = where_condition
-                else:
-                    # Combine conditions based on "and" and "or" operators
-                    if item == "and":
-                        query = query & where_condition
-                    elif item == "or":
-                        query = query | where_condition
-            else:
-                # Handle "and" and "or" operators as needed
-                if item == "and":
-                    query = query & query
+    def query_list(self, data: list | None = None):
+            """Array of SQL.where(s)"""
+            query = None
+            operator = None
+            for item in data:
+                if isinstance(item, list):
+                    column = item[0]
+                    op = item[1]
+                    value = item[2]
+                    expression = self.where(column, op, value)
+                    if query is None:
+                        query = expression
+                    else:
+                        if operator == "and":
+                            query = query & expression
+                        elif operator == "or":
+                            query = query | expression
+                elif item == "and":
+                    operator = "and"
                 elif item == "or":
-                    query = query | query
-
-        return query
+                    operator = "or"
+            return query
