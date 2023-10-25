@@ -116,7 +116,7 @@ class SQL:
             return Response(data=self.to_obj(items), count=len(items))
         return await self._create_many_rows(forms)
 
-    async def update(self, unique_ids: list[str], form: dict):
+    async def update(self, unique_ids: list[str], form: dict, ignore_return: bool = False):
         """Update Multiple/Single-Row(s)"""
         return_value = Response()
         # Get Ids
@@ -132,7 +132,7 @@ class SQL:
             return_value.error = True
             return_value.error_message = str(error)
         # Get Details
-        if len(all_ids) == 1 and return_value.count == 1:
+        if len(all_ids) == 1 and return_value.count == 1 and not ignore_return:
             return_value.data = await self.get_by(_id=all_ids[0])
         return return_value
 

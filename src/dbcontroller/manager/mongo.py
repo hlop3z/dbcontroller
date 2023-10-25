@@ -163,14 +163,14 @@ class Mongo:
         """Create Single-Row."""
         return await self.crud.create(form)
 
-    async def update(self, unique_ids: list[str], form: dict):
+    async def update(self, unique_ids: list[str], form: dict, ignore_return: bool = False):
         """Update Multiple/Single-Row(s)"""
         if not isinstance(unique_ids, list):
             unique_ids = [unique_ids]
         _ids = [Decode.mongo(i) for i in unique_ids]
         search = {"_id": {"$in": _ids}}
         results = await self.crud.update(search, form)
-        if results.count == 1 and not results.error:
+        if results.count == 1 and not results.error and not ignore_return:
             results.data = await self.detail(unique_ids[0])
         return results
 
