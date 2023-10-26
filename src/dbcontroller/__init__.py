@@ -21,3 +21,6 @@ from .core import type  # Type
 # Forms
 from .forms import Form as form  # Tool - Create Forms
 from .manager import manager  # Tool - Querying Manager
+
+# Mongo (ID)
+from .manager.utils.object_id import ObjectId as mongo_id
