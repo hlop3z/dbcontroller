@@ -33,7 +33,7 @@ engine = create_engine(sql.url, echo=True)
 
 
 # Types
-@sql.model(table_name="main_user")
+@sql.model(table_name="main_user", auto=["meta"])
 class UserSQL:
     name: str
     notes: dbc.text

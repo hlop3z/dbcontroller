@@ -22,6 +22,7 @@ class TableConfig:
     engine: str = None
     database: str = None
     many_to_many: list = None
+    auto: list = None
 
 
 def table_info(original_object, table_name, config):

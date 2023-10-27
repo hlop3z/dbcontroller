@@ -27,6 +27,7 @@ def custom_type(
     database: str = "default",
     controller: object = None,
     description: str = None,
+    auto: list = None,
 ):
     """{ Controller } for GraphQL { Type } & { Model } Database"""
     primary_key = primary_key or []
@@ -47,6 +48,7 @@ def custom_type(
         "engine": engine,
         "database": database,
         "controller": controller,
+        "auto": auto,
     }
 
     # Starting Wrapper. . .

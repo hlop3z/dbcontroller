@@ -24,7 +24,7 @@ import dbcontroller as dbc
 mongo = dbc.Controller(mongo="mongodb://localhost:63445/test_database")
 
 # Types
-@mongo.model(table_name="main_user")
+@mongo.model(table_name="main_user", auto=["meta"])
 class UserMongo:
     name: str
     notes: dbc.text
