@@ -1,6 +1,7 @@
 """
     App
 """
+
 import dataclasses as dc
 import datetime
 import decimal
@@ -52,22 +53,21 @@ def load(models: list):
 
 
 class Date:
-    """Datetime for Testing"""
+    """DateTime (UTC)"""
 
-    @staticmethod
-    def date():
-        """Date"""
+    utc_timezone = datetime.timezone.utc
+
+    @classmethod
+    def datetime(cls):
+        return datetime.datetime.now(cls.utc_timezone)
+
+    @classmethod
+    def date(cls):
         return datetime.date.today()
 
-    @staticmethod
-    def datetime():
-        """DateTime"""
-        return datetime.datetime.now()
-
-    @staticmethod
-    def time():
-        """Time"""
-        return datetime.datetime.now().time()
+    @classmethod
+    def time(cls):
+        return datetime.datetime.now(cls.utc_timezone).time()
 
 
 class Controller:
