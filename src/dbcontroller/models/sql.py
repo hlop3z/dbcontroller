@@ -74,7 +74,7 @@ def column_base_setup(name: str, config: dict) -> dict:
         "primary_key": name in config.get("primary_key", []),
         "index": name in config.get("index", []),
         "unique": name in config.get("unique", []),
-        "nullable": not name in config.get("required", []),
+        "nullable": name not in config.get("required", []),
     }
 
 

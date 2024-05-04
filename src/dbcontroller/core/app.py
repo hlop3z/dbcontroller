@@ -63,7 +63,7 @@ class Date:
 
     @classmethod
     def date(cls):
-        return datetime.date.today()
+        return datetime.datetime.now(cls.utc_timezone).date()
 
     @classmethod
     def time(cls):
